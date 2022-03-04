@@ -47,4 +47,4 @@ async function handleFrosty(success) {
 }
 
 // await test();
-await askRunFrosty();
+export default await askRunFrosty();
