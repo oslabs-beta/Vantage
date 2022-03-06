@@ -17,8 +17,9 @@ const frostyjsDir = path.resolve('./frostyjs')
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
 async function test() {
-  console.log(chalk.bgGreen("hi there!"));
-  await sleep();
+  if(process.argv[2] === 'analytics') {
+    
+  }
 }
 
 async function askRunFrosty() {
@@ -32,14 +33,6 @@ async function askRunFrosty() {
   if (answers.question_1) {
     return handleFrosty(process.argv[2]);
   } else console.log(chalk.red("frosty exited"));
-}
-
-async function loading(success) {
-  const spinner = createSpinner("Calculating web vitals").start();
-  await sleep();
-  if (success) {
-    spinner.success({});
-  }
 }
 
 async function handleFrosty(success) {
@@ -59,16 +52,21 @@ async function handleFrosty(success) {
   }
 }
 
-function writeJSON() {
+function writeFolderAndFile() {
   if (!fs.existsSync(frostyjsDir)) {
     fs.mkdirSync(frostyjsDir);
   }
-  fs.appendFile(frostyjsDir + "/data.json", "{}", (err) => {
+  if(!fs.existsSync(frostyjsDir + "/data.json")) {
+    fs.appendFile(frostyjsDir + "/data.json", "{}", (err) => {
+      if (err) console.log(err);
+    });
+  }
+  fs.appendFile("frosty.config.js", "", (err) => {
     if (err) console.log(err);
   });
 }
 
 // await test();
-writeJSON();
-console.log(frostyjsDir)
-// askRunFrosty();
+// writeFolderAndFile();
+// console.log(frostyjsDir)
+askRunFrosty();
