@@ -1,6 +1,6 @@
 {
   "name": "frostyjs",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --open",
     "build": "webpack",
     "start": "open ./dist/index.html",
-    "postinstall": "webpack"
+    "postinstall": "inject-script"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,8 @@
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
   "bin": {
     "main": "./package/main/index.js",
-    "display": "./package/main/display.js"
+    "display": "./package/main/display.js",
+    "inject-script": "./package/main/inject-script.js"
   },
   "dependencies": {
     "@babel/core": "^7.17.5",
