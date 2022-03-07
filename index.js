@@ -6,13 +6,19 @@ import inquirer from "inquirer";
 import chalkAnimation from "chalk-animation";
 import fs from "fs";
 import path from "path";
+import childProcess from "child_process";
+
 
 // Get file directory
 // import { fileURLToPath } from 'url';
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // const currentDir = path.resolve(process.argv[1], "../../../");
 // const frostyjsDir = path.join(currentDir, "/frostyjs");
-const frostyjsDir = path.resolve('./frostyjs')
+const frostyjsDir = path.resolve('./frosty')
+const commitMsg = childProcess
+  .execSync("git log -1 --pretty=%B")
+  .toString()
+  .trim();
 
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
@@ -69,4 +75,6 @@ function writeFolderAndFile() {
 // await test();
 // writeFolderAndFile();
 // console.log(frostyjsDir)
-askRunFrosty();
+console.log(commitMsg);
+// askRunFrosty();
+// console.log(process.argv[2])
