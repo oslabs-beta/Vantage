@@ -22,11 +22,21 @@ async function startDevServer() {
 }
 
 // Function to refresh data
-async function runRefresh(url, gitMessage) {
+async function getLighthouseResults(url, gitMessage) {
 
   // To Dos:  
   // Figure out browser configuration for security certificates
   // Research how to run this on sites requiring authentication
+  // Configurability of lighthouseOptions (example options object below)
+
+  // const lighthouseOptions = {
+  //   extends: 'lighthouse:default',
+  //   settings: {
+  //     onlyCategories: ['accessibility'],
+  //     emulatedFormFactor:'desktop',
+  //     output: ['html'],
+  //   },
+  // }
 
   // Initiate headless browser session and run Lighthouse for the specified URL
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
@@ -43,64 +53,52 @@ async function runRefresh(url, gitMessage) {
 }
 
 
-
-
-async function generateUpdatedData(lhr) {
+async function generateUpdatedDataStore(lhr) {
   // Process returned object based on our defined criteria
   // Get the existing JSON file for this project
   // Update it with new data
 
-  // Load existing JSON file
-  let currentData = await fs.readFileSync(DATA_STORE);
-  let data = JSON.parse(currentData);
-  console.log(data);
-  // Parse through lhr and handle its current contents
+  // Load existing JSON file or create new one if not yet present
+  let data;
+  try {
+    let currentData = await fs.readFileSync(DATA_STORE);
+    data = JSON.parse(currentData);
+  } catch {
+    data = {};
+  }
   
+  // Parse through lhr and handle its current contents
+
+  let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary];
+  
+  // To Do: Read keys from a stored file instead of hard coded value above
+  // try {
+  //   let lhrKeys = await fs.readFileSync('./lhr_keys.json');
+  //   keys = JSON.parse(lhrKeys);
+  // } catch {
+  //   keys = [];
+  // }
+  
+  let newResults = {};
+  console.log(keys);
+  for (const key of keys) {
+    newResults[key] = lhr['audits'][key];
+  }
+
+
+  data[lhr.fetchTime] = newResults;  // To do:  Update key based on preferred format (e.g. git commit message) 
+
   // Save output to JSON
   fs.writeFileSync(DATA_STORE, JSON.stringify(data));
 
 }
 
-// startDevServer();
-// let lhr = runRefresh('http://localhost:3000');
-generateUpdatedData(' ');  // Update to pass in LHR when ready
+async function initiateRefresh() {
 
-// const fs = require('fs');
-// const lighthouse = require('lighthouse');
-// const chromeLauncher = require('chrome-launcher');
+  await startDevServer();
+  let lhr = await getLighthouseResults('http://localhost:3000');
+  await generateUpdatedDataStore(lhr);
 
-// (async () => {
-//   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-//   const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
-//   const runnerResult = await lighthouse('https://example.com', options);
+}
 
-//   // `.report` is the HTML report as a string
-//   const reportHtml = runnerResult.report;
-//   fs.writeFileSync('lhreport.html', reportHtml);
-
-//   // `.lhr` is the Lighthouse Result as a JS object
-//   console.log('Report is done for', runnerResult.lhr.finalUrl);
-//   console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
-
-//   await chrome.kill();
-// })();
-
-// function launchChromeAndRunLighthouse(url, opts, config = null) {
-//   return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
-//     opts.port = chrome.port;
-//     return lighthouse(url, opts, config).then(results => {
-//       return chrome.kill().then(() => results.lhr)
-//     });
-//   });
-// }
-
-// const lighthouseOptions = {
-//   extends: 'lighthouse:default',
-//   settings: {
-//     onlyCategories: ['accessibility'],
-//     emulatedFormFactor:'desktop',
-//     output: ['html'],
-//   },
-// }
-
-// Export
+initiateRefresh();

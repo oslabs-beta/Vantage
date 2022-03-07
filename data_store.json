@@ -1,1 +1,2670 @@
-{"1":"one"}
+{
+  "2022-03-07T20:05:28.329Z": {},
+  "2022-03-07T20:08:42.915Z": {},
+  "2022-03-07T20:17:17.913Z": {
+    "first-contentful-paint": {
+      "id": "first-contentful-paint",
+      "title": "First Contentful Paint",
+      "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
+      "score": 0.96,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 1451.25,
+      "numericUnit": "millisecond",
+      "displayValue": "1.5 s"
+    },
+    "largest-contentful-paint": {
+      "id": "largest-contentful-paint",
+      "title": "Largest Contentful Paint",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)",
+      "score": 0,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 29010.125,
+      "numericUnit": "millisecond",
+      "displayValue": "29.0 s"
+    },
+    "first-meaningful-paint": {
+      "id": "first-meaningful-paint",
+      "title": "First Meaningful Paint",
+      "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://web.dev/first-meaningful-paint/).",
+      "score": 0.99,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 1451.25,
+      "numericUnit": "millisecond",
+      "displayValue": "1.5 s"
+    },
+    "speed-index": {
+      "id": "speed-index",
+      "title": "Speed Index",
+      "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).",
+      "score": 0.85,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 3700.8737000018355,
+      "numericUnit": "millisecond",
+      "displayValue": "3.7 s"
+    },
+    "total-blocking-time": {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).",
+      "score": 0.72,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 357,
+      "numericUnit": "millisecond",
+      "displayValue": "360 ms"
+    },
+    "max-potential-fid": {
+      "id": "max-potential-fid",
+      "title": "Max Potential First Input Delay",
+      "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid/).",
+      "score": 0.16,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 407,
+      "numericUnit": "millisecond",
+      "displayValue": "410 ms"
+    },
+    "cumulative-layout-shift": {
+      "id": "cumulative-layout-shift",
+      "title": "Cumulative Layout Shift",
+      "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "unitless",
+      "displayValue": "0",
+      "details": {
+        "type": "debugdata",
+        "items": [
+          {
+            "cumulativeLayoutShiftMainFrame": 0,
+            "totalCumulativeLayoutShift": 0
+          }
+        ]
+      }
+    },
+    "server-response-time": {
+      "id": "server-response-time",
+      "title": "Initial server response time was short",
+      "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "numericValue": 435.5,
+      "numericUnit": "millisecond",
+      "displayValue": "Root document took 440 ms",
+      "details": {
+        "type": "opportunity",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "responseTime",
+            "valueType": "timespanMs",
+            "label": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:3000/",
+            "responseTime": 435.5
+          }
+        ],
+        "overallSavingsMs": 335.5
+      }
+    },
+    "interactive": {
+      "id": "interactive",
+      "title": "Time to Interactive",
+      "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).",
+      "score": 0,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 29012,
+      "numericUnit": "millisecond",
+      "displayValue": "29.0 s"
+    },
+    "user-timings": {
+      "id": "user-timings",
+      "title": "User Timing marks and measures",
+      "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://web.dev/user-timings/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "370 user timings",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "name",
+            "itemType": "text",
+            "text": "Name"
+          },
+          {
+            "key": "timingType",
+            "itemType": "text",
+            "text": "Type"
+          },
+          {
+            "key": "startTime",
+            "itemType": "ms",
+            "granularity": 0.01,
+            "text": "Start Time"
+          },
+          {
+            "key": "duration",
+            "itemType": "ms",
+            "granularity": 0.01,
+            "text": "Duration"
+          }
+        ],
+        "items": [
+          {
+            "name": "Next.js-before-hydration",
+            "startTime": 0,
+            "duration": 2111.75,
+            "timingType": "Measure"
+          },
+          {
+            "name": "Next.js-hydration",
+            "startTime": 2111.75,
+            "duration": 8.25,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2112.75,
+            "duration": 5.95,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Root [mount]",
+            "startTime": 2113.5,
+            "duration": 5.2,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Head [mount]",
+            "startTime": 2113.875,
+            "duration": 0.325,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ AppContainer [mount]",
+            "startTime": 2114.25,
+            "duration": 4.45,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Container [mount]",
+            "startTime": 2114.375,
+            "duration": 4.325,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [mount]",
+            "startTime": 2114.75,
+            "duration": 3.95,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ ErrorBoundary [mount]",
+            "startTime": 2115,
+            "duration": 3.7,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ App [mount]",
+            "startTime": 2115.125,
+            "duration": 3.474,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Index [mount]",
+            "startTime": 2115.125,
+            "duration": 3.474,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Layout [mount]",
+            "startTime": 2115.5,
+            "duration": 3.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Header [mount]",
+            "startTime": 2115.75,
+            "duration": 1.649,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2117.25,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2117.25,
+            "duration": 0.149,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2117.625,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2117.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2117.875,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2117.875,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2118,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2118.125,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2118.125,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2118.25,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2118.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [mount]",
+            "startTime": 2118.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ JSXStyle [mount]",
+            "startTime": 2118.375,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Portal [mount]",
+            "startTime": 2118.5,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2118.875,
+            "duration": 1.524,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2119,
+            "duration": 0.299,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 31 Total)",
+            "startTime": 2119.25,
+            "duration": 0.25,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 31 Total)",
+            "startTime": 2119.5,
+            "duration": 0.799,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Container.componentDidMount",
+            "startTime": 2119.875,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2145.25,
+            "duration": 1.349,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Portal [update]",
+            "startTime": 2145.5,
+            "duration": 1.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ RouteAnnouncer [mount]",
+            "startTime": 2145.75,
+            "duration": 0.849,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2146.5,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2146.5,
+            "duration": 0.299,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2146.625,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 1 Total)",
+            "startTime": 2146.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2146.875,
+            "duration": 0.625,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2147,
+            "duration": 0.299,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2147.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2147.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2147.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2148.25,
+            "duration": 0.25,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2148.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2148.5,
+            "duration": 0.299,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2148.5,
+            "duration": 0.399,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2148.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2148.75,
+            "duration": 0.149,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2149,
+            "duration": 0.299,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2149.125,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2149.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2149.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2149.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2149.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2149.625,
+            "duration": 0.274,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2149.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2149.875,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2149.875,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2150,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2150,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2150.125,
+            "duration": 0.274,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2150.25,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2150.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2150.375,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2150.375,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2150.5,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2150.625,
+            "duration": 0.375,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2150.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2150.875,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2150.875,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2150.875,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2150.875,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2151,
+            "duration": 0.299,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2151.125,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2151.25,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2151.25,
+            "duration": 0.149,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2151.25,
+            "duration": 0.149,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2151.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2151.5,
+            "duration": 0.2,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2151.625,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2151.625,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2151.625,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2151.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2151.75,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2151.875,
+            "duration": 0.325,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2152.125,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2152.125,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2152.125,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2152.125,
+            "duration": 0.174,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2152.25,
+            "duration": 0.25,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2152.375,
+            "duration": 0.125,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2152.5,
+            "duration": 0.2,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2152.5,
+            "duration": 0.2,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2152.625,
+            "duration": 0.075,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2152.75,
+            "duration": 0.149,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2152.875,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2152.875,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2152.875,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2153,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2153,
+            "duration": 0.099,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation: Completed Root)",
+            "startTime": 2153.125,
+            "duration": 0.274,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ Link [update]",
+            "startTime": 2153.25,
+            "duration": 0.049,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Host Effects: 2 Total)",
+            "startTime": 2153.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects: 0 Total)",
+            "startTime": 2153.375,
+            "duration": 0.024,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2153.375,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods: 3 Total)",
+            "startTime": 2153.375,
+            "duration": 0.224,
+            "timingType": "Measure"
+          },
+          {
+            "name": "beforeRender",
+            "startTime": 2111.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2112.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [mount] (#4)",
+            "startTime": 2113.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [mount] (#5)",
+            "startTime": 2113.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [mount] (#6)",
+            "startTime": 2114.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [mount] (#7)",
+            "startTime": 2114.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [mount] (#8)",
+            "startTime": 2114.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [mount] (#9)",
+            "startTime": 2115,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [mount] (#12)",
+            "startTime": 2115.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [mount] (#14)",
+            "startTime": 2115.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [mount] (#15)",
+            "startTime": 2115.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [mount] (#17)",
+            "startTime": 2115.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#20)",
+            "startTime": 2115.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#21)",
+            "startTime": 2117.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#37)",
+            "startTime": 2117.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#39)",
+            "startTime": 2117.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#41)",
+            "startTime": 2117.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#43)",
+            "startTime": 2117.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#45)",
+            "startTime": 2118,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#47)",
+            "startTime": 2118,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#49)",
+            "startTime": 2118.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#51)",
+            "startTime": 2118.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#53)",
+            "startTime": 2118.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [mount] (#55)",
+            "startTime": 2118.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [mount] (#26)",
+            "startTime": 2118.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [mount] (#13)",
+            "startTime": 2118.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2118.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2119,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2119.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2119.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container.componentDidMount (#7)",
+            "startTime": 2119.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "afterHydrate",
+            "startTime": 2120,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2145.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2145.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2145.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2145.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2145.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2145.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2145.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2145.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2145.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ RouteAnnouncer [mount] (#68)",
+            "startTime": 2145.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2146.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2146.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2146.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2146.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2146.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2146.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2146.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2146.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#20)",
+            "startTime": 2147,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#21)",
+            "startTime": 2147.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2147.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2147.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2147.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2147.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2147.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2148.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#20)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#21)",
+            "startTime": 2148.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2148.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2148.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2148.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2148.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2148.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2149,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2149,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2149,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2149,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#37)",
+            "startTime": 2149.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2149.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2149.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2149.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2149.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2149.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2149.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2149.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2149.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2149.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2149.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2149.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#39)",
+            "startTime": 2149.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2149.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2149.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2149.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2149.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2150,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2150,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2150.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2150.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2150.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2150.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2150.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2150.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2150.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2150.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2150.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2150.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2150.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#41)",
+            "startTime": 2150.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2150.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2150.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2150.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2150.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2150.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2150.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2150.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#43)",
+            "startTime": 2150.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2150.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2150.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2150.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2150.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2150.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2150.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2151,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2151,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#45)",
+            "startTime": 2151.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2151.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2151.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2151.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2151.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2151.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2151.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2151.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#47)",
+            "startTime": 2151.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2151.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2151.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2151.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2151.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2151.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2151.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2151.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2152,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#49)",
+            "startTime": 2152,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2152,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2152,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2152.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2152.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2152.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2152.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2152.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2152.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2152.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#51)",
+            "startTime": 2152.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2152.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2152.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2152.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2152.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2152.5,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2152.625,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2152.75,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#53)",
+            "startTime": 2152.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2152.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2152.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2152.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2152.875,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2153,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2153,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (React Tree Reconciliation)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Root [update] (#4)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Head [update] (#5)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ AppContainer [update] (#6)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Container [update] (#7)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ReactDevOverlay [update] (#8)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ ErrorBoundary [update] (#9)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ App [update] (#12)",
+            "startTime": 2153.125,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Index [update] (#14)",
+            "startTime": 2153.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Layout [update] (#15)",
+            "startTime": 2153.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Header [update] (#17)",
+            "startTime": 2153.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Link [update] (#55)",
+            "startTime": 2153.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ JSXStyle [update] (#26)",
+            "startTime": 2153.25,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ Portal [update] (#13)",
+            "startTime": 2153.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Changes)",
+            "startTime": 2153.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Snapshot Effects)",
+            "startTime": 2153.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Committing Host Effects)",
+            "startTime": 2153.375,
+            "timingType": "Mark"
+          },
+          {
+            "name": "⚛ (Calling Lifecycle Methods)",
+            "startTime": 2153.375,
+            "timingType": "Mark"
+          }
+        ]
+      }
+    },
+    "critical-request-chains": {
+      "id": "critical-request-chains",
+      "title": "Avoid chaining critical requests",
+      "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://web.dev/critical-request-chains/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 chain found",
+      "details": {
+        "type": "criticalrequestchain",
+        "chains": {
+          "3A3541540E3C248BE14FA0A1A2090020": {
+            "request": {
+              "url": "http://localhost:3000/",
+              "startTime": 80394.436625,
+              "endTime": 80394.884125,
+              "responseReceivedTime": 80394.883625,
+              "transferSize": 18703
+            },
+            "children": {
+              "13868.8": {
+                "request": {
+                  "url": "http://localhost:3000/_next/static/chunks/react-refresh.js?ts=1646684239032",
+                  "startTime": 80394.88975,
+                  "endTime": 80394.95025,
+                  "responseReceivedTime": 80394.939625,
+                  "transferSize": 77972
+                }
+              }
+            }
+          }
+        },
+        "longestChain": {
+          "duration": 513.6249999923166,
+          "length": 2,
+          "transferSize": 77972
+        }
+      }
+    },
+    "redirects": {
+      "id": "redirects",
+      "title": "Avoid multiple page redirects",
+      "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects/).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
+      }
+    },
+    "mainthread-work-breakdown": {
+      "id": "mainthread-work-breakdown",
+      "title": "Minimizes main-thread work",
+      "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/mainthread-work-breakdown/)",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 773.5,
+      "numericUnit": "millisecond",
+      "displayValue": "0.8 s",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "groupLabel",
+            "itemType": "text",
+            "text": "Category"
+          },
+          {
+            "key": "duration",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "group": "scriptEvaluation",
+            "groupLabel": "Script Evaluation",
+            "duration": 352
+          },
+          {
+            "group": "other",
+            "groupLabel": "Other",
+            "duration": 244.5
+          },
+          {
+            "group": "styleLayout",
+            "groupLabel": "Style & Layout",
+            "duration": 90.5
+          },
+          {
+            "group": "scriptParseCompile",
+            "groupLabel": "Script Parsing & Compilation",
+            "duration": 63
+          },
+          {
+            "group": "garbageCollection",
+            "groupLabel": "Garbage Collection",
+            "duration": 14
+          },
+          {
+            "group": "parseHTML",
+            "groupLabel": "Parse HTML & CSS",
+            "duration": 5.5
+          },
+          {
+            "group": "paintCompositeRender",
+            "groupLabel": "Rendering",
+            "duration": 4
+          }
+        ]
+      }
+    },
+    "font-display": {
+      "id": "font-display",
+      "title": "All text remains visible during webfont loads",
+      "description": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://web.dev/font-display/).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "warnings": [],
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
+    "diagnostics": {
+      "id": "diagnostics",
+      "title": "Diagnostics",
+      "description": "Collection of useful page vitals.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "debugdata",
+        "items": [
+          {
+            "numRequests": 11,
+            "numScripts": 8,
+            "numStylesheets": 0,
+            "numFonts": 0,
+            "numTasks": 185,
+            "numTasksOver10ms": 2,
+            "numTasksOver25ms": 2,
+            "numTasksOver50ms": 1,
+            "numTasksOver100ms": 1,
+            "numTasksOver500ms": 0,
+            "rtt": 0.25,
+            "throughput": 29077570.88281688,
+            "maxRtt": 0.25,
+            "maxServerLatency": 50.625,
+            "totalByteWeight": 5468346,
+            "totalTaskTime": 193.375,
+            "mainDocumentTransferSize": 18703
+          }
+        ]
+      }
+    },
+    "network-requests": {
+      "id": "network-requests",
+      "title": "Network Requests",
+      "description": "Lists the network requests that were made during page load.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "protocol",
+            "itemType": "text",
+            "text": "Protocol"
+          },
+          {
+            "key": "startTime",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Start Time"
+          },
+          {
+            "key": "endTime",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "End Time"
+          },
+          {
+            "key": "transferSize",
+            "itemType": "bytes",
+            "displayUnit": "kb",
+            "granularity": 1,
+            "text": "Transfer Size"
+          },
+          {
+            "key": "resourceSize",
+            "itemType": "bytes",
+            "displayUnit": "kb",
+            "granularity": 1,
+            "text": "Resource Size"
+          },
+          {
+            "key": "statusCode",
+            "itemType": "text",
+            "text": "Status Code"
+          },
+          {
+            "key": "mimeType",
+            "itemType": "text",
+            "text": "MIME Type"
+          },
+          {
+            "key": "resourceType",
+            "itemType": "text",
+            "text": "Resource Type"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:3000/",
+            "protocol": "http/1.1",
+            "startTime": 0,
+            "endTime": 447.4999999947613,
+            "finished": true,
+            "transferSize": 18703,
+            "resourceSize": 18430,
+            "statusCode": 200,
+            "mimeType": "text/html",
+            "resourceType": "Document"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/chunks/webpack.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 452.37499999348074,
+            "endTime": 495.24999999266583,
+            "finished": true,
+            "transferSize": 51613,
+            "resourceSize": 51296,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/chunks/main.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 452.6249999908032,
+            "endTime": 2006.2499999912689,
+            "finished": true,
+            "transferSize": 4330624,
+            "resourceSize": 4330303,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/chunks/pages/_app.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 453.6249999946449,
+            "endTime": 503.37500000023283,
+            "finished": true,
+            "transferSize": 19824,
+            "resourceSize": 19507,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/chunks/pages/index.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 453.9999999979045,
+            "endTime": 833.4999999933643,
+            "finished": true,
+            "transferSize": 962737,
+            "resourceSize": 962418,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/development/_buildManifest.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 454.249999995227,
+            "endTime": 504.4999999954598,
+            "finished": true,
+            "transferSize": 610,
+            "resourceSize": 296,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/development/_ssgManifest.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 495.24999999266583,
+            "endTime": 546.3749999908032,
+            "finished": true,
+            "transferSize": 388,
+            "resourceSize": 76,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/chunks/react-refresh.js?ts=1646684239032",
+            "protocol": "http/1.1",
+            "startTime": 453.125,
+            "endTime": 513.6249999923166,
+            "finished": true,
+            "transferSize": 77972,
+            "resourceSize": 77654,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_dev_noop_js.js",
+            "protocol": "http/1.1",
+            "startTime": 2089.25000000454,
+            "endTime": 2275.2499999915017,
+            "finished": true,
+            "transferSize": 4819,
+            "resourceSize": 4503,
+            "statusCode": 200,
+            "mimeType": "application/javascript",
+            "resourceType": "Script"
+          },
+          {
+            "url": "http://localhost:3000/_next/webpack-hmr?page=%2F",
+            "protocol": "http/1.1",
+            "startTime": 2143.2499999937136,
+            "endTime": 2210.3749999951106,
+            "finished": false,
+            "transferSize": 854,
+            "resourceSize": 478,
+            "statusCode": 200,
+            "mimeType": "text/event-stream",
+            "resourceType": "EventSource"
+          },
+          {
+            "url": "http://localhost:3000/_next/static/development/_devPagesManifest.json",
+            "protocol": "http/1.1",
+            "startTime": 2147.499999991851,
+            "endTime": 2210.8750000043074,
+            "finished": true,
+            "transferSize": 202,
+            "resourceSize": 32,
+            "statusCode": 200,
+            "mimeType": "application/json",
+            "resourceType": "Fetch"
+          }
+        ]
+      }
+    },
+    "network-rtt": {
+      "id": "network-rtt",
+      "title": "Network Round Trip Times",
+      "description": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "numericValue": 0.25,
+      "numericUnit": "millisecond",
+      "displayValue": "0 ms",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "origin",
+            "itemType": "text",
+            "text": "URL"
+          },
+          {
+            "key": "rtt",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "origin": "http://localhost:3000",
+            "rtt": 0.25
+          }
+        ]
+      }
+    },
+    "metrics": {
+      "id": "metrics",
+      "title": "Metrics",
+      "description": "Collects all available metrics.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "numericValue": 29012,
+      "numericUnit": "millisecond",
+      "details": {
+        "type": "debugdata",
+        "items": [
+          {
+            "firstContentfulPaint": 1451,
+            "firstMeaningfulPaint": 1451,
+            "largestContentfulPaint": 29010,
+            "interactive": 29012,
+            "speedIndex": 3701,
+            "totalBlockingTime": 357,
+            "maxPotentialFID": 407,
+            "cumulativeLayoutShift": 0,
+            "cumulativeLayoutShiftMainFrame": 0,
+            "totalCumulativeLayoutShift": 0,
+            "observedTimeOrigin": 0,
+            "observedTimeOriginTs": 80394435750,
+            "observedNavigationStart": 0,
+            "observedNavigationStartTs": 80394435750,
+            "observedFirstPaint": 2150,
+            "observedFirstPaintTs": 80396585625,
+            "observedFirstContentfulPaint": 2150,
+            "observedFirstContentfulPaintTs": 80396585625,
+            "observedFirstContentfulPaintAllFrames": 2150,
+            "observedFirstContentfulPaintAllFramesTs": 80396585625,
+            "observedFirstMeaningfulPaint": 2150,
+            "observedFirstMeaningfulPaintTs": 80396585625,
+            "observedLargestContentfulPaint": 2150,
+            "observedLargestContentfulPaintTs": 80396585625,
+            "observedLargestContentfulPaintAllFrames": 2150,
+            "observedLargestContentfulPaintAllFramesTs": 80396585625,
+            "observedTraceEnd": 45032,
+            "observedTraceEndTs": 80439468000,
+            "observedLoad": 2278,
+            "observedLoadTs": 80396713250,
+            "observedDomContentLoaded": 2103,
+            "observedDomContentLoadedTs": 80396538375,
+            "observedCumulativeLayoutShift": 0,
+            "observedCumulativeLayoutShiftMainFrame": 0,
+            "observedTotalCumulativeLayoutShift": 0,
+            "observedFirstVisualChange": 2148,
+            "observedFirstVisualChangeTs": 80396583750,
+            "observedLastVisualChange": 2148,
+            "observedLastVisualChangeTs": 80396583750,
+            "observedSpeedIndex": 2148,
+            "observedSpeedIndexTs": 80396584008
+          },
+          {
+            "lcpInvalidated": false
+          }
+        ]
+      }
+    },
+    "performance-budget": {
+      "id": "performance-budget",
+      "title": "Performance budget",
+      "description": "Keep the quantity and size of network requests under the targets set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "timing-budget": {
+      "id": "timing-budget",
+      "title": "Timing budget",
+      "description": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
+    "resource-summary": {
+      "id": "resource-summary",
+      "title": "Keep request counts low and transfer sizes small",
+      "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://web.dev/use-lighthouse-for-performance-budgets/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "11 requests • 5,340 KiB",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "label",
+            "itemType": "text",
+            "text": "Resource Type"
+          },
+          {
+            "key": "requestCount",
+            "itemType": "numeric",
+            "text": "Requests"
+          },
+          {
+            "key": "transferSize",
+            "itemType": "bytes",
+            "text": "Transfer Size"
+          }
+        ],
+        "items": [
+          {
+            "resourceType": "total",
+            "label": "Total",
+            "requestCount": 11,
+            "transferSize": 5468346
+          },
+          {
+            "resourceType": "script",
+            "label": "Script",
+            "requestCount": 8,
+            "transferSize": 5448587
+          },
+          {
+            "resourceType": "document",
+            "label": "Document",
+            "requestCount": 1,
+            "transferSize": 18703
+          },
+          {
+            "resourceType": "other",
+            "label": "Other",
+            "requestCount": 2,
+            "transferSize": 1056
+          },
+          {
+            "resourceType": "stylesheet",
+            "label": "Stylesheet",
+            "requestCount": 0,
+            "transferSize": 0
+          },
+          {
+            "resourceType": "image",
+            "label": "Image",
+            "requestCount": 0,
+            "transferSize": 0
+          },
+          {
+            "resourceType": "media",
+            "label": "Media",
+            "requestCount": 0,
+            "transferSize": 0
+          },
+          {
+            "resourceType": "font",
+            "label": "Font",
+            "requestCount": 0,
+            "transferSize": 0
+          },
+          {
+            "resourceType": "third-party",
+            "label": "Third-party",
+            "requestCount": 0,
+            "transferSize": 0
+          }
+        ]
+      }
+    }
+  }
+}
