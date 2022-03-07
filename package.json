@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "display": "display"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,10 @@
     "url": "https://github.com/oslabs-beta/Frosty/issues"
   },
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
-  "bin": "./main/index.js",
+  "bin": {
+    "main": "./main/index.js",
+    "display": "./main/display.js"
+  },
   "dependencies": {
     "chalk": "^5.0.0",
     "chalk-animation": "^1.6.0",
