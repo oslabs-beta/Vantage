@@ -14,7 +14,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
-  mode: process.env.NODE_ENV,
+  mode: 'production',
   devServer: {
     host: 'localhost',
     port: 8080,
