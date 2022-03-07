@@ -7,7 +7,7 @@ import { exec } from 'child_process';
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-const PROJECT_FOLDER = '/Users/michaelnoah/Codesmith-Dev/next-js-app/';
+const PROJECT_FOLDER = '';
 const SERVER_COMMAND = 'npm run dev';
 const DATA_STORE = './data_store.json';
 
@@ -39,8 +39,8 @@ async function getLighthouseResults(url, gitMessage) {
   // }
 
   // Initiate headless browser session and run Lighthouse for the specified URL
-  const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-  const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
+  const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']}); // Todo: Add incognito flag
+  const options = {logLevel: 'info', output: 'html', maxWaitForLoad: 60000, onlyCategories: ['performance'], port: chrome.port};
   const runnerResult = await lighthouse(url, options);
 
   // `.lhr` is the Lighthouse Result as a JS object
@@ -69,7 +69,7 @@ async function generateUpdatedDataStore(lhr) {
   
   // Parse through lhr and handle its current contents
 
-  let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary];
+  let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary'];
   
   // To Do: Read keys from a stored file instead of hard coded value above
   // try {
@@ -85,7 +85,6 @@ async function generateUpdatedDataStore(lhr) {
     newResults[key] = lhr['audits'][key];
   }
 
-
   data[lhr.fetchTime] = newResults;  // To do:  Update key based on preferred format (e.g. git commit message) 
 
   // Save output to JSON
@@ -94,11 +93,10 @@ async function generateUpdatedDataStore(lhr) {
 }
 
 async function initiateRefresh() {
-
   await startDevServer();
+  // Todo:  Iterate through each possible page to be checked
   let lhr = await getLighthouseResults('http://localhost:3000');
   await generateUpdatedDataStore(lhr);
-
 }
 
 initiateRefresh();
