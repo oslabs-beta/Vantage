@@ -21,11 +21,16 @@
     "url": "https://github.com/oslabs-beta/Frosty/issues"
   },
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
-  "bin": "./index.js",
+  "bin": "./main/index.js",
   "dependencies": {
     "chalk": "^5.0.0",
     "chalk-animation": "^1.6.0",
     "inquirer": "^8.2.0",
     "nanospinner": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-plugin-react": "^7.29.3",
+    "prettier": "^2.5.1"
   }
 }
