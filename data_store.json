@@ -1,0 +1,303 @@
+{
+  "run-list": [
+    "2022-03-08T00:42:06.787Z"
+  ],
+  "web-vitals": {
+    "first-contentful-paint": {
+      "2022-03-08T00:33:48.597Z": {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:34:49.941Z": {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:35:11.750Z": {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:37:57.395Z": {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
+        "score": 1,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 914.104,
+        "numericUnit": "millisecond",
+        "displayValue": "0.9 s"
+      },
+      "2022-03-08T00:42:06.787Z": {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
+        "score": 1,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 913.5319999999999,
+        "numericUnit": "millisecond",
+        "displayValue": "0.9 s"
+      }
+    },
+    "speed-index": {
+      "2022-03-08T00:33:48.597Z": {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:34:49.941Z": {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:35:11.750Z": {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:37:57.395Z": {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).",
+        "score": 1,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 914.104,
+        "numericUnit": "millisecond",
+        "displayValue": "0.9 s"
+      },
+      "2022-03-08T00:42:06.787Z": {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).",
+        "score": 1,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 913.5319999999999,
+        "numericUnit": "millisecond",
+        "displayValue": "0.9 s"
+      }
+    },
+    "largest-contentful-paint": {
+      "2022-03-08T00:33:48.597Z": {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:34:49.941Z": {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:35:11.750Z": {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:37:57.395Z": {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)",
+        "score": 0.03,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 7681.785999999999,
+        "numericUnit": "millisecond",
+        "displayValue": "7.7 s"
+      },
+      "2022-03-08T00:42:06.787Z": {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)",
+        "score": 0.03,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 7660.212999999999,
+        "numericUnit": "millisecond",
+        "displayValue": "7.7 s"
+      }
+    },
+    "interactive": {
+      "2022-03-08T00:33:48.597Z": {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:34:49.941Z": {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:35:11.750Z": {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:37:57.395Z": {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).",
+        "score": 0.46,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 7681.785999999999,
+        "numericUnit": "millisecond",
+        "displayValue": "7.7 s"
+      },
+      "2022-03-08T00:42:06.787Z": {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).",
+        "score": 0.45,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 7738.595999999999,
+        "numericUnit": "millisecond",
+        "displayValue": "7.7 s"
+      }
+    },
+    "total-blocking-time": {
+      "2022-03-08T00:33:48.597Z": {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:34:49.941Z": {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:35:11.750Z": {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:37:57.395Z": {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).",
+        "score": 0.77,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 318,
+        "numericUnit": "millisecond",
+        "displayValue": "320 ms"
+      },
+      "2022-03-08T00:42:06.787Z": {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).",
+        "score": 0.87,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 223.00000000000045,
+        "numericUnit": "millisecond",
+        "displayValue": "220 ms"
+      }
+    },
+    "cumulative-layout-shift": {
+      "2022-03-08T00:33:48.597Z": {
+        "id": "cumulative-layout-shift",
+        "title": "Cumulative Layout Shift",
+        "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:34:49.941Z": {
+        "id": "cumulative-layout-shift",
+        "title": "Cumulative Layout Shift",
+        "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:35:11.750Z": {
+        "id": "cumulative-layout-shift",
+        "title": "Cumulative Layout Shift",
+        "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/).",
+        "score": null,
+        "scoreDisplayMode": "error",
+        "errorMessage": "Required traces gatherer did not run."
+      },
+      "2022-03-08T00:37:57.395Z": {
+        "id": "cumulative-layout-shift",
+        "title": "Cumulative Layout Shift",
+        "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/).",
+        "score": 1,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 0,
+        "numericUnit": "unitless",
+        "displayValue": "0",
+        "details": {
+          "type": "debugdata",
+          "items": [
+            {
+              "cumulativeLayoutShiftMainFrame": 0,
+              "totalCumulativeLayoutShift": 0
+            }
+          ]
+        }
+      },
+      "2022-03-08T00:42:06.787Z": {
+        "id": "cumulative-layout-shift",
+        "title": "Cumulative Layout Shift",
+        "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/).",
+        "score": 1,
+        "scoreDisplayMode": "numeric",
+        "numericValue": 0,
+        "numericUnit": "unitless",
+        "displayValue": "0",
+        "details": {
+          "type": "debugdata",
+          "items": [
+            {
+              "cumulativeLayoutShiftMainFrame": 0,
+              "totalCumulativeLayoutShift": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "opportunities": {},
+  "diagnostics": {}
+}

@@ -1,0 +1,19 @@
+{
+  "web-vitals": {
+    "first-contentful-paint" : {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    "time-to-interactive": {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    "speed-index": {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    "total-blocking-time": {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    "largest-contentful-paint": {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    "cumulative-layout-shift": {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc}
+  },
+  "opportunities": {
+    "opportunity-name" : {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    ...additional opportunities
+  },
+  "diagnostics": {
+    "diagnostic-name" : {timestamp : value, timestamp : value, timestamp : value, timestamp : value etc},
+    ...additional diagnostics
+  },
+
+}
