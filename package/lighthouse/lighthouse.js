@@ -7,7 +7,7 @@ import { exec } from 'child_process';
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-const PROJECT_FOLDER = '';
+const PROJECT_FOLDER = '/Users/michaelnoah/Codesmith-Dev/my-test-app/';
 const SERVER_COMMAND = 'npm run dev';
 const DATA_STORE = './data_store.json';
 
@@ -43,6 +43,11 @@ async function getLighthouseResults(url, gitMessage) {
   const options = {logLevel: 'info', output: 'html', maxWaitForLoad: 60000, onlyCategories: ['performance'], port: chrome.port};
   const runnerResult = await lighthouse(url, options);
 
+  // `.report` is the HTML report as a string
+  const reportHtml = runnerResult.report;
+  fs.writeFileSync('lhreport.html', reportHtml);
+
+
   // `.lhr` is the Lighthouse Result as a JS object
   fs.writeFileSync('analysis_results.json', JSON.stringify(runnerResult.lhr));
   console.log('Report is done for', runnerResult.lhr.finalUrl);
@@ -64,13 +69,23 @@ async function generateUpdatedDataStore(lhr) {
     let currentData = await fs.readFileSync(DATA_STORE);
     data = JSON.parse(currentData);
   } catch {
-    data = {};
+    data = {"run-list": [], "web-vitals": {}, "opportunities": {}, "diagnostics": {}};
   }
   
   // Parse through lhr and handle its current contents
 
-  let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary'];
-  
+  data["run-list"].push(lhr['fetchTime']);
+  let webVitals = ['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift'];
+  for (const item of webVitals) {
+    if (data['web-vitals'][item] === undefined) data['web-vitals'][item] = {};
+    data['web-vitals'][item][lhr['fetchTime']] = lhr['audits'][item];
+  }
+
+
+  // let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary'];
+
+
+
   // To Do: Read keys from a stored file instead of hard coded value above
   // try {
   //   let lhrKeys = await fs.readFileSync('./lhr_keys.json');
@@ -79,13 +94,13 @@ async function generateUpdatedDataStore(lhr) {
   //   keys = [];
   // }
   
-  let newResults = {};
-  console.log(keys);
-  for (const key of keys) {
-    newResults[key] = lhr['audits'][key];
-  }
+  // let newResults = {};
+  // // console.log(keys);
+  // // for (const key of keys) {
+  // //   newResults[key] = lhr['audits'][key];
+  // // }
 
-  data[lhr.fetchTime] = newResults;  // To do:  Update key based on preferred format (e.g. git commit message) 
+  // data[lhr.fetchTime] = newResults;  // To do:  Update key based on preferred format (e.g. git commit message) 
 
   // Save output to JSON
   fs.writeFileSync(DATA_STORE, JSON.stringify(data));
