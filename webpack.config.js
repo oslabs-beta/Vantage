@@ -14,7 +14,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
-  mode: 'production',
+  mode: process.env.NODE_ENV,
   devServer: {
     host: 'localhost',
     port: 8080,
@@ -67,7 +67,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './client/index.html',
-      publicPath: path.join(__dirname, '/dist'),
     }),
   ],
   resolve: {
