@@ -1,6 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Metric from "../components/Metric";
+import {useDispatch, useSelector} from 'react-redux';
+import {getCurrentPage} from '../store/currentViewSlice';
 
 //Example metric data
 const metricData = [
@@ -11,10 +13,11 @@ const metricData = [
 ];
 
 const MetricContainer = () => {
+  const currentPage = useSelector(getCurrentPage);
   const metricComponents = metricData.map((data,i) => <Metric {...data} key={i}/> );
   return (
     <div id='metricContainer'>
-      <h1>Metric Container</h1>
+      <h1>{currentPage}</h1>
       <Box sx={{ display: 'flex', gap: 5 }}>
         {metricComponents}
       </Box>
