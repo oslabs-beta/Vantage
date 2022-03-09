@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const dataSlice = createSlice({
-  name: 'counter',
+  name: 'data',
   initialState: {
     value: 0
   },
