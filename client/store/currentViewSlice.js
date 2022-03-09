@@ -18,9 +18,7 @@ export const currentViewSlice = createSlice({
       else throw "changeMetric payload incorrect";
     },
     changePage: (state, action) => {
-      const regex = /Page 1|Page 2|Page 3|default/;
-      if (regex.test(action.payload)) state.currentPage = action.payload;
-      else throw "changePage payload incorrect";
+      state.currentPage = action.payload;
     }
   },
 });

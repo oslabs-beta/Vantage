@@ -4,6 +4,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 
+//Only use HtmlInlineScriptPlugin for production
+const pluginsArr = [
+  new HtmlWebpackPlugin({
+    inject: 'body',
+    template: './client/index.html',
+  })
+];
+if(process.env.NODE_ENV === "production") pluginsArr.push(new HtmlInlineScriptPlugin());
+
 module.exports = {
   entry: [
     // entry point of our app
@@ -65,13 +74,7 @@ module.exports = {
       }
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      inject: 'body',
-      template: './client/index.html',
-    }),
-    new HtmlInlineScriptPlugin(),
-  ],
+  plugins: pluginsArr,
   // optimization: {
   //   minimize: false
   // },

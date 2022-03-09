@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import {Menu, MenuItem, IconButton, Box} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useDispatch } from "react-redux";
 import { changePage } from "../store/currentViewSlice";
 
@@ -18,22 +17,26 @@ const pages = [
 
 export default function DropDownMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const dispatch = useDispatch();
   const handleClose = (pageName) => {
-    dispatch(changePage(pageName))
+    setAnchorEl(null);
+  };
+  const selectPage = (pageName) => {
+    dispatch(changePage(pageName));
     setAnchorEl(null);
   };
   const pageList = pages.map((el,i) =>
-    <MenuItem key={i} onClick={(_) => handleClose(el.name)}>{el.name}</MenuItem>
+    <MenuItem key={i} onClick={(_) => selectPage(el.name)}>{el.name}</MenuItem>
   );
   
-
   return (
-    <div>
+    <Box >
       <IconButton
         size="large"
         edge="start"
@@ -58,6 +61,6 @@ export default function DropDownMenu() {
       >  
         {pageList}
       </Menu>
-    </div>
+    </Box>
   );
 }

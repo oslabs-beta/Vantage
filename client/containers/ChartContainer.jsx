@@ -7,7 +7,8 @@ import {getWebVitals} from '../store/dataSlice';
 const ChartContainer = () => {
   const webVitals = useSelector(getWebVitals);
   const currentMetric = useSelector(getCurrentMetric);
-  console.log(webVitals);
+  // console.log(webVitals);
+  
   return (
     <>
       <h1>{currentMetric}</h1>

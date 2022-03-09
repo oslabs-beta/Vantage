@@ -1,9 +1,7 @@
 import React from 'react';
 import DropDownMenu from '../components/DropDownMenu';
-import Button from '@mui/material/Button';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import MenuTest from '../components/MenuTest';
+import {Button, AppBar, Box, Toolbar} from '@mui/material/';
 import Typography from '@mui/material/Typography';
 import Switch from '@mui/material/Switch';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,6 +16,7 @@ const TitleContainer = () => {
         <AppBar position="static">
           <Toolbar>
             <DropDownMenu/>
+            <MenuTest />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Vantage
             </Typography>
