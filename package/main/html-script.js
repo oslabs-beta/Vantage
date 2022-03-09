@@ -2,7 +2,16 @@
 
 var path = require('path');
 var fs = require('fs');
+var injectHTML = require('node-inject-html').injectHTML;
 
-const html = `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Document</title><script defer="defer" src=${path.resolve(__dirname, '../../dist/bundle.js')}></script></head><body><h1>Hello World</h1><div id="root"></div></body></html>`;
+const htmlTest = fs.readFileSync(path.resolve('./dist/index.html')).toString();
+const VANTAGE_JSON = fs.readFileSync(path.resolve('./data_store_sample.json')).toString();
 
-fs.writeFileSync(path.resolve(__dirname,'../../dist/index.html'),html);
+const htmlInject = `<script>window.__VANTAGE_JSON__ = ${VANTAGE_JSON}</script>`;
+
+const newHtml = injectHTML(htmlTest, {bodyStart: htmlInject});
+
+fs.writeFileSync(path.resolve('./dist/index.html'), newHtml);
+
+
+
