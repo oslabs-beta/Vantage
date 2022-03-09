@@ -1,0 +1,7 @@
+{
+  "nextAppSettings" : {
+    "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
+    "serverCommand" : "npm run dev",
+    "port" : "3000"
+  }
+}

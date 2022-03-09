@@ -9,7 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack",
     "start": "open ./dist/index.html",
     "postinstall": "html-script",
-    "prepublish": "cross-env NODE_ENV=production webpack"
+    "prepublish": "cross-env NODE_ENV=production webpack",
+    "snapshot": "node ./package/lighthouse/lighthouse.js"
   },
   "repository": {
     "type": "git",

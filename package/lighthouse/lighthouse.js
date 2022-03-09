@@ -1,17 +1,31 @@
 // Import files needed for Lighthouse
-import lighthouse from 'lighthouse';
-import fs from 'fs';
-import chromeLauncher from 'chrome-launcher';
-import { exec } from 'child_process';
-import { useDebugValue } from 'react';
+const lighthouse = require('lighthouse');
+const fs = require('fs');
+const chromeLauncher = require('chrome-launcher');
+const { exec } = require('child_process');
+const { useDebugValue } = require('react');
 
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-const PROJECT_FOLDER = '/Users/michaelnoah/Codesmith-Dev/my-test-app/';
-const SERVER_COMMAND = 'npm run dev';
-const PORT = '3000'
+let PROJECT_FOLDER, SERVER_COMMAND, PORT;
 const DATA_STORE = './data_store.json';
+const CONFIG_FILE = './vantage_config.json';
+
+// Initialize data from config file
+async function initialize() {
+  try {
+    let currentData = await fs.readFileSync(CONFIG_FILE);
+    let configData = JSON.parse(currentData);
+    console.log(configData);
+    PROJECT_FOLDER = configData.nextAppSettings.projectFolder;
+    SERVER_COMMAND = configData.nextAppSettings.serverCommand;
+    PORT = configData.nextAppSettings.port;
+
+  } catch {
+    throw Error('Error accessing config file');
+  }
+}
 
 // Function to initiate the project's dev server
 async function startDevServer() {
@@ -158,6 +172,7 @@ async function generateUpdatedDataStore(lhr) {
 }
 
 async function initiateRefresh() {
+  await initialize();
   await startDevServer();
   // Todo:  Iterate through each possible page to be checked
   let lhr = await getLighthouseResults('http://localhost:3000');
