@@ -8,7 +8,7 @@ const { useDebugValue } = require('react');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-let PROJECT_FOLDER, SERVER_COMMAND, PORT;
+let PROJECT_FOLDER, SERVER_COMMAND, PORT, ENDPOINTS;
 const DATA_STORE = './data_store.json';
 const CONFIG_FILE = './vantage_config.json';
 
@@ -17,10 +17,10 @@ async function initialize() {
   try {
     let currentData = await fs.readFileSync(CONFIG_FILE);
     let configData = JSON.parse(currentData);
-    console.log(configData);
     PROJECT_FOLDER = configData.nextAppSettings.projectFolder;
     SERVER_COMMAND = configData.nextAppSettings.serverCommand;
     PORT = configData.nextAppSettings.port;
+    ENDPOINTS = configData.nextAppSettings.endpoints;
 
   } catch {
     throw Error('Error accessing config file');
@@ -74,7 +74,7 @@ async function getLighthouseResults(url, gitMessage) {
 }
 
 
-async function generateUpdatedDataStore(lhr) {
+async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage) {
   // Process returned object based on our defined criteria
   // Get the existing JSON file for this project
   // Update it with new data
@@ -85,12 +85,14 @@ async function generateUpdatedDataStore(lhr) {
     let currentData = await fs.readFileSync(DATA_STORE);
     data = JSON.parse(currentData);
   } catch {
-    data = {"run-list": [], "web-vitals": {}, "numeric-results": {}, "binary-results": {}, "not-applicable": {}, "informative": {}};
+    data = {"run-list": [], "endpoints":[], "commits":{}, "web-vitals": {}};
   }
-  
-  // Parse through lhr and handle its current contents
 
-  data["run-list"].push(lhr['fetchTime']);
+  // Parse through lhr and handle its current contents
+  data["run-list"].push(snapshotTimestamp);
+  data["run-list"] = Array.from(new Set(data["run-list"]));
+  data["endpoints"].push(endpoint);
+  data["commits"][snapshotTimestamp] = commitMessage;
 
   // Update web vitals section of output object
   let webVitals = ['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift'];
@@ -103,17 +105,18 @@ async function generateUpdatedDataStore(lhr) {
       delete data['web-vitals'][item]['score'];
       delete data['web-vitals'][item]['numericValue'];
       delete data['web-vitals'][item]['displayValue'];
-      let timestamp = lhr['fetchTime'];
-      data['web-vitals'][item]['results'] = { [timestamp] : currentResults};
-    } else {
+      data['web-vitals'][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
+    } else if (data['web-vitals'][item]['results'][endpoint] === undefined) {
     // score, numeric value, display value
-      data['web-vitals'][item]['results'][lhr['fetchTime']] = currentResults;
+      data['web-vitals'][item]['results'][endpoint] = {[snapshotTimestamp] : currentResults};
+    } else {
+      data['web-vitals'][item]['results'][endpoint][snapshotTimestamp] = currentResults;
     }
   }
 
 
 
-  // Add errors to the object
+  // Add remaining outputs to the object
   let webVitalsSet = new Set(webVitals);
   let keys = Object.keys(lhr['audits']);
   for (const item of keys) {
@@ -131,40 +134,11 @@ async function generateUpdatedDataStore(lhr) {
         delete data[resultType][item]['scoreDisplayMode'];
         data[resultType][item]['results'] = {};
       }
-
-      data[resultType][item]['results'][lhr['fetchTime']] = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue'], 'details' : lhr['audits'][item]['details']};
-      //data[resultType][item]['results'][lhr['fetchTime']] = {'score' : 'test'};
       
+      if (data[resultType][item]['results'][endpoint] === undefined) data[resultType][item]['results'][endpoint] = {};
+      data[resultType][item]['results'][endpoint][snapshotTimestamp] = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue'], 'details' : lhr['audits'][item]['details']};
     }
   }
-
-
-
-  
-
-
-
-  // Update diagnostics section of output object
-
-  // let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary'];
-
-
-
-  // To Do: Read keys from a stored file instead of hard coded value above
-  // try {
-  //   let lhrKeys = await fs.readFileSync('./lhr_keys.json');
-  //   keys = JSON.parse(lhrKeys);
-  // } catch {
-  //   keys = [];
-  // }
-  
-  // let newResults = {};
-  // // console.log(keys);
-  // // for (const key of keys) {
-  // //   newResults[key] = lhr['audits'][key];
-  // // }
-
-  // data[lhr.fetchTime] = newResults;  // To do:  Update key based on preferred format (e.g. git commit message) 
 
   // Save output to JSON
   fs.writeFileSync(DATA_STORE, JSON.stringify(data));
@@ -175,8 +149,14 @@ async function initiateRefresh() {
   await initialize();
   await startDevServer();
   // Todo:  Iterate through each possible page to be checked
-  let lhr = await getLighthouseResults('http://localhost:3000');
-  await generateUpdatedDataStore(lhr);
+  let snapshotTimestamp = new Date().toISOString();
+
+  for (const endpoint of ENDPOINTS) {
+    let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message");
+  }
+
+  // To do: New function to insert final JSON into HTML
 }
 
 initiateRefresh();
