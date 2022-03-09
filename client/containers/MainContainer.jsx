@@ -10,7 +10,7 @@ const MainContainer = () => {
   return(
     <div id="mainContainer">
       <Container maxWidth="md">
-        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
+        <Box sx={{ height: '100vh' }}>
           <TitleContainer/>
           <MetricContainer/>
           <ChartContainer/>
