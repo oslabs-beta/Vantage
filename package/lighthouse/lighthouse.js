@@ -3,17 +3,19 @@ import lighthouse from 'lighthouse';
 import fs from 'fs';
 import chromeLauncher from 'chrome-launcher';
 import { exec } from 'child_process';
+import { useDebugValue } from 'react';
 
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
 const PROJECT_FOLDER = '/Users/michaelnoah/Codesmith-Dev/my-test-app/';
 const SERVER_COMMAND = 'npm run dev';
+const PORT = '3000'
 const DATA_STORE = './data_store.json';
 
 // Function to initiate the project's dev server
 async function startDevServer() {
-  const commands = `cd ${PROJECT_FOLDER} &&
+  const commands = `npx kill-port ${PORT} && cd ${PROJECT_FOLDER} &&
   ${SERVER_COMMAND}`;
   await exec(commands, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
@@ -69,18 +71,66 @@ async function generateUpdatedDataStore(lhr) {
     let currentData = await fs.readFileSync(DATA_STORE);
     data = JSON.parse(currentData);
   } catch {
-    data = {"run-list": [], "web-vitals": {}, "opportunities": {}, "diagnostics": {}};
+    data = {"run-list": [], "web-vitals": {}, "numeric-results": {}, "binary-results": {}, "not-applicable": {}, "informative": {}};
   }
   
   // Parse through lhr and handle its current contents
 
   data["run-list"].push(lhr['fetchTime']);
+
+  // Update web vitals section of output object
   let webVitals = ['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift'];
+  
   for (const item of webVitals) {
-    if (data['web-vitals'][item] === undefined) data['web-vitals'][item] = {};
-    data['web-vitals'][item][lhr['fetchTime']] = lhr['audits'][item];
+    let currentResults = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
+    if (data['web-vitals'][item] === undefined) {
+      data['web-vitals'][item] = lhr['audits'][item];
+      delete data['web-vitals'][item]['id'];
+      delete data['web-vitals'][item]['score'];
+      delete data['web-vitals'][item]['numericValue'];
+      delete data['web-vitals'][item]['displayValue'];
+      let timestamp = lhr['fetchTime'];
+      data['web-vitals'][item]['results'] = { [timestamp] : currentResults};
+    } else {
+    // score, numeric value, display value
+      data['web-vitals'][item]['results'][lhr['fetchTime']] = currentResults;
+    }
   }
 
+
+
+  // Add errors to the object
+  let webVitalsSet = new Set(webVitals);
+  let keys = Object.keys(lhr['audits']);
+  for (const item of keys) {
+    if (!webVitalsSet.has(item)) {
+      let resultType = lhr['audits'][item]['scoreDisplayMode'];
+      if (data[resultType] === undefined) data[resultType] = {};
+      // Add error results to data["error"]
+      if (data[resultType][item] === undefined) {
+        data[resultType][item] = lhr['audits'][item];
+        delete data[resultType][item]['id'];
+        delete data[resultType][item]['score'];
+        delete data[resultType][item]['numericValue'];
+        delete data[resultType][item]['displayValue'];
+        delete data[resultType][item]['details'];
+        delete data[resultType][item]['scoreDisplayMode'];
+        data[resultType][item]['results'] = {};
+      }
+
+      data[resultType][item]['results'][lhr['fetchTime']] = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue'], 'details' : lhr['audits'][item]['details']};
+      //data[resultType][item]['results'][lhr['fetchTime']] = {'score' : 'test'};
+      
+    }
+  }
+
+
+
+  
+
+
+
+  // Update diagnostics section of output object
 
   // let keys = ['first-contentful-paint', 'largest-contentful-paint', 'first-meaningful-paint', 'speed-index', 'total-blocking-time', 'max-potential-fid', 'cumulative-layout-shift', 'server-response-time', 'interactive', 'user-timings', 'critical-request-chains', 'redirects', 'mainthread-work-breakdown', 'font-display', 'diagnostics', 'network-requests', 'network-rtt', 'metrics', 'performance-budget', 'timing-budget', 'resource-summary'];
 
