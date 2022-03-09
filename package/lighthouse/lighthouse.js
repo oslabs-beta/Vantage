@@ -4,11 +4,12 @@ const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec } = require('child_process');
 const { useDebugValue } = require('react');
+const environment = process.env.NODE_ENV || 'development';
 
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-let PROJECT_FOLDER, SERVER_COMMAND, PORT, ENDPOINTS;
+let PROJECT_FOLDER, SERVER_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
 const DATA_STORE = './data_store.json';
 const CONFIG_FILE = './vantage_config.json';
 
@@ -17,11 +18,11 @@ async function initialize() {
   try {
     let currentData = await fs.readFileSync(CONFIG_FILE);
     let configData = JSON.parse(currentData);
-    PROJECT_FOLDER = configData.nextAppSettings.projectFolder;
-    SERVER_COMMAND = configData.nextAppSettings.serverCommand;
-    PORT = configData.nextAppSettings.port;
-    ENDPOINTS = configData.nextAppSettings.endpoints;
-
+    PROJECT_FOLDER = configData.nextAppSettings[environment].projectFolder;
+    SERVER_COMMAND = configData.nextAppSettings[environment].serverCommand;
+    PORT = configData.nextAppSettings[environment].port;
+    ENDPOINTS = configData.nextAppSettings[environment].endpoints;
+    FULL_VIEW = configData.nextAppSettings.fullView === 1;
   } catch {
     throw Error('Error accessing config file');
   }
@@ -56,7 +57,7 @@ async function getLighthouseResults(url, gitMessage) {
 
   // Initiate headless browser session and run Lighthouse for the specified URL
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']}); // Todo: Add incognito flag
-  const options = {logLevel: 'info', output: 'html', maxWaitForLoad: 60000, onlyCategories: ['performance'], port: chrome.port};
+  const options = {logLevel: 'info', output: 'html', maxWaitForLoad: 10000, port: chrome.port};
   const runnerResult = await lighthouse(url, options);
 
   // `.report` is the HTML report as a string
@@ -74,7 +75,7 @@ async function getLighthouseResults(url, gitMessage) {
 }
 
 
-async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage) {
+async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, fullView) {
   // Process returned object based on our defined criteria
   // Get the existing JSON file for this project
   // Update it with new data
@@ -85,45 +86,38 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
     let currentData = await fs.readFileSync(DATA_STORE);
     data = JSON.parse(currentData);
   } catch {
-    data = {"run-list": [], "endpoints":[], "commits":{}, "web-vitals": {}};
+    data = {"run-list": [], "endpoints":[], "commits":{}, "overall-scores": {}, "web-vitals": {}};
   }
 
   // Parse through lhr and handle its current contents
   data["run-list"].push(snapshotTimestamp);
   data["run-list"] = Array.from(new Set(data["run-list"]));
   data["endpoints"].push(endpoint);
+  data["endpoints"] = Array.from(new Set(data["endpoints"]));
   data["commits"][snapshotTimestamp] = commitMessage;
+  if (data["overall-scores"][endpoint] === undefined) data["overall-scores"][endpoint] = {};
+  data["overall-scores"][endpoint][snapshotTimestamp] = {
+    "performance": lhr['categories']['performance']['score'], 
+    "accessibility": lhr['categories']['accessibility']['score'], 
+    "best-practices": lhr['categories']['best-practices']['score'], 
+    "seo": lhr['categories']['seo']['score'], 
+    "pwa": lhr['categories']['pwa']['score']   
+  };
 
-  // Update web vitals section of output object
-  let webVitals = ['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift'];
   
-  for (const item of webVitals) {
-    let currentResults = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
-    if (data['web-vitals'][item] === undefined) {
-      data['web-vitals'][item] = lhr['audits'][item];
-      delete data['web-vitals'][item]['id'];
-      delete data['web-vitals'][item]['score'];
-      delete data['web-vitals'][item]['numericValue'];
-      delete data['web-vitals'][item]['displayValue'];
-      data['web-vitals'][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
-    } else if (data['web-vitals'][item]['results'][endpoint] === undefined) {
-    // score, numeric value, display value
-      data['web-vitals'][item]['results'][endpoint] = {[snapshotTimestamp] : currentResults};
-    } else {
-      data['web-vitals'][item]['results'][endpoint][snapshotTimestamp] = currentResults;
-    }
-  }
+  // Update web vitals section of output object
+  let webVitals = new Set(['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift']);
+  
+  for (const category of Object.keys(lhr['categories'])) {
+    let refs = lhr['categories'][category]['auditRefs'];
+    let keys = [];
+    refs.map((ref) => keys.push(ref.id));
+    for (const item of keys) {
+      let currentResults = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
+      if (!webVitals.has(item) && !fullView) continue; 
+      let resultType = webVitals.has(item) ? 'web-vitals' : category;
 
-
-
-  // Add remaining outputs to the object
-  let webVitalsSet = new Set(webVitals);
-  let keys = Object.keys(lhr['audits']);
-  for (const item of keys) {
-    if (!webVitalsSet.has(item)) {
-      let resultType = lhr['audits'][item]['scoreDisplayMode'];
       if (data[resultType] === undefined) data[resultType] = {};
-      // Add error results to data["error"]
       if (data[resultType][item] === undefined) {
         data[resultType][item] = lhr['audits'][item];
         delete data[resultType][item]['id'];
@@ -131,18 +125,19 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
         delete data[resultType][item]['numericValue'];
         delete data[resultType][item]['displayValue'];
         delete data[resultType][item]['details'];
-        delete data[resultType][item]['scoreDisplayMode'];
-        data[resultType][item]['results'] = {};
+        delete data[resultType][item]['description'];
+        data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
+      } else if (data[resultType][item]['results'][endpoint] === undefined) {
+      // score, numeric value, display value
+        data[resultType][item]['results'][endpoint] = {[snapshotTimestamp] : currentResults};
+      } else {
+        data[resultType][item]['results'][endpoint][snapshotTimestamp] = currentResults;
       }
-      
-      if (data[resultType][item]['results'][endpoint] === undefined) data[resultType][item]['results'][endpoint] = {};
-      data[resultType][item]['results'][endpoint][snapshotTimestamp] = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue'], 'details' : lhr['audits'][item]['details']};
     }
   }
 
   // Save output to JSON
   fs.writeFileSync(DATA_STORE, JSON.stringify(data));
-
 }
 
 async function initiateRefresh() {
@@ -153,7 +148,7 @@ async function initiateRefresh() {
 
   for (const endpoint of ENDPOINTS) {
     let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message");
+    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
   }
 
   // To do: New function to insert final JSON into HTML
