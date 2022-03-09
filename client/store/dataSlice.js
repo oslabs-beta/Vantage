@@ -1,4 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+// import sampleData from './sampleData';
+//"run-list", "endpoints", "commits", "web-vitals", "binary", "numeric", "informative", "notApplicable"
+
+// const data = process.env.NODE_ENV === 'development' 
+//   ? {...window.__VANTAGE_JSON__} 
+//   : JSON.parse(sampleData);
 
 export const dataSlice = createSlice({
   name: 'data',
@@ -23,5 +29,6 @@ export const dataSlice = createSlice({
 });
 
 export const { increment, decrement, incrementByAmount } = dataSlice.actions;
+export const getWebVitals = (state) => state.data["web-vitals"];
 
 export default dataSlice.reducer;
