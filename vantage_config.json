@@ -1,8 +1,17 @@
 {
-  "nextAppSettings" : {
-    "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
-    "serverCommand" : "npm run dev",
-    "port" : "3000",
-    "endpoints" : ["/", "/information"]
+  "nextAppSettings": {
+    "development": {
+      "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
+      "serverCommand" : "npm run dev",
+      "port" : "3000",
+      "endpoints" : ["/", "/information"]
+    },
+    "production": {
+      "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
+      "serverCommand" : "npm run build && npm run start",
+      "port" : "3000",
+      "endpoints" : ["/", "/information"]
+    },
+    "fullView": 1
   }
 }
