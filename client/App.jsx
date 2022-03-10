@@ -7,7 +7,7 @@ import { useSelector} from 'react-redux';
 import './styles.scss';
 
 
-const App1 = () => {
+const App = () => {
   const mode = useSelector(getTheme);
 
   const theme = useMemo(
@@ -61,4 +61,4 @@ const App1 = () => {
   );
 };
 
-export default App1;
+export default App;
