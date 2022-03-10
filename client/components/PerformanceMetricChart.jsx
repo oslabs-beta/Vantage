@@ -7,7 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label
 } from "recharts";
+import CustomTooltip from './CustomTooltip';
 import {
   selectOverallScoreByEndpoint,
   selectCommits,
@@ -71,9 +73,11 @@ const PerformanceMetricChart = () => {
       }}
     >
       <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey='name' />
+      <XAxis dataKey={" "}>
+        <Label value="Commits" style={{fill: 'gray'}} />
+      </XAxis>
       <YAxis />
-      <Tooltip />
+      <Tooltip content={<CustomTooltip commits={commits} />}/>
       <Legend />
       {perfMetricsSelected.FCP && (
         <Line type='monotone' dataKey='FCP' stroke='#8884d8' />
