@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PerformanceMetricChart from "../components/PerformanceMetricChart";
@@ -6,12 +6,11 @@ import {
   getCurrentMetric,
   selectPerformanceMetrics,
 } from "../store/currentViewSlice";
-import { selectWebVitals } from "../store/dataSlice";
+
 import PerformanceMetrics from "./PerformanceMetrics";
 import OverallMetricChart from "../components/OverallMetricChart";
 
 const ChartContainer = () => {
-  const webVitals = useSelector(selectWebVitals);
   const currentMetric = useSelector(getCurrentMetric);
   const perfMetricsSelected = useSelector(selectPerformanceMetrics);
 
@@ -20,14 +19,14 @@ const ChartContainer = () => {
 
   return (
     <>
-      <h1>{currentMetric}</h1>
-      <Box sx={{ display: "flex" }}>
+      {/* <h1>{currentMetric}</h1> */}
+      <Paper id="chart-container">
         {currentMetric === "Performance" && <PerformanceMetrics />}
-        {isPerfMetricSelected &&
-          <OverallMetricChart />}
-        {!isPerfMetricSelected &&
-          <PerformanceMetricChart />}
-      </Box>
+        {(isPerfMetricSelected || currentMetric !== "Performance") && <OverallMetricChart />}
+        {!isPerfMetricSelected && currentMetric === "Performance" && (
+          <PerformanceMetricChart />
+        )}
+      </Paper>
     </>
   );
 };
