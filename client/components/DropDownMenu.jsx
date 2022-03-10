@@ -1,20 +1,11 @@
 import * as React from 'react';
 // import Button from '@mui/material/Button';
 import {Menu, MenuItem, IconButton, Box} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import ArticleIcon from '@mui/icons-material/Article';
 // import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useDispatch, useSelector } from "react-redux";
 import { changeEndpoint } from "../store/currentViewSlice";
 import {selectEndpoints} from '../store/dataSlice';
-
-
-//Example Endpoint list
-// const Endpoints = [
-//   { name: "Endpoint 1"},
-//   { name: "Endpoint 2"},
-//   { name: "Endpoint 3"},
-//   { name: "Endpoint 4"},
-// ];
 
 export default function DropDownMenu() {
   const endpoints = useSelector(selectEndpoints);
@@ -41,16 +32,16 @@ export default function DropDownMenu() {
     <Box >
       <IconButton
         size="large"
-        edge="start"
+        // edge="start"
         color="inherit"
         aria-label="menu"
-        sx={{ mr: 2 }}
+        sx={{ mt: 0 }}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <MenuIcon />
+        <ArticleIcon/>
       </IconButton>
       <Menu
         id="basic-menu"

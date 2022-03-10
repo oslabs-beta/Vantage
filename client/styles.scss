@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 15px;
 }
 
 #performance-metrics {
@@ -31,6 +32,10 @@
 }
 .metric-container-inner {
   padding: 10px;
+}
+
+#content-container {
+  
 }
 
 .metric { 
