@@ -5,14 +5,15 @@
       "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
       "serverCommand" : "npm run dev",
       "port" : "3000",
-      "endpoints" : ["/", "/information"]
+      "endpoints" : []
     },
     "production": {
       "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
       "serverCommand" : "npm run build && npm run start",
-      "port" : "8080",
-      "endpoints" : ["/", "/information"]
-    }
+      "port" : "3000",
+      "endpoints" : []
+    },
+    "fullView": 1
   }
 }
 

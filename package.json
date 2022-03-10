@@ -7,10 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "prod-test": "cross-env NODE_ENV=production webpack && html-script && open ./dist/index.html",
+    "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script && open ./dist/index.html",
     "start": "open ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
-    "snapshot": "node ./package/lighthouse/lighthouse.js"
+    "snapshot-dev": "NODE_ENV=development node ./package/lighthouse/lighthouse.js", 
+    "snapshot-prod": "NODE_ENV=production node ./package/lighthouse/lighthouse.js"
   },
   "repository": {
     "type": "git",
