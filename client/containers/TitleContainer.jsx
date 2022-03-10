@@ -25,6 +25,7 @@ const TitleContainer = () => {
             </Typography>
             {/* <Brightness5Icon fontSize="small"/> */}
             <Switch
+              className='darkModeSwitch'
               checked={mode === 'dark'}
               onChange={()=>dispatch(changeTheme())}
               inputProps={{ 'aria-label': 'controlled' }}
