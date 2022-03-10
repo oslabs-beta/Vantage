@@ -24,7 +24,7 @@ const MetricContainer = () => {
   };
 
   return (
-    <div id='metricContainer'>
+    <div id='metric-container'>
       <h1 onClick={(_) => dispatch(changeMetric("default"))}>
         {currentEndpoint}
       </h1>

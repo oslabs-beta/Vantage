@@ -7,9 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Label
+  Label,
 } from "recharts";
-import CustomTooltip from './CustomTooltip';
+import CustomTooltip from "./CustomTooltip";
 import {
   selectOverallScoreByEndpoint,
   selectCommits,
@@ -48,15 +48,23 @@ const PerformanceMetricChart = () => {
     selectWebVitalData(state, "cumulative-layout-shift", currentEndpoint)
   );
 
+  // Show actual units if only one performance metric is selected
+  const perfMetricsSelectedArr = Object.values(perfMetricsSelected).filter(
+    (v) => !!v
+  );
+  const valueType =
+    perfMetricsSelectedArr.length > 1 ? "score" : "numericValue";
+
   const data = runList.map((cur, i) => {
+    const mult = valueType === "score" ? 100 : 1;
     return {
       name: cur,
-      FCP: fcpData[cur].score * 100,
-      TTI: ttiData[cur].score * 100,
-      SI: siData[cur].score * 100,
-      TBT: tbtData[cur].score * 100,
-      LCP: lcpData[cur].score * 100,
-      CLS: clsData[cur].score * 100,
+      FCP: fcpData[cur][valueType] * mult,
+      TTI: ttiData[cur][valueType] * mult,
+      SI: siData[cur][valueType] * mult,
+      TBT: tbtData[cur][valueType] * mult,
+      LCP: lcpData[cur][valueType] * mult,
+      CLS: clsData[cur][valueType] * mult,
     };
   });
 
@@ -74,10 +82,10 @@ const PerformanceMetricChart = () => {
     >
       <CartesianGrid strokeDasharray='3 3' />
       <XAxis dataKey={" "}>
-        <Label value="Commits" style={{fill: 'gray'}} />
+        <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
-      <Tooltip content={<CustomTooltip commits={commits} />}/>
+      <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
       {perfMetricsSelected.FCP && (
         <Line type='monotone' dataKey='FCP' stroke='#8884d8' />

@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Switch from '@mui/material/Switch';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeTheme, getTheme} from '../store/currentViewSlice';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import Brightness5Icon from '@mui/icons-material/Brightness5';
 
 const TitleContainer = () => {
   const dispatch = useDispatch();
@@ -21,12 +23,14 @@ const TitleContainer = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Vantage
             </Typography>
+            {/* <Brightness5Icon fontSize="small"/> */}
             <Switch
               checked={mode === 'dark'}
               onChange={()=>dispatch(changeTheme())}
               inputProps={{ 'aria-label': 'controlled' }}
             />
-            <Button color="inherit">Refresh</Button>
+            <DarkModeIcon fontSize="small"/>
+            {/* <Button color="inherit">Refresh</Button> */}
           </Toolbar>
         </AppBar>
       </Box>

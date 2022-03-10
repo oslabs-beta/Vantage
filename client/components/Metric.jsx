@@ -8,6 +8,7 @@ const Metric = ({ name, value, handleClick, size, isActive }) => {
 
   return (
     <Box
+      className="metric"
       onClick={(_) => handleClick(name)}
       sx={{
         position: "relative",
@@ -26,8 +27,6 @@ const Metric = ({ name, value, handleClick, size, isActive }) => {
           value={value}
           size={size}
           thickness={3 + size / 30}
-          // sx={isActive && activeStyle}
-          
         />
         <Typography
           component='div'

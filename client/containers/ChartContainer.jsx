@@ -20,7 +20,7 @@ const ChartContainer = () => {
   return (
     <>
       {/* <h1>{currentMetric}</h1> */}
-      <Box sx={{ display: "flex" }}>
+      <Box id="chart-container">
         {currentMetric === "Performance" && <PerformanceMetrics />}
         {(isPerfMetricSelected || currentMetric !== "Performance") && <OverallMetricChart />}
         {!isPerfMetricSelected && currentMetric === "Performance" && (
