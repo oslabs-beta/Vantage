@@ -4,9 +4,10 @@ const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec } = require('child_process');
 const { useDebugValue } = require('react');
+const environment = process.env.NODE_ENV || 'development';
 
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
-
+console.log(environment);
 // To do: Make these fields configurable during project setup
 let PROJECT_FOLDER, SERVER_COMMAND, PORT, ENDPOINTS;
 const DATA_STORE = './data_store.json';
