@@ -39,20 +39,38 @@ async function startDevServer() {
   await new Promise(resolve => setTimeout(resolve, 5000));
 }
 
-async function getRoutes() {
-  const commands = `cd ${PROJECT_FOLDER} && cd pages && ls`;
-
-  await exec(commands, (err, stdOut, stdErr) => {
-    let files = stdOut.split('\n');
-    if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
-    if (!ENDPOINTS.includes('/')) ENDPOINTS.push('/');
-    files.map((file) => {
-      if (file.endsWith('.js') && !file.startsWith('_') && file !== 'index.js') {
-        const endpointName = '/' + file.split('.js')[0];
-        if (!ENDPOINTS.includes(endpointName)) ENDPOINTS.push('/' + file.split('.js')[0]);
-      }
+async function getRoutes(subfolders = '') {
+  let commands = `cd ${PROJECT_FOLDER} && cd pages`;
+  if (subfolders !== '') commands += ` && cd ${subfolders}`;
+  try {
+    await exec(`${commands} && ls`, async (err, stdOut, stdErr) => {
+      let files = stdOut.split('\n');
+      if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
+      await files.map(async (file) => {
+        await addFileToList(file, subfolders);
+      });
     });
-  });
+  } catch {
+    throw Error('Error capturing structure of pages folder')
+  }
+}
+
+async function addFileToList(file, subfolders) {
+  let prefix = subfolders !== '' ? '/' + subfolders + '/' : '/';
+  if (file.endsWith('.js') && !file.startsWith('_') && file !== 'index.js') {
+    const endpointName = prefix + file.split('.js')[0];
+    if (!ENDPOINTS.includes(endpointName)) {
+      ENDPOINTS.push(endpointName); 
+    }
+  } else if (file === 'index.js') {
+    const endpointName = prefix + '/';
+    if (!ENDPOINTS.includes(prefix)) {
+      ENDPOINTS.push(prefix); 
+    }
+  } else if (!file.endsWith('.js') && file !== 'api' && file !== '') {
+    await getRoutes(subfolders === '' ? file : subfolders + '/' + file);
+  }
+  console.log(ENDPOINTS);
 }
 
 // Function to refresh data
@@ -145,14 +163,15 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 async function initiateRefresh() {
   await initialize();
   await getRoutes();
-  await startDevServer();
-  // Todo:  Iterate through each possible page to be checked
-  let snapshotTimestamp = new Date().toISOString();
+  console.log(ENDPOINTS);
+  // await startDevServer();
+  // // Todo:  Iterate through each possible page to be checked
+  // let snapshotTimestamp = new Date().toISOString();
 
-  for (const endpoint of ENDPOINTS) {
-    let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
-  }
+  // for (const endpoint of ENDPOINTS) {
+  //   let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+  //   await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
+  // }
 
   // To do: New function to insert final JSON into HTML
 }
