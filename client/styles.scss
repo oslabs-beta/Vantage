@@ -1,3 +1,9 @@
+#mainBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #performance-metrics {
   display: grid;
   grid-template-columns: repeat(2,1fr);
@@ -11,15 +17,20 @@
 }
 
 #chart-container {
+  justify-self: center;
   margin: 1rem;
   display: flex;
   justify-content: center;
+  width: 75%;
 }
 
 #metric-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.metric-container-inner {
+  padding: 10px;
 }
 
 .metric { 
