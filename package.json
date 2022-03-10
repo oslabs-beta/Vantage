@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
   "bin": {
-    "snapshot": "./package/main/snapshot.sh",
+    "snapshot": "./package/lighthouse/lighthouse.js",
     "display": "./package/main/display.js",
     "html-script": "./package/main/html-script.js"
   },
