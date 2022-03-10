@@ -1,39 +1,44 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+// import Button from '@mui/material/Button';
+import {Menu, MenuItem, IconButton, Box} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
-import { useDispatch } from "react-redux";
-import { changePage } from "../store/currentViewSlice";
+// import ClickAwayListener from '@mui/base/ClickAwayListener';
+import { useDispatch, useSelector } from "react-redux";
+import { changeEndpoint } from "../store/currentViewSlice";
+import {selectEndpoints} from '../store/dataSlice';
 
 
-//Example page list
-const pages = [
-  { name: "Page 1"},
-  { name: "Page 2"},
-  { name: "Page 3"},
-  { name: "Page 4"},
-];
+//Example Endpoint list
+// const Endpoints = [
+//   { name: "Endpoint 1"},
+//   { name: "Endpoint 2"},
+//   { name: "Endpoint 3"},
+//   { name: "Endpoint 4"},
+// ];
 
 export default function DropDownMenu() {
+  const endpoints = useSelector(selectEndpoints);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const dispatch = useDispatch();
-  const handleClose = (pageName) => {
-    dispatch(changePage(pageName))
+  const handleClose = () => {
     setAnchorEl(null);
   };
-  const pageList = pages.map((el,i) =>
-    <MenuItem key={i} onClick={(_) => handleClose(el.name)}>{el.name}</MenuItem>
+  const selectEndpoint = (endpointName) => {
+    dispatch(changeEndpoint(endpointName));
+    setAnchorEl(null);
+  };
+  const endpointList = endpoints.map((el,i) =>
+    <MenuItem key={i} onClick={(_) => selectEndpoint(el)}>{el}</MenuItem>
   );
   
-
   return (
-    <div>
+    <Box >
       <IconButton
         size="large"
         edge="start"
@@ -56,8 +61,8 @@ export default function DropDownMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >  
-        {pageList}
+        {endpointList}
       </Menu>
-    </div>
+    </Box>
   );
 }

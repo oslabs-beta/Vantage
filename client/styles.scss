@@ -1,0 +1,10 @@
+#performance-metrics {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  column-gap: 1rem;
+}
+
+.active-metric {
+  border-radius: 50%;
+  box-shadow: 0 0 40px 2px rgb(255, 229, 81);
+}
