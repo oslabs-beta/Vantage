@@ -11,7 +11,9 @@ const MainContainer = () => {
     <div id="mainContainer">
       <TitleContainer/>
       <Container maxWidth="md">
-        <Box sx={{ height: '100vh' }} id="content-container">
+        <Box
+          id ="mainBox" 
+          sx={{ height: '100vh' }}>
           
           <MetricContainer/>
           <ChartContainer/>

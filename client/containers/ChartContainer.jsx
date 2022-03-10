@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PerformanceMetricChart from "../components/PerformanceMetricChart";
@@ -20,13 +20,13 @@ const ChartContainer = () => {
   return (
     <>
       {/* <h1>{currentMetric}</h1> */}
-      <Box id="chart-container">
+      <Paper id="chart-container">
         {currentMetric === "Performance" && <PerformanceMetrics />}
         {(isPerfMetricSelected || currentMetric !== "Performance") && <OverallMetricChart />}
         {!isPerfMetricSelected && currentMetric === "Performance" && (
           <PerformanceMetricChart />
         )}
-      </Box>
+      </Paper>
     </>
   );
 };
