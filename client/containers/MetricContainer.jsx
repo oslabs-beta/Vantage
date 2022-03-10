@@ -25,9 +25,6 @@ const MetricContainer = () => {
 
   return (
     <div id='metric-container'>
-      <h1 onClick={(_) => dispatch(changeMetric("default"))}>
-        {currentEndpoint}
-      </h1>
       <Box sx={{ display: "flex", gap: 5 }}>
         <Metric
           name={"Performance"}
