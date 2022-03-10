@@ -42,4 +42,20 @@ export const selectMostRecentWebVital = (state, webVital, endpoint) => {
 export const selectWebVitalData = (state, webVital, endpoint) =>
   state.data["web-vitals"][webVital].results[endpoint];
 
+// export const selectWebVitalInfo = (state, webVital) => {
+//   const webVitalRelationship = {
+//     FCP: "first-contentful-paint",
+//     TTI: "interactive",
+//     SI: "speed-index",
+//     TBT: "total-blocking-time",
+//     LCP: "largest-contentful-paint",
+//     CLS: "cumulative-layout-shift"
+//   };
+
+//   return {
+//     numericUnit: state.data["web-vitals"][webVital].numericUnit,
+//     title: state.data["web-vitals"][webVitalRelationship[webVital]].title
+//   };
+// };
+
 export default dataSlice.reducer;

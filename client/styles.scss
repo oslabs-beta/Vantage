@@ -6,11 +6,26 @@
 
 .active-metric {
   border-radius: 50%;
-  box-shadow: 0 0 40px 2px rgb(255, 229, 81);
+  box-shadow: 0 0 40px 2px rgba(255, 217, 0, 0.516);
+  background-color: rgba(255, 217, 0, 0.21);
 }
-.darkModeSwitch.Mui-checked {
-  color: #fff;
+
+#chart-container {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
 }
-.darkModeSwitch {
-  color: #fff;
+
+#metric-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metric { 
+  transition: all .2s ease-in-out; 
+}
+
+.metric:hover { 
+  transform: scale(1.05); 
 }

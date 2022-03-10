@@ -6,12 +6,11 @@ import {
   getCurrentMetric,
   selectPerformanceMetrics,
 } from "../store/currentViewSlice";
-import { selectWebVitals } from "../store/dataSlice";
+
 import PerformanceMetrics from "./PerformanceMetrics";
 import OverallMetricChart from "../components/OverallMetricChart";
 
 const ChartContainer = () => {
-  const webVitals = useSelector(selectWebVitals);
   const currentMetric = useSelector(getCurrentMetric);
   const perfMetricsSelected = useSelector(selectPerformanceMetrics);
 
@@ -20,13 +19,13 @@ const ChartContainer = () => {
 
   return (
     <>
-      <h1>{currentMetric}</h1>
-      <Box sx={{ display: "flex" }}>
+      {/* <h1>{currentMetric}</h1> */}
+      <Box id="chart-container">
         {currentMetric === "Performance" && <PerformanceMetrics />}
-        {isPerfMetricSelected &&
-          <OverallMetricChart />}
-        {!isPerfMetricSelected &&
-          <PerformanceMetricChart />}
+        {(isPerfMetricSelected || currentMetric !== "Performance") && <OverallMetricChart />}
+        {!isPerfMetricSelected && currentMetric === "Performance" && (
+          <PerformanceMetricChart />
+        )}
       </Box>
     </>
   );

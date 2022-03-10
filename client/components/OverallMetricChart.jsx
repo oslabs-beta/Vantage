@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label
 } from "recharts";
 import {
   selectOverallScoreByEndpoint,
@@ -15,6 +16,7 @@ import {
 } from "../store/dataSlice.js";
 import { getCurrentEndpoint, getCurrentMetric } from "../store/currentViewSlice.js";
 import { useSelector } from "react-redux";
+import CustomTooltip from "./CustomTooltip.jsx";
 
 const OverallMetricChart = () => {
   const currentEndpoint = useSelector(getCurrentEndpoint);
@@ -49,9 +51,11 @@ const OverallMetricChart = () => {
       }}
     >
       <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey='name' />
+      <XAxis dataKey={" "}>
+        <Label value="Commits" style={{fill: 'gray'}} />
+      </XAxis>
       <YAxis />
-      <Tooltip />
+      <Tooltip content={<CustomTooltip commits={commits} />}/>
       <Legend />
       {(currentMetric === 'default' || currentMetric === 'SEO') &&
         <Line type='monotone' dataKey='SEO' stroke='#8884d8' /> }

@@ -7,7 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
 } from "recharts";
+import CustomTooltip from "./CustomTooltip";
 import {
   selectOverallScoreByEndpoint,
   selectCommits,
@@ -46,17 +48,39 @@ const PerformanceMetricChart = () => {
     selectWebVitalData(state, "cumulative-layout-shift", currentEndpoint)
   );
 
+  // Show actual units if only one performance metric is selected
+  const perfMetricsSelectedArr = Object.entries(perfMetricsSelected).reduce(
+    (acc, curr) => (curr[1] ? [...acc, curr[0]] : acc),
+    []
+  );
+  const valueType =
+    perfMetricsSelectedArr.length > 1 ? "score" : "numericValue";
+
   const data = runList.map((cur, i) => {
+    const multiple = valueType === "score" ? 100 : 1;
     return {
       name: cur,
-      FCP: fcpData[cur].score * 100,
-      TTI: ttiData[cur].score * 100,
-      SI: siData[cur].score * 100,
-      TBT: tbtData[cur].score * 100,
-      LCP: lcpData[cur].score * 100,
-      CLS: clsData[cur].score * 100,
+      FCP: Math.round(fcpData[cur][valueType] * multiple),
+      TTI: Math.round(ttiData[cur][valueType] * multiple),
+      SI: Math.round(siData[cur][valueType] * multiple),
+      TBT: Math.round(tbtData[cur][valueType] * multiple),
+      LCP: Math.round(lcpData[cur][valueType] * multiple),
+      CLS: Math.round(clsData[cur][valueType] * multiple),
     };
   });
+
+  const webVitalUnits = {
+    FCP: "ms",
+    TTI: "ms",
+    SI: "ms",
+    TBT: "ms",
+    LCP: "ms",
+    CLS: ""
+  };
+
+  const unit = (perfMetricsSelectedArr.length > 1) 
+    ? ""
+    : webVitalUnits[perfMetricsSelectedArr[0]];
 
   return (
     <LineChart
@@ -71,9 +95,11 @@ const PerformanceMetricChart = () => {
       }}
     >
       <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey='name' />
+      <XAxis dataKey={" "}>
+        <Label value='Commits' style={{ fill: "gray" }} />
+      </XAxis>
       <YAxis />
-      <Tooltip />
+      <Tooltip content={<CustomTooltip commits={commits} unit={unit} />} />
       <Legend />
       {perfMetricsSelected.FCP && (
         <Line type='monotone' dataKey='FCP' stroke='#8884d8' />
