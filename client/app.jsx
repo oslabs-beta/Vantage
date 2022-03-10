@@ -15,6 +15,37 @@ const App = () => {
       createTheme({
         palette: {
           mode,
+          ...(mode === 'light'
+            ? {
+              // palette values for light mode
+              primary: {
+                main: '#4b2271',
+                light: '#bab9d4',
+              },
+              secondary: {
+                main: '#283885',
+              },
+              background: {
+                default: '#bab9d4',
+                paper: '#ededf5',
+              },
+            }
+            : {
+              // palette values for dark mode
+              // primary: {
+              //   main: '#fff',
+              //   light: '#121212',
+              // },
+              // background: {
+              //   default: '#121212',
+              //   paper: '#121212',
+              // },
+              // text: {
+              //   primary: '#fff',
+              //   secondary: '#fff',
+              // },
+            }),
+          
         },
       }),
     [mode],

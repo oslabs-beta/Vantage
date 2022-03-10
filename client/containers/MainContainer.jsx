@@ -9,9 +9,10 @@ import Container from '@mui/material/Container';
 const MainContainer = () => {
   return(
     <div id="mainContainer">
+      <TitleContainer/>
       <Container maxWidth="md">
         <Box sx={{ height: '100vh' }}>
-          <TitleContainer/>
+          
           <MetricContainer/>
           <ChartContainer/>
         </Box>
