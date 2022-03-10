@@ -2,12 +2,11 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import MetricChart from '../components/MetricChart';
 import {getCurrentMetric} from '../store/currentViewSlice';
-import {getWebVitals} from '../store/dataSlice';
+import {selectWebVitals} from '../store/dataSlice';
 
 const ChartContainer = () => {
-  const webVitals = useSelector(getWebVitals);
+  const webVitals = useSelector(selectWebVitals);
   const currentMetric = useSelector(getCurrentMetric);
-  // console.log(webVitals);
   
   return (
     <>

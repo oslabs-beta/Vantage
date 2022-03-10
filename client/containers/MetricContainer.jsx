@@ -2,7 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Metric from "../components/Metric";
 import {useDispatch, useSelector} from 'react-redux';
-import {getCurrentPage} from '../store/currentViewSlice';
+import {getCurrentEndpoint} from '../store/currentViewSlice';
+import {selectOverallScoreByEndpoint, selectRunList} from '../store/dataSlice.js';
 
 //Example metric data
 const metricData = [
@@ -13,13 +14,22 @@ const metricData = [
 ];
 
 const MetricContainer = () => {
-  const currentPage = useSelector(getCurrentPage);
+  const currentEndpoint = useSelector(getCurrentEndpoint);
+  const overallScore = useSelector(state=>selectOverallScoreByEndpoint(state,currentEndpoint));
+  const runList = useSelector(selectRunList);
+  const mostRecentRun = runList[runList.length - 1];
+  const mostRecentOverallScore = overallScore[mostRecentRun];
+
   const metricComponents = metricData.map((data,i) => <Metric {...data} key={i}/> );
   return (
     <div id='metricContainer'>
-      <h1>{currentPage}</h1>
+      <h1>{currentEndpoint}</h1>
       <Box sx={{ display: 'flex', gap: 5 }}>
-        {metricComponents}
+        <Metric name={"Performance"} value={mostRecentOverallScore.performance * 100} />
+        <Metric name={"SEO"} value={mostRecentOverallScore.seo * 100} />
+        <Metric name={"Best Practices"} value={mostRecentOverallScore["best-practices"] * 100} />
+        <Metric name={"Accessibility"} value={mostRecentOverallScore.accessibility * 100} />
+        {/* <Metric name={"PWA"} value={mostRecentOverallScore.pwa * 100} /> */}
       </Box>
     </div>
   );

@@ -11,10 +11,6 @@ export const dataSlice = createSlice({
   initialState: data,
   reducers: {
     increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.value += 1;
     },
     decrement: state => {
@@ -27,6 +23,12 @@ export const dataSlice = createSlice({
 });
 
 export const { increment, decrement, incrementByAmount } = dataSlice.actions;
-export const getWebVitals = (state) => state.data["web-vitals"];
+
+export const selectWebVitals = (state) => state.data["web-vitals"];
+export const selectRunList = (state) => state.data["run-list"];
+export const selectEndpoints = (state) => state.data.endpoints;
+export const selectCommits = (state) => state.data.commits;
+export const selectOverallScoreByEndpoint = (state, endpoint) => state.data["overall-scores"][endpoint];
+
 
 export default dataSlice.reducer;

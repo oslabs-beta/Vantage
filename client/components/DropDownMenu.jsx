@@ -1,21 +1,23 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import {Menu, MenuItem, IconButton, Box} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import ClickAwayListener from '@mui/base/ClickAwayListener';
-import { useDispatch } from "react-redux";
-import { changePage } from "../store/currentViewSlice";
+// import ClickAwayListener from '@mui/base/ClickAwayListener';
+import { useDispatch, useSelector } from "react-redux";
+import { changeEndpoint } from "../store/currentViewSlice";
+import {selectEndpoints} from '../store/dataSlice';
 
 
-//Example page list
-const pages = [
-  { name: "Page 1"},
-  { name: "Page 2"},
-  { name: "Page 3"},
-  { name: "Page 4"},
-];
+//Example Endpoint list
+// const Endpoints = [
+//   { name: "Endpoint 1"},
+//   { name: "Endpoint 2"},
+//   { name: "Endpoint 3"},
+//   { name: "Endpoint 4"},
+// ];
 
 export default function DropDownMenu() {
+  const endpoints = useSelector(selectEndpoints);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
 
@@ -24,15 +26,15 @@ export default function DropDownMenu() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (pageName) => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
-  const selectPage = (pageName) => {
-    dispatch(changePage(pageName));
+  const selectEndpoint = (endpointName) => {
+    dispatch(changeEndpoint(endpointName));
     setAnchorEl(null);
   };
-  const pageList = pages.map((el,i) =>
-    <MenuItem key={i} onClick={(_) => selectPage(el.name)}>{el.name}</MenuItem>
+  const endpointList = endpoints.map((el,i) =>
+    <MenuItem key={i} onClick={(_) => selectEndpoint(el)}>{el}</MenuItem>
   );
   
   return (
@@ -59,7 +61,7 @@ export default function DropDownMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >  
-        {pageList}
+        {endpointList}
       </Menu>
     </Box>
   );

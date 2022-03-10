@@ -6,7 +6,7 @@ export const currentViewSlice = createSlice({
     // theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light",
     theme: "light",
     currentMetric: "default",
-    currentPage: "default page"
+    currentEndpoint: "/"
   },
   reducers: {
     changeTheme: (state) => {
@@ -17,16 +17,16 @@ export const currentViewSlice = createSlice({
       if (regex.test(action.payload)) state.currentMetric = action.payload;
       else throw "changeMetric payload incorrect";
     },
-    changePage: (state, action) => {
-      state.currentPage = action.payload;
+    changeEndpoint: (state, action) => {
+      state.currentEndpoint = action.payload;
     }
   },
 });
 
-export const { changeTheme, changeMetric, changePage } = currentViewSlice.actions;
+export const { changeTheme, changeMetric, changeEndpoint } = currentViewSlice.actions;
 
 export const getTheme = (state) => state.currentView.theme;
 export const getCurrentMetric = (state) => state.currentView.currentMetric;
-export const getCurrentPage = (state) => state.currentView.currentPage;
+export const getCurrentEndpoint = (state) => state.currentView.currentEndpoint;
 
 export default currentViewSlice.reducer;
