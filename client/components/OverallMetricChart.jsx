@@ -16,7 +16,7 @@ import {
 import { getCurrentEndpoint, getCurrentMetric } from "../store/currentViewSlice.js";
 import { useSelector } from "react-redux";
 
-const MetricChart = () => {
+const OverallMetricChart = () => {
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const commits = useSelector(selectCommits);
   const overallScore = useSelector((state) =>
@@ -65,4 +65,4 @@ const MetricChart = () => {
   );
 };
 
-export default MetricChart;
+export default OverallMetricChart;
