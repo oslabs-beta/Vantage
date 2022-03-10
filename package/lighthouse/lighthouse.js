@@ -4,6 +4,7 @@ const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec } = require('child_process');
 const { useDebugValue } = require('react');
+const { waitForDebugger } = require('inspector');
 const environment = process.env.NODE_ENV || 'development';
 
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
@@ -35,29 +36,30 @@ async function startDevServer() {
   await exec(commands, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
   });
-  
+  await new Promise(resolve => setTimeout(resolve, 5000));
+}
+
+async function getRoutes() {
+  const commands = `cd ${PROJECT_FOLDER} && cd pages && ls`;
+
+  await exec(commands, (err, stdOut, stdErr) => {
+    let files = stdOut.split('\n');
+    if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
+    if (!ENDPOINTS.includes('/')) ENDPOINTS.push('/');
+    files.map((file) => {
+      if (file.endsWith('.js') && !file.startsWith('_') && file !== 'index.js') {
+        const endpointName = '/' + file.split('.js')[0];
+        if (!ENDPOINTS.includes(endpointName)) ENDPOINTS.push('/' + file.split('.js')[0]);
+      }
+    });
+  });
 }
 
 // Function to refresh data
 async function getLighthouseResults(url, gitMessage) {
-
-  // To Dos:  
-  // Figure out browser configuration for security certificates
-  // Research how to run this on sites requiring authentication
-  // Configurability of lighthouseOptions (example options object below)
-
-  // const lighthouseOptions = {
-  //   extends: 'lighthouse:default',
-  //   settings: {
-  //     onlyCategories: ['accessibility'],
-  //     emulatedFormFactor:'desktop',
-  //     output: ['html'],
-  //   },
-  // }
-
   // Initiate headless browser session and run Lighthouse for the specified URL
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']}); // Todo: Add incognito flag
-  const options = {logLevel: 'info', output: 'html', maxWaitForLoad: 10000, port: chrome.port};
+  const options = {logLevel: 'silent', output: 'html', maxWaitForLoad: 10000, port: chrome.port};
   const runnerResult = await lighthouse(url, options);
 
   // `.report` is the HTML report as a string
@@ -142,6 +144,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 
 async function initiateRefresh() {
   await initialize();
+  await getRoutes();
   await startDevServer();
   // Todo:  Iterate through each possible page to be checked
   let snapshotTimestamp = new Date().toISOString();
