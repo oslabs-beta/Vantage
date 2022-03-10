@@ -49,24 +49,38 @@ const PerformanceMetricChart = () => {
   );
 
   // Show actual units if only one performance metric is selected
-  const perfMetricsSelectedArr = Object.values(perfMetricsSelected).filter(
-    (v) => !!v
+  const perfMetricsSelectedArr = Object.entries(perfMetricsSelected).reduce(
+    (acc, curr) => (curr[1] ? [...acc, curr[0]] : acc),
+    []
   );
   const valueType =
     perfMetricsSelectedArr.length > 1 ? "score" : "numericValue";
 
   const data = runList.map((cur, i) => {
-    const mult = valueType === "score" ? 100 : 1;
+    const multiple = valueType === "score" ? 100 : 1;
     return {
       name: cur,
-      FCP: fcpData[cur][valueType] * mult,
-      TTI: ttiData[cur][valueType] * mult,
-      SI: siData[cur][valueType] * mult,
-      TBT: tbtData[cur][valueType] * mult,
-      LCP: lcpData[cur][valueType] * mult,
-      CLS: clsData[cur][valueType] * mult,
+      FCP: Math.round(fcpData[cur][valueType] * multiple),
+      TTI: Math.round(ttiData[cur][valueType] * multiple),
+      SI: Math.round(siData[cur][valueType] * multiple),
+      TBT: Math.round(tbtData[cur][valueType] * multiple),
+      LCP: Math.round(lcpData[cur][valueType] * multiple),
+      CLS: Math.round(clsData[cur][valueType] * multiple),
     };
   });
+
+  const webVitalUnits = {
+    FCP: "ms",
+    TTI: "ms",
+    SI: "ms",
+    TBT: "ms",
+    LCP: "ms",
+    CLS: ""
+  };
+
+  const unit = (perfMetricsSelectedArr.length > 1) 
+    ? ""
+    : webVitalUnits[perfMetricsSelectedArr[0]];
 
   return (
     <LineChart
@@ -85,7 +99,7 @@ const PerformanceMetricChart = () => {
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
-      <Tooltip content={<CustomTooltip commits={commits} />} />
+      <Tooltip content={<CustomTooltip commits={commits} unit={unit} />} />
       <Legend />
       {perfMetricsSelected.FCP && (
         <Line type='monotone' dataKey='FCP' stroke='#8884d8' />

@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
-const CustomTooltip = ({ active, payload, commits }) => {
+const CustomTooltip = ({ active, payload, commits, unit }) => {
   if (active && payload && payload.length) {
     const activeTime = payload[0].payload.name;
     const dateFormatted = new Date(activeTime).toLocaleString();
@@ -13,15 +13,15 @@ const CustomTooltip = ({ active, payload, commits }) => {
         <p
           key={i}
           style={{ color: cur.stroke }}
-        >{`${cur.name} : ${cur.value}`}</p>
+        >{`${cur.name} : ${cur.value} ${unit}`}</p>
       );
     });
 
     return (
       <Card className='custom-tooltip' variant='outlined' sx={{ px: 1 }}>
         <p className='time-tooltip'>{dateFormatted}</p>
-        {payloadComponents}
         <p className='commits-tooltip'>{commits[activeTime]}</p>
+        {payloadComponents}
       </Card>
     );
   }
