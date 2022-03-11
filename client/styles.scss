@@ -11,6 +11,15 @@
   column-gap: 1rem;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .active-metric {
   border-radius: 50%;
   box-shadow: 0 0 40px 2px rgba(255, 217, 0, 0.516);

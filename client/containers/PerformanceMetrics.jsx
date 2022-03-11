@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Metric from "../components/Metric";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -63,7 +63,7 @@ const PerformanceMetrics = () => {
   );
 
   return (
-    <Box id='performance-metrics'>
+    <Box id='performance-metrics' style={{ animation: `fadeIn .5s` }}>
       {metricsArr}
     </Box>
   );

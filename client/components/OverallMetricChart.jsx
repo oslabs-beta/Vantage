@@ -7,7 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Label
+  Label,
+  AreaChart,
+  Area
 } from "recharts";
 import {
   selectOverallScoreByEndpoint,
