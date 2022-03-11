@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Import files needed for Lighthouse
 const lighthouse = require('lighthouse');
 const fs = require('fs');
