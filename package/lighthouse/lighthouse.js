@@ -59,7 +59,15 @@ async function getRoutes() {
 async function getLighthouseResults(url, gitMessage) {
   // Initiate headless browser session and run Lighthouse for the specified URL
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']}); // Todo: Add incognito flag
-  const options = {logLevel: 'silent', output: 'html', maxWaitForLoad: 10000, port: chrome.port};
+  const options = {
+    logLevel: 'silent', 
+    output: 'html', 
+    maxWaitForLoad: 10000, 
+    port: chrome.port, 
+    extraHeaders: {
+      Authorization: '/*insert text*/'
+    }
+  };
   const runnerResult = await lighthouse(url, options);
 
   // `.report` is the HTML report as a string
@@ -115,7 +123,11 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
     const keys = [];
     refs.map((ref) => keys.push(ref.id));
     for (const item of keys) {
-      const currentResults = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
+      const currentResults = {
+        'score' : lhr['audits'][item]['score'], 
+        'numericValue' : lhr['audits'][item]['numericValue'], 
+        'displayValue' : lhr['audits'][item]['displayValue']
+      };
       if (!webVitals.has(item) && !fullView) continue; 
       const resultType = webVitals.has(item) ? 'web-vitals' : category;
 

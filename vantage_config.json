@@ -2,13 +2,13 @@
 {
   "nextAppSettings": {
     "development": {
-      "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
+      "projectFolder" : "C:\Users\paull\OneDrive\Documents\codesmith\next-js-auth",
       "serverCommand" : "npm run dev",
       "port" : "3000",
       "endpoints" : []
     },
     "production": {
-      "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
+      "projectFolder" : "C:/Users/paull/OneDrive/Documents/codesmith/next-js-auth/",
       "serverCommand" : "npm run build && npm run start",
       "port" : "3000",
       "endpoints" : []
