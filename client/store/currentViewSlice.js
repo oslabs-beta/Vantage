@@ -15,6 +15,8 @@ export const currentViewSlice = createSlice({
       TBT: false,
       CLS: false,
     },
+    runValueArr: [],
+    runValueArrSort: [],
   },
   reducers: {
     changeTheme: (state) => {
@@ -32,6 +34,14 @@ export const currentViewSlice = createSlice({
       state.performanceMetrics[action.payload] =
         !state.performanceMetrics[action.payload];
     },
+    addRunValue: (state, action) => {
+      const run = action.payload;
+      if (!state.runValueArr.includes(run)) {
+        if (state.runValueArr.length >= 2) state.runValueArr.shift();
+        state.runValueArr.push(run);
+        state.runValueArrSort = state.runValueArr.sort();
+      }
+    },
   },
 });
 
@@ -40,12 +50,13 @@ export const {
   changeMetric,
   changeEndpoint,
   changePerformanceMetrics,
+  addRunValue,
 } = currentViewSlice.actions;
 
 export const getTheme = (state) => state.currentView.theme;
 export const getCurrentMetric = (state) => state.currentView.currentMetric;
 export const getCurrentEndpoint = (state) => state.currentView.currentEndpoint;
-export const selectPerformanceMetrics = (state) => state.currentView.performanceMetrics;
-
+export const selectPerformanceMetrics = (state) =>
+  state.currentView.performanceMetrics;
 
 export default currentViewSlice.reducer;

@@ -9,6 +9,7 @@
   display: grid;
   grid-template-columns: repeat(2,1fr);
   column-gap: 1rem;
+  animation: fadeIn .5s;
 }
 
 .active-metric {
@@ -30,6 +31,18 @@
   flex-direction: column;
   align-items: center;
 }
+
+#description-container {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+#score-components {
+  display: flex;
+  gap: 2rem;
+}
+
 .metric-container-inner {
   padding: 10px;
 }
@@ -40,4 +53,13 @@
 
 .metric:hover { 
   transform: scale(1.05); 
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
