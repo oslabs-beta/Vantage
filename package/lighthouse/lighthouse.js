@@ -7,20 +7,18 @@ const chromeLauncher = require('chrome-launcher');
 const { exec, execSync } = require('child_process');
 const { useDebugValue } = require('react');
 const { waitForDebugger } = require('inspector');
-
+const kill = require('kill-port');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-let PROJECT_FOLDER, SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
 const DATA_STORE = './data_store.json';
-const CONFIG_FILE = './vantage_config.json';
 
 // Initialize data from config file
 function initialize() {
   try {
-    let currentData = fs.readFileSync(CONFIG_FILE);
+    let currentData = fs.readFileSync('./vantage_config.json');
     let configData = JSON.parse(currentData);
-    PROJECT_FOLDER = configData.nextAppSettings.projectFolder;
     SERVER_COMMAND = configData.nextAppSettings.serverCommand;
     BUILD_COMMAND = configData.nextAppSettings.buildCommand;
     PORT = configData.nextAppSettings.port;
@@ -33,12 +31,10 @@ function initialize() {
 
 // Initiate the project's dev server based on command provided in config file
 async function startServer() {
-  const buildCommands = `cd ${PROJECT_FOLDER} && ${BUILD_COMMAND}`;
-  const startCommands = `npx kill-port ${PORT} && cd ${PROJECT_FOLDER} &&
-  ${SERVER_COMMAND}`;
-  let stdOut = execSync(buildCommands, { encoding: 'utf-8' });
+  await kill(PORT);
+  let stdOut = execSync(BUILD_COMMAND, { encoding: 'utf-8' });
   console.log(stdOut);
-  exec(startCommands, (err, stdOut, stdErr) => {
+  exec(SERVER_COMMAND, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
   });
   await new Promise(resolve => setTimeout(resolve, 5000));
@@ -46,7 +42,7 @@ async function startServer() {
 
 // Function to traverse the 'pages' folder in project directory and capture list of endpoints to check
 function getRoutes(subfolders = '') {
-  let commands = `cd ${PROJECT_FOLDER} && cd pages`;
+  let commands = `cd pages`;
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
@@ -182,6 +178,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
+  
   initialize();
   getRoutes();
   console.log(ENDPOINTS);

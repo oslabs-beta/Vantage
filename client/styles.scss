@@ -1,8 +1,17 @@
+
 #mainBox {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 15px;
+  position: relative;
+  height: '100vh'
+}
+#contentContainer {
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #performance-metrics {
@@ -23,7 +32,7 @@
   margin: 1rem;
   display: flex;
   justify-content: center;
-  width: 75%;
+  width: 100%;
 }
 
 #metric-container {
@@ -36,6 +45,7 @@
   display: flex;
   flex-direction: column;
   gap: .3rem;
+  margin-bottom: 10px;
 }
 
 #score-components {
@@ -62,4 +72,12 @@
   100% {
     opacity: 1;
   }
+}
+#footer {
+  position:absolute;
+  display: flex;
+  justify-content: flex-end;
+  bottom:0;
+  width:100vw;
+  height:40px;
 }
