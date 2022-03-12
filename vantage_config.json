@@ -1,7 +1,6 @@
 
 {
   "nextAppSettings": {
-    "projectFolder" : "/Users/michaelnoah/Codesmith-Dev/my-test-app/",
     "serverCommand" : "npm run start",
     "buildCommand" : "npm run build",
     "port" : "3000",
