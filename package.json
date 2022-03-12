@@ -34,6 +34,7 @@
   "dependencies": {
     "chalk": "^5.0.0",
     "inquirer": "^8.2.0",
+    "kill-port": "^1.6.1",
     "lighthouse": "^9.4.0",
     "nanospinner": "^1.0.0",
     "node-inject-html": "^0.0.5"
