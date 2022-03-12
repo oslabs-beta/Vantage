@@ -4,16 +4,21 @@ import MetricContainer from './MetricContainer';
 import ChartContainer from './ChartContainer';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import DescriptionContainer from './DescriptionContainer';
 
 
 const MainContainer = () => {
   return(
     <div id="mainContainer">
+      <TitleContainer/>
       <Container maxWidth="md">
-        <Box sx={{ height: '100vh' }}>
-          <TitleContainer/>
+        <Box
+          id ="mainBox" 
+          sx={{ height: '100vh' }}>
+          
           <MetricContainer/>
           <ChartContainer/>
+          <DescriptionContainer/>
         </Box>
       </Container>
     </div>

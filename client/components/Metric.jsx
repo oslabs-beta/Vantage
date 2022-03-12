@@ -1,15 +1,15 @@
 import React from "react";
 import { CircularProgress, Typography, Box } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { changeMetric } from "../store/currentViewSlice";
 
-const Metric = (props) => {
-  const dispatch = useDispatch();
-  const color =
-    props.value > 90 ? "success" : props.value > 70 ? "warning" : "error";
+const Metric = ({ name, value, handleClick, size, isActive }) => {
+  const color = value > 90 ? "success" : value > 70 ? "warning" : "error";
+
+  const activeClass = isActive ? "active-metric" : "";
+
   return (
     <Box
-      onClick={(_) => dispatch(changeMetric(props.name))}
+      className="metric"
+      onClick={(_) => handleClick(name)}
       sx={{
         position: "relative",
         display: "inline-flex",
@@ -21,17 +21,18 @@ const Metric = (props) => {
     >
       <Box sx={{ position: "relative", display: "inline-flex" }}>
         <CircularProgress
+          className={activeClass}
           variant='determinate'
           color={color}
-          {...props}
-          size={80}
-          thickness={6}
+          value={value}
+          size={size}
+          thickness={3 + size / 30}
         />
         <Typography
           component='div'
           color='text.primary'
           sx={{
-            fontSize: 30,
+            fontSize: size / 2.6,
             top: 0,
             left: 0,
             bottom: 0,
@@ -42,7 +43,7 @@ const Metric = (props) => {
             justifyContent: "center",
           }}
         >
-          {`${Math.round(props.value)}`}
+          {`${Math.round(value)}`}
         </Typography>
       </Box>
       <Box
@@ -53,11 +54,16 @@ const Metric = (props) => {
         }}
       >
         <Typography component='div' color='text.primary'>
-          {props.name}
+          {name}
         </Typography>
       </Box>
     </Box>
   );
+};
+
+Metric.defaultProps = {
+  size: 70,
+  isActive: false,
 };
 
 export default Metric;
