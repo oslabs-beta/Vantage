@@ -116,7 +116,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
     data = {"run-list": [], "endpoints":[], "commits":{}, "overall-scores": {}, "web-vitals": {}};
   }
   let oldestRun;
-  if (data["run-list"].length >= 10) oldestRun = data["run-list"].shift();
+  if (data["run-list"].length > 10) oldestRun = data["run-list"].shift();
   // Parse through lhr and handle its current contents
   data["run-list"].push(snapshotTimestamp);
   data["run-list"] = Array.from(new Set(data["run-list"]));
@@ -143,7 +143,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
     let keys = [];
     refs.map((ref) => keys.push(ref.id));
     for (const item of keys) {
-      let currentResults = {'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
+      let currentResults = {'scoreDisplayMode' : lhr['audits'][item]['scoreDisplayMode'], 'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
       if (!webVitals.has(item) && !fullView) continue; 
       let resultType = webVitals.has(item) ? 'web-vitals' : category;
 
@@ -156,6 +156,8 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
         delete data[resultType][item]['numericValue'];
         delete data[resultType][item]['displayValue'];
         delete data[resultType][item]['details'];
+        delete data[resultType][item]['scoreDisplayMode'];
+        
         data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
       } else if (data[resultType][item]['results'][endpoint] === undefined) {
       // score, numeric value, display value
@@ -183,7 +185,8 @@ async function initiateRefresh() {
     await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
   }
 
-  // To do: New function to insert final JSON into HTML
+  console.log('All tests complete');
+  process.exit();
 }
 
 initiateRefresh();
