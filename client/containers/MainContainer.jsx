@@ -12,17 +12,19 @@ const MainContainer = () => {
   return(
     <div id="mainContainer">
       <TitleContainer/>
-      <Container maxWidth="md">
-        <Box
-          id ="mainBox" 
-          sx={{ height: '100vh' }}>
-          
+      <Box
+        id ="mainBox" 
+        sx={{ height: '100vh' }}
+      >
+        <div id='contentContainer' >
           <MetricContainer/>
           <ChartContainer/>
           <DescriptionContainer/>
+        </div>
+        <Box id="footer">
+          <Footer />
         </Box>
-      </Container>
-      <Footer/>
+      </Box>
     </div>
   );
 };
