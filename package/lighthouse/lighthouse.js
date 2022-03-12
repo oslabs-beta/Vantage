@@ -41,9 +41,7 @@ async function startServer() {
   exec(startCommands, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
   });
-  runDev.on('exit', () => {
-    new Promise(resolve => setTimeout(resolve, 5000));
-  })
+  await new Promise(resolve => setTimeout(resolve, 5000));
 }
 
 // Function to traverse the 'pages' folder in project directory and capture list of endpoints to check
