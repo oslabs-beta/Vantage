@@ -5,6 +5,7 @@ import ChartContainer from './ChartContainer';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import DescriptionContainer from './DescriptionContainer';
+import Footer from './Footer';
 
 
 const MainContainer = () => {
@@ -21,6 +22,7 @@ const MainContainer = () => {
           <DescriptionContainer/>
         </Box>
       </Container>
+      <Footer/>
     </div>
   );
 };
