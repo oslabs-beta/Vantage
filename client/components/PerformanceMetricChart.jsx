@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
   Label,
+  ReferenceArea,
 } from "recharts";
 import CustomTooltip from "./CustomTooltip";
 import {
@@ -20,10 +21,15 @@ import {
   getCurrentEndpoint,
   getCurrentMetric,
   selectPerformanceMetrics,
+  addRunValue
 } from "../store/currentViewSlice.js";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const PerformanceMetricChart = () => {
+  const [runA, runB] = useSelector(
+    (state) => state.currentView.runValueArrSort
+  );
+  const dispatch = useDispatch();
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const commits = useSelector(selectCommits);
   const runList = useSelector(selectRunList);
@@ -83,6 +89,12 @@ const PerformanceMetricChart = () => {
       ? ""
       : webVitalUnits[perfMetricsSelectedArr[0]];
 
+  const handleClick = (data) => {
+    if (data) {
+      dispatch(addRunValue(data.activePayload[0].payload.name));
+    }
+  };
+
   const lineComponents = perfMetricsSelectedArr.map((curr, i) => (
     <Line
       key={i}
@@ -95,6 +107,7 @@ const PerformanceMetricChart = () => {
 
   return (
     <LineChart
+      onClick={handleClick}
       width={500}
       height={300}
       data={data}
@@ -106,7 +119,7 @@ const PerformanceMetricChart = () => {
       }}
     >
       <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey={" "}>
+      <XAxis dataKey={"name"} style={{ opacity: 0 }}>
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
@@ -117,6 +130,7 @@ const PerformanceMetricChart = () => {
       />
       <Legend />
       {lineComponents}
+      {runB && <ReferenceArea x1={runA} x2={runB} />}
     </LineChart>
   );
 };

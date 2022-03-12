@@ -48,13 +48,10 @@ const OverallMetricChart = () => {
     };
   });
 
-  console.log(data);
-
   const sw = 3;
 
   const handleClick = (data) => {
     if (data) {
-      console.log(data);
       dispatch(addRunValue(data.activePayload[0].payload.name));
     }
   };
