@@ -2,60 +2,65 @@
 const lighthouse = require('lighthouse');
 const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
-const { exec } = require('child_process');
+const { exec, execSync } = require('child_process');
 const { useDebugValue } = require('react');
 const { waitForDebugger } = require('inspector');
-const environment = process.env.NODE_ENV || 'development';
 
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // To do: Make these fields configurable during project setup
-let PROJECT_FOLDER, SERVER_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
+let PROJECT_FOLDER, SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
 const DATA_STORE = './data_store.json';
 const CONFIG_FILE = './vantage_config.json';
 
 // Initialize data from config file
-async function initialize() {
+function initialize() {
   try {
-    let currentData = await fs.readFileSync(CONFIG_FILE);
+    let currentData = fs.readFileSync(CONFIG_FILE);
     let configData = JSON.parse(currentData);
-    PROJECT_FOLDER = configData.nextAppSettings[environment].projectFolder;
-    SERVER_COMMAND = configData.nextAppSettings[environment].serverCommand;
-    PORT = configData.nextAppSettings[environment].port;
-    ENDPOINTS = configData.nextAppSettings[environment].endpoints;
+    PROJECT_FOLDER = configData.nextAppSettings.projectFolder;
+    SERVER_COMMAND = configData.nextAppSettings.serverCommand;
+    BUILD_COMMAND = configData.nextAppSettings.buildCommand;
+    PORT = configData.nextAppSettings.port;
+    ENDPOINTS = configData.nextAppSettings.endpoints;
     FULL_VIEW = configData.nextAppSettings.fullView === 1;
   } catch {
     throw Error('Error accessing config file');
   }
 }
 
-// Function to initiate the project's dev server
-async function startDevServer() {
-  const commands = `npx kill-port ${PORT} && cd ${PROJECT_FOLDER} &&
+// Initiate the project's dev server based on command provided in config file
+async function startServer() {
+  const buildCommands = `cd ${PROJECT_FOLDER} && ${BUILD_COMMAND}`;
+  const startCommands = `npx kill-port ${PORT} && cd ${PROJECT_FOLDER} &&
   ${SERVER_COMMAND}`;
-  await exec(commands, (err, stdOut, stdErr) => {
+  let stdOut = execSync(buildCommands, { encoding: 'utf-8' });
+  console.log(stdOut);
+  exec(startCommands, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
   });
   await new Promise(resolve => setTimeout(resolve, 5000));
 }
 
-async function getRoutes(subfolders = '') {
+// Function to traverse the 'pages' folder in project directory and capture list of endpoints to check
+function getRoutes(subfolders = '') {
   let commands = `cd ${PROJECT_FOLDER} && cd pages`;
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
-    await exec(`${commands} && ls`, async (err, stdOut, stdErr) => {
-      let files = stdOut.split('\n');
-      if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
-      await files.map(async (file) => {
-        await addFileToList(file, subfolders);
-      });
+    const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
+    if (stdOut.includes("Failed to compile.")) throw Error("Project failed to compile");
+    const files = stdOut.split('\n');
+    if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
+    files.map((file) => {
+      addFileToList(file, subfolders);
     });
   } catch {
     throw Error('Error capturing structure of pages folder')
   }
 }
 
-async function addFileToList(file, subfolders) {
+// Helper function to check file name and add to list or traverse additional folder levels as needed
+function addFileToList(file, subfolders) {
   let prefix = subfolders !== '' ? '/' + subfolders + '/' : '/';
   if (file.endsWith('.js') && !file.startsWith('_') && file !== 'index.js') {
     const endpointName = prefix + file.split('.js')[0];
@@ -68,13 +73,13 @@ async function addFileToList(file, subfolders) {
       ENDPOINTS.push(prefix); 
     }
   } else if (!file.endsWith('.js') && file !== 'api' && file !== '') {
-    await getRoutes(subfolders === '' ? file : subfolders + '/' + file);
+    getRoutes(subfolders === '' ? file : subfolders + '/' + file);
   }
-  console.log(ENDPOINTS);
 }
 
 // Function to refresh data
 async function getLighthouseResults(url, gitMessage) {
+  console.log('Getting report for ' + url);
   // Initiate headless browser session and run Lighthouse for the specified URL
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']}); // Todo: Add incognito flag
   const options = {logLevel: 'silent', output: 'html', maxWaitForLoad: 10000, port: chrome.port};
@@ -108,14 +113,17 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   } catch {
     data = {"run-list": [], "endpoints":[], "commits":{}, "overall-scores": {}, "web-vitals": {}};
   }
-
+  let oldestRun;
+  if (data["run-list"].length >= 10) oldestRun = data["run-list"].shift();
   // Parse through lhr and handle its current contents
   data["run-list"].push(snapshotTimestamp);
   data["run-list"] = Array.from(new Set(data["run-list"]));
   data["endpoints"].push(endpoint);
   data["endpoints"] = Array.from(new Set(data["endpoints"]));
+  if (oldestRun !== undefined) delete data["commits"][oldestRun]; 
   data["commits"][snapshotTimestamp] = commitMessage;
   if (data["overall-scores"][endpoint] === undefined) data["overall-scores"][endpoint] = {};
+  if (oldestRun !== undefined) delete data["overall-scores"][endpoint][oldestRun]; 
   data["overall-scores"][endpoint][snapshotTimestamp] = {
     "performance": lhr['categories']['performance']['score'], 
     "accessibility": lhr['categories']['accessibility']['score'], 
@@ -138,6 +146,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
       let resultType = webVitals.has(item) ? 'web-vitals' : category;
 
       if (data[resultType] === undefined) data[resultType] = {};
+      
       if (data[resultType][item] === undefined) {
         data[resultType][item] = lhr['audits'][item];
         delete data[resultType][item]['id'];
@@ -145,7 +154,6 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
         delete data[resultType][item]['numericValue'];
         delete data[resultType][item]['displayValue'];
         delete data[resultType][item]['details'];
-        delete data[resultType][item]['description'];
         data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
       } else if (data[resultType][item]['results'][endpoint] === undefined) {
       // score, numeric value, display value
@@ -153,6 +161,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
       } else {
         data[resultType][item]['results'][endpoint][snapshotTimestamp] = currentResults;
       }
+      if (oldestRun !== undefined) delete data[resultType][item]['results'][endpoint][oldestRun]; 
     }
   }
 
@@ -161,17 +170,16 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
-  await initialize();
-  await getRoutes();
+  initialize();
+  getRoutes();
   console.log(ENDPOINTS);
-  // await startDevServer();
-  // // Todo:  Iterate through each possible page to be checked
-  // let snapshotTimestamp = new Date().toISOString();
+  await startServer();
+  let snapshotTimestamp = new Date().toISOString();
 
-  // for (const endpoint of ENDPOINTS) {
-  //   let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-  //   await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
-  // }
+  for (const endpoint of ENDPOINTS) {
+    let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
+  }
 
   // To do: New function to insert final JSON into HTML
 }
