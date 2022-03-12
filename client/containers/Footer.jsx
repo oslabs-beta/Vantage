@@ -5,9 +5,13 @@ import { useTheme } from '@mui/material/styles';
 
 const Footer = () => {
   const theme = useTheme();
+  const footerColor = () => {
+    if (theme.palette.mode == 'dark') return '#1e1e1e';
+    else return theme.palette.primary.main;
+  };
   return (
-    <div 
-      style= {{backgroundColor: `${theme.palette.primary.main}`}}
+    <div id="footer"
+      style= {{backgroundColor: `${footerColor()}`}}
     >
       <div id="lh-logo-container">
         <a href="https://developers.google.com/web/tools/lighthouse">

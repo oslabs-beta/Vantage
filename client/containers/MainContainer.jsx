@@ -12,16 +12,15 @@ const MainContainer = () => {
   return(
     <div id="mainContainer">
       <TitleContainer/>
-      <Box
-        id ="mainBox" 
-        sx={{ height: '100vh' }}
-      >
-        <div id='contentContainer' >
+      <Box id ="mainBox">
+        <Box id='contentContainer'
+        sx={{width:'lg'}}
+         >
           <MetricContainer/>
           <ChartContainer/>
           <DescriptionContainer/>
-        </div>
-        <Box id="footer">
+        </Box>
+        <Box style={{width:'100%',bottom:'0',height:'40px'}}>
           <Footer />
         </Box>
       </Box>
