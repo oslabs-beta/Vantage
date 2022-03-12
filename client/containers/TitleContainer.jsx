@@ -26,13 +26,18 @@ const TitleContainer = () => {
             </Typography>
             {/* <Brightness5Icon fontSize="small"/> */}
             <DropDownMenu />
-            <Typography variant='h6' component='div' sx={{px: 1}}>
+            <Typography
+              variant='h6'
+              component='div'
+              sx={{ px: 1, cursor: "pointer" }}
+              onClick={(_) => dispatch(changeMetric("default"))}
+            >
               Current Endpoint:
             </Typography>
             <Typography
               variant='h4'
               component='div'
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, cursor: "pointer"}}
               onClick={(_) => dispatch(changeMetric("default"))}
             >
               {currentEndpoint}

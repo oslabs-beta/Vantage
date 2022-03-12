@@ -75,12 +75,23 @@ const PerformanceMetricChart = () => {
     SI: "ms",
     TBT: "ms",
     LCP: "ms",
-    CLS: ""
+    CLS: "",
   };
 
-  const unit = (perfMetricsSelectedArr.length > 1) 
-    ? ""
-    : webVitalUnits[perfMetricsSelectedArr[0]];
+  const unit =
+    perfMetricsSelectedArr.length > 1
+      ? ""
+      : webVitalUnits[perfMetricsSelectedArr[0]];
+
+  const lineComponents = perfMetricsSelectedArr.map((curr, i) => (
+    <Line
+      key={i}
+      type='monotone'
+      dataKey={curr}
+      stroke='#8884d8'
+      strokeWidth={3}
+    />
+  ));
 
   return (
     <LineChart
@@ -99,26 +110,13 @@ const PerformanceMetricChart = () => {
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
-      <Tooltip content={<CustomTooltip commits={commits} unit={unit} />} />
+      <Tooltip
+        content={
+          <CustomTooltip commits={commits} unit={unit} runList={runList} />
+        }
+      />
       <Legend />
-      {perfMetricsSelected.FCP && (
-        <Line type='monotone' dataKey='FCP' stroke='#8884d8' />
-      )}
-      {perfMetricsSelected.TTI && (
-        <Line type='monotone' dataKey='TTI' stroke='#8884d8' />
-      )}
-      {perfMetricsSelected.SI && (
-        <Line type='monotone' dataKey='SI' stroke='#8884d8' />
-      )}
-      {perfMetricsSelected.TBT && (
-        <Line type='monotone' dataKey='TBT' stroke='#8884d8' />
-      )}
-      {perfMetricsSelected.LCP && (
-        <Line type='monotone' dataKey='LCP' stroke='#8884d8' />
-      )}
-      {perfMetricsSelected.CLS && (
-        <Line type='monotone' dataKey='CLS' stroke='#8884d8' />
-      )}
+      {lineComponents}
     </LineChart>
   );
 };

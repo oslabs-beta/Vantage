@@ -29,4 +29,8 @@ const CustomTooltip = ({ active, payload, commits, unit }) => {
   return null;
 };
 
+CustomTooltip.defaultProps = {
+  unit: ""
+};
+
 export default CustomTooltip;

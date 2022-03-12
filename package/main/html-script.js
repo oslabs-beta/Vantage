@@ -9,9 +9,10 @@ const VANTAGE_JSON = fs.readFileSync(path.resolve('./data_store_full.json')).toS
 
 const htmlInject = `<script>window.__VANTAGE_JSON__ = ${VANTAGE_JSON}</script>`;
 
-const newHtml = injectHTML(htmlTest, {bodyStart: htmlInject});
+const newHtml = injectHTML(htmlTest, {headStart: htmlInject});
 
 fs.writeFileSync(path.resolve('./dist/index.html'), newHtml);
+
 
 
 

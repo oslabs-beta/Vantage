@@ -9,18 +9,23 @@ import {
   Legend,
   Label,
   AreaChart,
-  Area
+  Area,
 } from "recharts";
 import {
   selectOverallScoreByEndpoint,
   selectCommits,
   selectRunList,
 } from "../store/dataSlice.js";
-import { getCurrentEndpoint, getCurrentMetric } from "../store/currentViewSlice.js";
-import { useSelector } from "react-redux";
+import {
+  getCurrentEndpoint,
+  getCurrentMetric,
+  addRunValue,
+} from "../store/currentViewSlice.js";
+import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
 
 const OverallMetricChart = () => {
+  const dispatch = useDispatch();
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const commits = useSelector(selectCommits);
   const overallScore = useSelector((state) =>
@@ -40,8 +45,18 @@ const OverallMetricChart = () => {
     };
   });
 
+  const sw = 3;
+
+  const handleClick = (data) => {
+    if (data) {
+      dispatch(addRunValue(data.activePayload[0].payload.name));
+    }
+  };
+
   return (
     <LineChart
+      onClick={handleClick}
+      id='performance-chart'
       width={500}
       height={300}
       data={data}
@@ -54,19 +69,38 @@ const OverallMetricChart = () => {
     >
       <CartesianGrid strokeDasharray='3 3' />
       <XAxis dataKey={" "}>
-        <Label value="Commits" style={{fill: 'gray'}} />
+        <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
-      <Tooltip content={<CustomTooltip commits={commits} />}/>
+      <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
-      {(currentMetric === 'default' || currentMetric === 'SEO') &&
-        <Line type='monotone' dataKey='SEO' stroke='#8884d8' /> }
-      {(currentMetric === 'default' || currentMetric === 'Best Practices') &&
-      <Line type='monotone' dataKey='Best Practices' stroke='#82ca9d' />}
-      {(currentMetric === 'default' || currentMetric === 'Performance') &&
-      <Line type='monotone' dataKey='Performance' stroke='#ff0000' />}
-      {(currentMetric === 'default' || currentMetric === 'Accessibility') &&
-      <Line type='monotone' dataKey='Accessibility' stroke='#FFA500' />}
+      {(currentMetric === "default" || currentMetric === "SEO") && (
+        <Line type='monotone' dataKey='SEO' stroke='#8884d8' strokeWidth={sw} />
+      )}
+      {(currentMetric === "default" || currentMetric === "Best Practices") && (
+        <Line
+          type='monotone'
+          dataKey='Best Practices'
+          stroke='#82ca9d'
+          strokeWidth={sw}
+        />
+      )}
+      {(currentMetric === "default" || currentMetric === "Performance") && (
+        <Line
+          type='monotone'
+          dataKey='Performance'
+          stroke='#ff0000'
+          strokeWidth={sw}
+        />
+      )}
+      {(currentMetric === "default" || currentMetric === "Accessibility") && (
+        <Line
+          type='monotone'
+          dataKey='Accessibility'
+          stroke='#FFA500'
+          strokeWidth={sw}
+        />
+      )}
     </LineChart>
   );
 };

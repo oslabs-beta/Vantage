@@ -63,7 +63,7 @@ const PerformanceMetrics = () => {
   );
 
   return (
-    <Box id='performance-metrics' style={{ animation: `fadeIn .5s` }}>
+    <Box id='performance-metrics'>
       {metricsArr}
     </Box>
   );
