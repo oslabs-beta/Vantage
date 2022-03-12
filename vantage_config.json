@@ -1,3 +1,4 @@
+
 {
   "nextAppSettings": {
     "serverCommand" : "npm run start",
@@ -6,4 +7,6 @@
     "endpoints" : [],
     "fullView": 1
   }
-}n
+}
+
+

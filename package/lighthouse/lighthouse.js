@@ -17,8 +17,8 @@ const DATA_STORE = './data_store.json';
 // Initialize data from config file
 function initialize() {
   try {
-    let currentData = fs.readFileSync('./vantage_config.json');
-    let configData = JSON.parse(currentData);
+    const currentData = fs.readFileSync('./vantage_config.json');
+    const configData = JSON.parse(currentData);
     SERVER_COMMAND = configData.nextAppSettings.serverCommand;
     BUILD_COMMAND = configData.nextAppSettings.buildCommand;
     PORT = configData.nextAppSettings.port;
@@ -32,7 +32,7 @@ function initialize() {
 // Initiate the project's dev server based on command provided in config file
 async function startServer() {
   await kill(PORT);
-  let stdOut = execSync(BUILD_COMMAND, { encoding: 'utf-8' });
+  const stdOut = execSync(BUILD_COMMAND, { encoding: 'utf-8' });
   console.log(stdOut);
   exec(SERVER_COMMAND, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
@@ -53,13 +53,13 @@ function getRoutes(subfolders = '') {
       addFileToList(file, subfolders);
     });
   } catch {
-    throw Error('Error capturing structure of pages folder')
+    throw Error('Error capturing structure of pages folder');
   }
 }
 
 // Helper function to check file name and add to list or traverse additional folder levels as needed
 function addFileToList(file, subfolders) {
-  let prefix = subfolders !== '' ? '/' + subfolders + '/' : '/';
+  const prefix = subfolders !== '' ? '/' + subfolders + '/' : '/';
   if (file.endsWith('.js') && !file.startsWith('_') && file !== 'index.js') {
     const endpointName = prefix + file.split('.js')[0];
     if (!ENDPOINTS.includes(endpointName)) {
@@ -80,7 +80,15 @@ async function getLighthouseResults(url, gitMessage) {
   console.log('Getting report for ' + url);
   // Initiate headless browser session and run Lighthouse for the specified URL
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']}); // Todo: Add incognito flag
-  const options = {logLevel: 'silent', output: 'html', maxWaitForLoad: 10000, port: chrome.port};
+  const options = {
+    logLevel: 'silent', 
+    output: 'html', 
+    maxWaitForLoad: 10000, 
+    port: chrome.port, 
+    // extraHeaders: {
+    //   Authorization: '/*insert text for potential auth qualifications*/'
+    // }
+  };
   const runnerResult = await lighthouse(url, options);
 
   // `.report` is the HTML report as a string
@@ -106,7 +114,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   // Load existing JSON file or create new one if not yet present
   let data;
   try {
-    let currentData = await fs.readFileSync(DATA_STORE);
+    const currentData = await fs.readFileSync(DATA_STORE);
     data = JSON.parse(currentData);
   } catch {
     data = {"run-list": [], "endpoints":[], "commits":{}, "overall-scores": {}, "web-vitals": {}};
@@ -132,16 +140,16 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 
   
   // Update web vitals section of output object
-  let webVitals = new Set(['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift']);
+  const webVitals = new Set(['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift']);
   
   for (const category of Object.keys(lhr['categories'])) {
-    let refs = lhr['categories'][category]['auditRefs'];
-    let keys = [];
+    const refs = lhr['categories'][category]['auditRefs'];
+    const keys = [];
     refs.map((ref) => keys.push(ref.id));
     for (const item of keys) {
-      let currentResults = {'scoreDisplayMode' : lhr['audits'][item]['scoreDisplayMode'], 'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
+      const currentResults = {'scoreDisplayMode' : lhr['audits'][item]['scoreDisplayMode'], 'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
       if (!webVitals.has(item) && !fullView) continue; 
-      let resultType = webVitals.has(item) ? 'web-vitals' : category;
+      const resultType = webVitals.has(item) ? 'web-vitals' : category;
 
       if (data[resultType] === undefined) data[resultType] = {};
       
@@ -175,10 +183,10 @@ async function initiateRefresh() {
   getRoutes();
   console.log(ENDPOINTS);
   await startServer();
-  let snapshotTimestamp = new Date().toISOString();
+  const snapshotTimestamp = new Date().toISOString();
 
   for (const endpoint of ENDPOINTS) {
-    let lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+    const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
     await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
   }
 
