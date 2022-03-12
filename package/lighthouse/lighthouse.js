@@ -35,10 +35,12 @@ async function initialize() {
 async function startDevServer() {
   const commands = `npx kill-port ${PORT} && cd ${PROJECT_FOLDER} &&
   ${SERVER_COMMAND}`;
-  await exec(commands, (err, stdOut, stdErr) => {
+  const runDev = await exec(commands, (err, stdOut, stdErr) => {
     console.log(err, stdOut, stdErr);
   });
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  runDev.on('exit', () => {
+    new Promise(resolve => setTimeout(resolve, 5000));
+  })
 }
 
 async function getRoutes() {
