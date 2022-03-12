@@ -34,30 +34,31 @@ const DescriptionContainer = () => {
       const title = data[key].title;
       // const description = data[key].description;
 
-      const scoreComponents = [];
-      if (!runValueArrSort.length) {
-        const dateFormat = new Date(runList[0]).toLocaleString();
-        scoreComponents.push(
-          <Typography key={dateFormat}>
-            {dateFormat} {data[key].results[currentEndpoint][runList[0]].score}
+      let scoreChange = "";
+      if (runValueArrSort.length === 2) {
+        const oldScore =
+          data[key].results[currentEndpoint][runValueArrSort[0]].score;
+        const newScore =
+          data[key].results[currentEndpoint][runValueArrSort[1]].score;
+        if (newScore > oldScore) scoreChange = "success.main";
+        else if (newScore === oldScore) scoreChange = "text.primary";
+        else if (newScore < oldScore) scoreChange = "error.main";
+      }
+      
+      const scoreComponents = runValueArrSort.map((cur, i) => {
+        const dateFormat = new Date(cur).toLocaleString();
+        return (
+          <Typography key={i} sx={{ color: scoreChange }}>
+            {dateFormat} {data[key].results[currentEndpoint][cur].score}
           </Typography>
         );
-      } else {
-        runValueArrSort.map((cur, i) => {
-          const dateFormat = new Date(cur).toLocaleString();
-          scoreComponents.push(
-            <Typography key={i}>
-              {dateFormat} {data[key].results[currentEndpoint][cur].score}
-            </Typography>
-          );
-        });
-      }
+      });
 
       dataComponents.push(
         <Tooltip title={title} key={title}>
           <Card>
             <Typography>{title}</Typography>
-            <Box id="score-components">{scoreComponents}</Box>
+            <Box id='score-components'>{scoreComponents}</Box>
           </Card>
         </Tooltip>
       );

@@ -39,7 +39,7 @@ export const currentViewSlice = createSlice({
       if (!state.runValueArr.includes(run)) {
         if (state.runValueArr.length >= 2) state.runValueArr.shift();
         state.runValueArr.push(run);
-        state.runValueArrSort = state.runValueArr.sort();
+        state.runValueArrSort = state.runValueArr.slice().sort();
       }
     },
   },
