@@ -85,9 +85,9 @@ async function getLighthouseResults(url, gitMessage) {
     output: 'html', 
     maxWaitForLoad: 10000, 
     port: chrome.port, 
-    extraHeaders: {
-      Authorization: '/*insert text*/'
-    }
+    // extraHeaders: {
+    //   Authorization: '/*insert text for potential auth qualifications*/'
+    // }
   };
   const runnerResult = await lighthouse(url, options);
 
