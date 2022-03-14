@@ -32,7 +32,7 @@ function initialize() {
     FULL_VIEW = configData.nextAppSettings.fullView === 1;
     //optimizes audit for desktop apps instead of the default mobile view
     if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
-    else CONFIG = {};
+    else CONFIG = {extends: 'lighthouse:default'};
   } catch {
     throw Error('Error accessing config file');
   }
