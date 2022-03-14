@@ -15,8 +15,8 @@ const App = () => {
       createTheme({
         palette: {
           primary: {
-            main: '#947fff',
-            light: '#cdc4ff',
+            main: '#881dff',
+            light: '#d9b6ff',
           },
           secondary: {
             main: '#46b7ff',
@@ -27,8 +27,17 @@ const App = () => {
             paper: '#222233',
           },
           text: {
-            primary: '#fff'
-          }
+            primary: '#efecfd'
+          },
+          success: {
+            main:'#47ff82'
+          },
+          warning: {
+            main:'#fff'
+          },
+          error: {
+            main:'#fff'
+          },
         }
       }),
   );

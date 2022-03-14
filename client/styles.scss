@@ -33,6 +33,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  padding-top: 20px;
 }
 
 #metric-container {
@@ -83,4 +84,9 @@
   // width:100vw;
   height:30px;
   padding-left: 20px;
+}
+#metricCircle{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }

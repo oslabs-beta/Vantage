@@ -10,10 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { getCurrentEndpoint, changeMetric } from "../store/currentViewSlice";
 import { ThemeContext } from "@emotion/react";
-import { useTheme } from '@mui/material/styles';
+import logo from '../assets/logo.png'
 
 const TitleContainer = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   // const mode = useSelector(getTheme);
   const currentEndpoint = useSelector(getCurrentEndpoint);
@@ -23,13 +22,19 @@ const TitleContainer = () => {
       <Box sx={{ 
         flexGrow: 1}}>
         <AppBar position='static'>
-          <Toolbar sx={{backgroundColor: theme.palette.background.paper}}>
+          <Toolbar sx={{backgroundColor: 'background.paper'}}>
+            <img src={logo} height = '50px' />
             {/* <MenuDrawer /> */}
-            <Typography color ='text.primary' variant='h6' component='div' sx={{ flexGrow: 1 }}>
+            <Typography 
+              color ='text.primary' 
+              variant='h6' 
+              component='div' 
+              marginLeft= '20px'
+              sx={{ flexGrow: 1 }}>
               Vantage
             </Typography>
             {/* <Brightness5Icon fontSize="small"/> */}
-            <DropDownMenu />
+            
             <Typography
               variant='h6'
               component='div'
@@ -39,6 +44,7 @@ const TitleContainer = () => {
             >
               Current Endpoint:
             </Typography>
+            
             <Typography
               variant='h6'
               component='div'
@@ -47,6 +53,7 @@ const TitleContainer = () => {
             >
               {currentEndpoint}
             </Typography>
+            <DropDownMenu />
             {/* <Switch
               className='darkModeSwitch'
               checked={mode === "dark"}

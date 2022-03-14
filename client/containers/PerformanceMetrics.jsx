@@ -56,7 +56,7 @@ const PerformanceMetrics = () => {
       key={cur.name}
       name={cur.name}
       value={cur.value}
-      size={50}
+      //size={50}
       handleClick={handleClick}
       isActive={currentPerfMetrics[cur.name]}
     />)
