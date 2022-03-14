@@ -10,6 +10,11 @@ const { waitForDebugger } = require('inspector');
 const kill = require('kill-port');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
+// Commit Message
+// const commitMsg = execSync("git log -1 --pretty=%B")
+//   .toString()
+//   .trim();
+
 // To do: Make these fields configurable during project setup
 let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
 const DATA_STORE = './data_store.json';

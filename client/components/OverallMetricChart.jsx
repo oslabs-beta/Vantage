@@ -8,8 +8,8 @@ import {
   Tooltip,
   Legend,
   Label,
-  AreaChart,
-  Area,
+  ReferenceArea,
+  ReferenceLine,
 } from "recharts";
 import {
   selectOverallScoreByEndpoint,
@@ -25,6 +25,9 @@ import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
 
 const OverallMetricChart = () => {
+  const [runA, runB] = useSelector(
+    (state) => state.currentView.runValueArrSort
+  );
   const dispatch = useDispatch();
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const commits = useSelector(selectCommits);
@@ -68,7 +71,7 @@ const OverallMetricChart = () => {
       }}
     >
       <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey={" "}>
+      <XAxis dataKey={"name"} style={{ opacity: 0 }}>
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
@@ -101,6 +104,8 @@ const OverallMetricChart = () => {
           strokeWidth={sw}
         />
       )}
+      {runB && <ReferenceArea x1={runA} x2={runB} />}
+      {/* <ReferenceLine x={runA} stroke="green" /> */}
     </LineChart>
   );
 };
