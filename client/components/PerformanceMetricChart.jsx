@@ -101,7 +101,7 @@ const PerformanceMetricChart = () => {
       type='monotone'
       dataKey={curr}
       stroke='#8884d8'
-      strokeWidth={3}
+      strokeWidth={2}
     />
   ));
 

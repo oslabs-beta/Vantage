@@ -23,8 +23,8 @@
 
 .active-metric {
   border-radius: 50%;
-  box-shadow: 0 0 40px 2px rgba(255, 217, 0, 0.516);
-  background-color: rgba(255, 217, 0, 0.21);
+  box-shadow: 0 0 20px 2px#55fffd;
+  //background-color:#e4e4e4;
 }
 
 #chart-container {
@@ -33,6 +33,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  padding-top: 20px;
 }
 
 #metric-container {
@@ -55,6 +56,7 @@
 
 .metric-container-inner {
   padding: 10px;
+  min-width: 530px;
 }
 
 .metric { 
@@ -83,4 +85,7 @@
   // width:100vw;
   height:30px;
   padding-left: 20px;
+}
+#metricCircle{
+  border-radius: 50%;
 }

@@ -19,14 +19,25 @@ const Metric = ({ name, value, handleClick, size, isActive }) => {
         cursor: "pointer",
       }}
     >
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <Box
+        id = 'metricCircle'
+        sx={{ 
+          position: "relative", 
+          display: "flex", 
+          alignContent:"center", 
+          justifyContent:"center",
+          paddingTop:"5px",
+          backgroundColor: "background.default",
+          width: size + 10 + 'px',
+          height: size + 10 + 'px'
+        }}>
         <CircularProgress
           className={activeClass}
           variant='determinate'
           color={color}
           value={value}
-          size={size}
-          thickness={3 + size / 30}
+          size= {size}
+          thickness={size / 35}
         />
         <Typography
           component='div'
