@@ -17,7 +17,7 @@ const installHooks = require('../git-hooks/gitHookInstall');
 //   .trim();
 
 // To do: Make these fields configurable during project setup
-let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW, CONFIG;
 const DATA_STORE = './data_store.json';
 
 // Initialize data from config file
@@ -30,6 +30,9 @@ function initialize() {
     PORT = configData.nextAppSettings.port;
     ENDPOINTS = configData.nextAppSettings.endpoints;
     FULL_VIEW = configData.nextAppSettings.fullView === 1;
+    //optimizes audit for desktop apps instead of the default mobile view
+    if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
+    else CONFIG = {};
   } catch {
     throw Error('Error accessing config file');
   }
@@ -95,7 +98,7 @@ async function getLighthouseResults(url, gitMessage) {
     //   Authorization: '/*insert text for potential auth qualifications*/'
     // }
   };
-  const runnerResult = await lighthouse(url, options);
+  const runnerResult = await lighthouse(url, options, CONFIG);
 
   // `.report` is the HTML report as a string
   const reportHtml = runnerResult.report;
