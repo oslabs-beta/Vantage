@@ -23,8 +23,12 @@ import {
 } from "../store/currentViewSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
+import { useTheme } from '@mui/material/styles';
+
 
 const OverallMetricChart = () => {
+  const theme = useTheme();
+
   const [runA, runB] = useSelector(
     (state) => state.currentView.runValueArrSort
   );
@@ -48,7 +52,7 @@ const OverallMetricChart = () => {
     };
   });
 
-  const sw = 3;
+  const sw = 2;
 
   const handleClick = (data) => {
     if (data) {
@@ -70,38 +74,47 @@ const OverallMetricChart = () => {
         bottom: 5,
       }}
     >
-      <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey={"name"} style={{ opacity: 0 }}>
+      <CartesianGrid /*horizontal={false} vertical={false}*/ />
+      <XAxis dataKey={"name"} tick={false}>
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
       <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
+      {(currentMetric === "default" || currentMetric === "Performance") && (
+        <Line
+          type='monotone'
+          dataKey='Performance'
+          stroke= {theme.palette.primary.main}
+          strokeWidth={sw}
+          dot={false}
+        />
+      )}
       {(currentMetric === "default" || currentMetric === "SEO") && (
-        <Line type='monotone' dataKey='SEO' stroke='#8884d8' strokeWidth={sw} />
+        <Line 
+          type='monotone' 
+          dataKey='SEO' 
+          stroke= {theme.palette.primary.light}
+          strokeWidth={sw}
+          dot={false} />
       )}
       {(currentMetric === "default" || currentMetric === "Best Practices") && (
         <Line
           type='monotone'
           dataKey='Best Practices'
-          stroke='#82ca9d'
+          stroke={theme.palette.secondary.main}
           strokeWidth={sw}
+          dot={false}
         />
       )}
-      {(currentMetric === "default" || currentMetric === "Performance") && (
-        <Line
-          type='monotone'
-          dataKey='Performance'
-          stroke='#ff0000'
-          strokeWidth={sw}
-        />
-      )}
+      
       {(currentMetric === "default" || currentMetric === "Accessibility") && (
         <Line
           type='monotone'
           dataKey='Accessibility'
-          stroke='#FFA500'
+          stroke={theme.palette.secondary.light}
           strokeWidth={sw}
+          dot={false}
         />
       )}
       {runB && <ReferenceArea x1={runA} x2={runB} />}

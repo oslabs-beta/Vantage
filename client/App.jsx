@@ -2,53 +2,44 @@ import React, {useEffect, useLayoutEffect, useMemo} from 'react';
 import MainContainer from './containers/MainContainer';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { getTheme } from './store/currentViewSlice';
+// import { getTheme } from './store/currentViewSlice';
 import { useSelector} from 'react-redux';
 import './styles.scss';
 
 
 const App = () => {
-  const mode = useSelector(getTheme);
+  // const mode = useSelector(getTheme);
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode,
-          ...(mode === 'light'
-            ? {
-              // palette values for light mode
-              primary: {
-                main: '#4b2271',
-                light: '#bab9d4',
-              },
-              secondary: {
-                main: '#283885',
-              },
-              background: {
-                default: '#bab9d4',
-                paper: '#ededf5',
-              },
-            }
-            : {
-              // palette values for dark mode
-              // primary: {
-              //   main: '#fff',
-              //   light: '#121212',
-              // },
-              // background: {
-              //   default: '#121212',
-              //   paper: '#121212',
-              // },
-              // text: {
-              //   primary: '#fff',
-              //   secondary: '#fff',
-              // },
-            }),
-          
-        },
+          primary: {
+            main: '#881dff',
+            light: '#d9b6ff',
+          },
+          secondary: {
+            main: '#46b7ff',
+            light: '#55fffe'
+          },
+          background: {
+            default: '#131219',
+            paper: '#222233',
+          },
+          text: {
+            primary: '#efecfd'
+          },
+          success: {
+            main:'#47ff82'
+          },
+          warning: {
+            main:'#e9f835'
+          },
+          error: {
+            main:'#ff4b4b'
+          },
+        }
       }),
-    [mode],
   );
 
   return (
