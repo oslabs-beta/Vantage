@@ -8,6 +8,7 @@ const { exec, execSync } = require('child_process');
 const { useDebugValue } = require('react');
 const { waitForDebugger } = require('inspector');
 const kill = require('kill-port');
+const installHooks = require('../git-hooks/gitHookInstall');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // Commit Message
@@ -16,7 +17,7 @@ const kill = require('kill-port');
 //   .trim();
 
 // To do: Make these fields configurable during project setup
-let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW;
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW, CONFIG;
 const DATA_STORE = './data_store.json';
 
 // Initialize data from config file
@@ -29,6 +30,9 @@ function initialize() {
     PORT = configData.nextAppSettings.port;
     ENDPOINTS = configData.nextAppSettings.endpoints;
     FULL_VIEW = configData.nextAppSettings.fullView === 1;
+    //optimizes audit for desktop apps instead of the default mobile view
+    if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
+    else CONFIG = {extends: 'lighthouse:default'};
   } catch {
     throw Error('Error accessing config file');
   }
@@ -94,7 +98,7 @@ async function getLighthouseResults(url, gitMessage) {
     //   Authorization: '/*insert text for potential auth qualifications*/'
     // }
   };
-  const runnerResult = await lighthouse(url, options);
+  const runnerResult = await lighthouse(url, options, CONFIG);
 
   // `.report` is the HTML report as a string
   const reportHtml = runnerResult.report;
@@ -111,7 +115,7 @@ async function getLighthouseResults(url, gitMessage) {
 }
 
 
-async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, fullView) {
+async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, fullView, lastResult) {
   // Process returned object based on our defined criteria
   // Get the existing JSON file for this project
   // Update it with new data
@@ -132,7 +136,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   data["endpoints"].push(endpoint);
   data["endpoints"] = Array.from(new Set(data["endpoints"]));
   if (oldestRun !== undefined) delete data["commits"][oldestRun]; 
-  data["commits"][snapshotTimestamp] = commitMessage;
+  data["commits"][snapshotTimestamp] = !lastResult ? ['PROCESSING IN PROGRESS, PLEASE WAIT', commitMessage] : commitMessage;
   if (data["overall-scores"][endpoint] === undefined) data["overall-scores"][endpoint] = {};
   if (oldestRun !== undefined) delete data["overall-scores"][endpoint][oldestRun]; 
   data["overall-scores"][endpoint][snapshotTimestamp] = {
@@ -183,16 +187,21 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
-  
-  initialize();
-  getRoutes();
-  console.log(ENDPOINTS);
-  await startServer();
-  const snapshotTimestamp = new Date().toISOString();
-
-  for (const endpoint of ENDPOINTS) {
-    const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
+  try {
+    installHooks();
+    initialize();
+    getRoutes();
+    console.log(ENDPOINTS);
+    await startServer();
+    const snapshotTimestamp = new Date().toISOString();
+    const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
+    for (const endpoint of ENDPOINTS) {
+      const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, FULL_VIEW, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
+    }
+  } catch(err) {
+    console.log('Vantage was unable to complete for this commit');
+    console.log(err);
   }
 
   console.log('All tests complete');
