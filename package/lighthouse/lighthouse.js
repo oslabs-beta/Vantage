@@ -184,16 +184,21 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
-  installHooks();
-  initialize();
-  getRoutes();
-  console.log(ENDPOINTS);
-  await startServer();
-  const snapshotTimestamp = new Date().toISOString();
-  const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
-  for (const endpoint of ENDPOINTS) {
-    const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, FULL_VIEW, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
+  try {
+    installHooks();
+    initialize();
+    getRoutes();
+    console.log(ENDPOINTS);
+    await startServer();
+    const snapshotTimestamp = new Date().toISOString();
+    const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
+    for (const endpoint of ENDPOINTS) {
+      const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, FULL_VIEW, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
+    }
+  } catch(err) {
+    console.log('Vantage was unable to complete for this commit');
+    console.log(err);
   }
 
   console.log('All tests complete');
