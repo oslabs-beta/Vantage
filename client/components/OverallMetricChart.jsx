@@ -52,7 +52,7 @@ const OverallMetricChart = () => {
     };
   });
 
-  const sw = 3;
+  const sw = 2;
 
   const handleClick = (data) => {
     if (data) {
@@ -74,8 +74,8 @@ const OverallMetricChart = () => {
         bottom: 5,
       }}
     >
-      <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey={"name"} style={{ opacity: 0 }}>
+      <CartesianGrid /*horizontal={false} vertical={false}*/ />
+      <XAxis dataKey={"name"} tick={false}>
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis />
@@ -87,6 +87,7 @@ const OverallMetricChart = () => {
           dataKey='Performance'
           stroke= {theme.palette.primary.main}
           strokeWidth={sw}
+          dot={false}
         />
       )}
       {(currentMetric === "default" || currentMetric === "SEO") && (
@@ -94,7 +95,8 @@ const OverallMetricChart = () => {
           type='monotone' 
           dataKey='SEO' 
           stroke= {theme.palette.primary.light}
-          strokeWidth={sw} />
+          strokeWidth={sw}
+          dot={false} />
       )}
       {(currentMetric === "default" || currentMetric === "Best Practices") && (
         <Line
@@ -102,6 +104,7 @@ const OverallMetricChart = () => {
           dataKey='Best Practices'
           stroke={theme.palette.secondary.main}
           strokeWidth={sw}
+          dot={false}
         />
       )}
       
@@ -111,6 +114,7 @@ const OverallMetricChart = () => {
           dataKey='Accessibility'
           stroke={theme.palette.secondary.light}
           strokeWidth={sw}
+          dot={false}
         />
       )}
       {runB && <ReferenceArea x1={runA} x2={runB} />}

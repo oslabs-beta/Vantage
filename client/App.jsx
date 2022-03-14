@@ -33,10 +33,10 @@ const App = () => {
             main:'#47ff82'
           },
           warning: {
-            main:'#fff'
+            main:'#e9f835'
           },
           error: {
-            main:'#fff'
+            main:'#ff4b4b'
           },
         }
       }),

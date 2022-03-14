@@ -28,14 +28,16 @@ const Metric = ({ name, value, handleClick, size, isActive }) => {
           justifyContent:"center",
           paddingTop:"5px",
           backgroundColor: "background.default",
+          width: size + 10 + 'px',
+          height: size + 10 + 'px'
         }}>
         <CircularProgress
           className={activeClass}
           variant='determinate'
           color={color}
           value={value}
-          size={size}
-          thickness={size / 40}
+          size= {size}
+          thickness={size / 35}
         />
         <Typography
           component='div'

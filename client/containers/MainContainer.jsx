@@ -14,8 +14,8 @@ const MainContainer = () => {
       <TitleContainer/>
       <Box id ="mainBox">
         <Box id='contentContainer'
-        sx={{width:'lg'}}
-         >
+          sx={{width:'lg'}}
+        >
           <MetricContainer/>
           <ChartContainer/>
           <DescriptionContainer/>
