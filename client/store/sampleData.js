@@ -3928,7 +3928,7 @@ export default {
         "/": {
           "2022-03-12T16:09:35.897Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .5,
             numericValue: 16,
             displayValue: "20 ms",
           },
@@ -3994,7 +3994,7 @@ export default {
           },
           "2022-03-12T16:34:54.090Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .5,
             numericValue: 16,
             displayValue: "20 ms",
           },
@@ -4442,19 +4442,19 @@ export default {
         "/": {
           "2022-03-12T16:09:35.897Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .5,
             numericValue: 938.6175000000001,
             displayValue: "0.9 s",
           },
           "2022-03-12T16:12:08.662Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .5,
             numericValue: 942.21,
             displayValue: "0.9 s",
           },
           "2022-03-12T16:13:31.795Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .5,
             numericValue: 938.9150000000001,
             displayValue: "0.9 s",
           },

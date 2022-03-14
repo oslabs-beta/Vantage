@@ -48,8 +48,9 @@
   margin-bottom: 10px;
 }
 
-#score-components {
+.suggestion {
   display: flex;
+  flex-direction: row;
   gap: 2rem;
 }
 
@@ -83,4 +84,14 @@
   // width:100vw;
   height:30px;
   padding-left: 20px;
+}
+
+.score-improvement {
+  background-color: green;
+}
+.score-disimprove {
+  background-color: red;
+}
+.score-same {
+  color: yellow !important;
 }

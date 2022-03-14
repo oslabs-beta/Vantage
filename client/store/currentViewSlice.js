@@ -4,7 +4,7 @@ export const currentViewSlice = createSlice({
   name: "currentView",
   initialState: {
     // theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light",
-    theme: "light",
+    theme: "dark",
     currentMetric: "default",
     currentEndpoint: "/",
     performanceMetrics: {
