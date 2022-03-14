@@ -74,10 +74,13 @@
   }
 }
 #footer {
-  position:absolute;
-  display: flex;
-  justify-content: flex-end;
+  position: fixed;
+  // display: flex;
+  // justify-content: flex-end;
+  top: auto;
+  // top: 85vh;
   bottom:0;
-  width:100vw;
-  height:40px;
+  // width:100vw;
+  height:30px;
+  padding-left: 20px;
 }

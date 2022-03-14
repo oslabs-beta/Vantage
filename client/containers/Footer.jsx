@@ -1,24 +1,23 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
+import { AppBar, Link, Typography } from '@mui/material';
 
 
 
 const Footer = () => {
-  const theme = useTheme();
-  const footerColor = () => {
-    if (theme.palette.mode == 'dark') return '#1e1e1e';
-    else return theme.palette.primary.main;
-  };
+  // const theme = useTheme();
+  // const footerColor = () => {
+  //   if (theme.palette.mode == 'dark') return '#1e1e1e';
+  //   else return theme.palette.primary.main;
+  // };
   return (
-    <div id="footer"
-      style= {{backgroundColor: `${footerColor()}`}}
-    >
-      <div id="lh-logo-container">
-        <a href="https://developers.google.com/web/tools/lighthouse">
+    <AppBar id="footer">
+      <Typography id="lh-logo-container">
+        <Link href="https://developers.google.com/web/tools/lighthouse" color='inherit'>
             Powered by Lighthouse
-        </a>
-      </div>
-    </div>
+        </Link>
+      </Typography>
+    </AppBar>
   );
 };
 
