@@ -10,7 +10,7 @@
     "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script && open ./dist/index.html",
     "start": "open ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
-    "snapshot": " node ./package/lighthouse/lighthouse.js"
+    "snapshot": "node ./package/lighthouse/lighthouse.js"
   },
   "repository": {
     "type": "git",

@@ -8,6 +8,7 @@ const { exec, execSync } = require('child_process');
 const { useDebugValue } = require('react');
 const { waitForDebugger } = require('inspector');
 const kill = require('kill-port');
+const installHooks = require('../git-hooks/gitHookInstall');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // Commit Message
@@ -111,7 +112,7 @@ async function getLighthouseResults(url, gitMessage) {
 }
 
 
-async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, fullView) {
+async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, fullView, lastResult) {
   // Process returned object based on our defined criteria
   // Get the existing JSON file for this project
   // Update it with new data
@@ -132,7 +133,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   data["endpoints"].push(endpoint);
   data["endpoints"] = Array.from(new Set(data["endpoints"]));
   if (oldestRun !== undefined) delete data["commits"][oldestRun]; 
-  data["commits"][snapshotTimestamp] = commitMessage;
+  data["commits"][snapshotTimestamp] = !lastResult ? ['PROCESSING IN PROGRESS, PLEASE WAIT', commitMessage] : commitMessage;
   if (data["overall-scores"][endpoint] === undefined) data["overall-scores"][endpoint] = {};
   if (oldestRun !== undefined) delete data["overall-scores"][endpoint][oldestRun]; 
   data["overall-scores"][endpoint][snapshotTimestamp] = {
@@ -183,16 +184,16 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
-  
+  installHooks();
   initialize();
   getRoutes();
   console.log(ENDPOINTS);
   await startServer();
   const snapshotTimestamp = new Date().toISOString();
-
+  const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
   for (const endpoint of ENDPOINTS) {
     const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, "Sample commit message", FULL_VIEW);
+    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, FULL_VIEW, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
   }
 
   console.log('All tests complete');
