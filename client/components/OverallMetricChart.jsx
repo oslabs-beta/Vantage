@@ -23,8 +23,12 @@ import {
 } from "../store/currentViewSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
+import { useTheme } from '@mui/material/styles';
+
 
 const OverallMetricChart = () => {
+  const theme = useTheme();
+
   const [runA, runB] = useSelector(
     (state) => state.currentView.runValueArrSort
   );
@@ -77,30 +81,35 @@ const OverallMetricChart = () => {
       <YAxis />
       <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
+      {(currentMetric === "default" || currentMetric === "Performance") && (
+        <Line
+          type='monotone'
+          dataKey='Performance'
+          stroke= {theme.palette.primary.main}
+          strokeWidth={sw}
+        />
+      )}
       {(currentMetric === "default" || currentMetric === "SEO") && (
-        <Line type='monotone' dataKey='SEO' stroke='#8884d8' strokeWidth={sw} />
+        <Line 
+          type='monotone' 
+          dataKey='SEO' 
+          stroke= {theme.palette.primary.light}
+          strokeWidth={sw} />
       )}
       {(currentMetric === "default" || currentMetric === "Best Practices") && (
         <Line
           type='monotone'
           dataKey='Best Practices'
-          stroke='#82ca9d'
+          stroke={theme.palette.secondary.main}
           strokeWidth={sw}
         />
       )}
-      {(currentMetric === "default" || currentMetric === "Performance") && (
-        <Line
-          type='monotone'
-          dataKey='Performance'
-          stroke='#ff0000'
-          strokeWidth={sw}
-        />
-      )}
+      
       {(currentMetric === "default" || currentMetric === "Accessibility") && (
         <Line
           type='monotone'
           dataKey='Accessibility'
-          stroke='#FFA500'
+          stroke={theme.palette.secondary.light}
           strokeWidth={sw}
         />
       )}

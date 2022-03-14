@@ -5,23 +5,27 @@ import { Button, AppBar, Box, Toolbar } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTheme, getTheme } from "../store/currentViewSlice";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
+// import { changeTheme, getTheme } from "../store/currentViewSlice";
+// import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { getCurrentEndpoint, changeMetric } from "../store/currentViewSlice";
+import { ThemeContext } from "@emotion/react";
+import { useTheme } from '@mui/material/styles';
 
 const TitleContainer = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
-  const mode = useSelector(getTheme);
+  // const mode = useSelector(getTheme);
   const currentEndpoint = useSelector(getCurrentEndpoint);
 
   return (
     <div id='titleContainer'>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ 
+        flexGrow: 1}}>
         <AppBar position='static'>
-          <Toolbar>
+          <Toolbar sx={{backgroundColor: theme.palette.background.paper}}>
             {/* <MenuDrawer /> */}
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+            <Typography color ='text.primary' variant='h6' component='div' sx={{ flexGrow: 1 }}>
               Vantage
             </Typography>
             {/* <Brightness5Icon fontSize="small"/> */}
@@ -29,26 +33,27 @@ const TitleContainer = () => {
             <Typography
               variant='h6'
               component='div'
+              color ='text.primary'
               sx={{ px: 1, cursor: "pointer" }}
               onClick={(_) => dispatch(changeMetric("default"))}
             >
               Current Endpoint:
             </Typography>
             <Typography
-              variant='h4'
+              variant='h6'
               component='div'
               sx={{ flexGrow: 1, cursor: "pointer"}}
               onClick={(_) => dispatch(changeMetric("default"))}
             >
               {currentEndpoint}
             </Typography>
-            <Switch
+            {/* <Switch
               className='darkModeSwitch'
               checked={mode === "dark"}
               onChange={() => dispatch(changeTheme())}
               inputProps={{ "aria-label": "controlled" }}
             />
-            <DarkModeIcon fontSize='small' />
+            <DarkModeIcon fontSize='small' /> */}
             {/* <Button color="inherit">Refresh</Button> */}
           </Toolbar>
         </AppBar>
