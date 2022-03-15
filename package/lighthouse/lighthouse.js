@@ -18,7 +18,7 @@ const htmlOutput = require('./html-script');
 //   .trim();
 
 // To do: Make these fields configurable during project setup
-let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW, CONFIG;
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG;
 const DATA_STORE = './vantage/data_store.json';
 
 // Initialize data from config file
@@ -30,7 +30,6 @@ function initialize() {
     BUILD_COMMAND = configData.nextAppSettings.buildCommand;
     PORT = configData.nextAppSettings.port;
     ENDPOINTS = configData.nextAppSettings.endpoints;
-    FULL_VIEW = configData.nextAppSettings.fullView === 1;
     //optimizes audit for desktop apps instead of the default mobile view
     if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
     else CONFIG = {extends: 'lighthouse:default'};
@@ -116,7 +115,7 @@ async function getLighthouseResults(url, gitMessage) {
 }
 
 
-async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, fullView, lastResult) {
+async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, lastResult) {
   // Process returned object based on our defined criteria
   // Get the existing JSON file for this project
   // Update it with new data
@@ -129,13 +128,21 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   } catch {
     data = {"run-list": [], "endpoints":[], "commits":{}, "overall-scores": {}, "web-vitals": {}};
   }
+
+  // If more than 10 runs are present, store the oldest timestamp for use during delete lines below
   let oldestRun;
-  if (data["run-list"].length > 10) oldestRun = data["run-list"].shift();
+  if (data["run-list"].length >= 10) {
+    if (!lastResult) oldestRun = data["run-list"][0];
+    else oldestRun = data["run-list"].shift();
+  }
+
   // Parse through lhr and handle its current contents
   data["run-list"].push(snapshotTimestamp);
   data["run-list"] = Array.from(new Set(data["run-list"]));
   data["endpoints"].push(endpoint);
   data["endpoints"] = Array.from(new Set(data["endpoints"]));
+
+
   if (oldestRun !== undefined) delete data["commits"][oldestRun]; 
   data["commits"][snapshotTimestamp] = !lastResult ? ['PROCESSING IN PROGRESS, PLEASE WAIT', commitMessage] : commitMessage;
   if (data["overall-scores"][endpoint] === undefined) data["overall-scores"][endpoint] = {};
@@ -158,7 +165,6 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
     refs.map((ref) => keys.push(ref.id));
     for (const item of keys) {
       const currentResults = {'scoreDisplayMode' : lhr['audits'][item]['scoreDisplayMode'], 'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
-      if (!webVitals.has(item) && !fullView) continue; 
       const resultType = webVitals.has(item) ? 'web-vitals' : category;
 
       if (data[resultType] === undefined) data[resultType] = {};
@@ -206,7 +212,7 @@ async function initiateRefresh() {
     const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
     for (const endpoint of ENDPOINTS) {
       const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, FULL_VIEW, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
+      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
     }
     htmlOutput();
     
