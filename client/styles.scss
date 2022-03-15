@@ -19,6 +19,8 @@
   grid-template-columns: repeat(2,1fr);
   column-gap: 1rem;
   animation: fadeIn .5s;
+  align-content: center;
+  row-gap: 10px;
 }
 
 .active-metric {
@@ -33,7 +35,12 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-top: 20px;
+  // padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.all-charts {
+  margin-top: 30px;
 }
 
 #metric-container {

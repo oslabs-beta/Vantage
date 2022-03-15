@@ -61,8 +61,8 @@ const OverallMetricChart = () => {
 
   return (
     <LineChart
+      className="all-charts"
       onClick={handleClick}
-      id='performance-chart'
       width={500}
       height={300}
       data={data}
@@ -77,7 +77,7 @@ const OverallMetricChart = () => {
       <XAxis dataKey={"name"} tick={false}>
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
-      <YAxis />
+      <YAxis /*domain={['dataMin', 'dataMax']}*/ />
       <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
       {(currentMetric === "default" || currentMetric === "Performance") && (

@@ -8,51 +8,71 @@ import { useDispatch, useSelector } from "react-redux";
 // import { changeTheme, getTheme } from "../store/currentViewSlice";
 // import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
-import { getCurrentEndpoint, changeMetric } from "../store/currentViewSlice";
+import {
+  getCurrentEndpoint,
+  changeMetric,
+  resetRunValue,
+} from "../store/currentViewSlice";
 import { ThemeContext } from "@emotion/react";
-import logo from '../assets/logo.png';
+import logo from "../assets/logo.png";
 
 const TitleContainer = () => {
   const dispatch = useDispatch();
   // const mode = useSelector(getTheme);
   const currentEndpoint = useSelector(getCurrentEndpoint);
 
+  const handleClick = () => {
+    dispatch(changeMetric("default"));
+    dispatch(resetRunValue());
+  };
+
   return (
     <div id='titleContainer'>
-      <Box sx={{ 
-        flexGrow: 1}}>
+      <Box
+        sx={{
+          flexGrow: 1,
+        }}
+      >
         <AppBar position='static'>
-          <Toolbar sx={{backgroundColor: 'background.paper'}}>
-            <img src={logo} height = '50px' />
-            {/* <MenuDrawer /> */}
-            <Typography 
-              color ='text.primary' 
-              variant='h6' 
-              component='div' 
-              marginLeft= '20px'
-              sx={{ flexGrow: 1 }}>
-              Vantage
-            </Typography>
+          <Toolbar
+            sx={{
+              backgroundColor: "background.paper",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <img src={logo} height='50px' />
+              {/* <MenuDrawer /> */}
+              <Typography
+                color='text.primary'
+                variant='h6'
+                component='div'
+                marginLeft='20px'
+                sx={{ flexGrow: 1 }}
+              >
+                Vantage
+              </Typography>
+            </Box>
             {/* <Brightness5Icon fontSize="small"/> */}
-            
-            <Typography
-              variant='h6'
-              component='div'
-              color ='text.primary'
-              sx={{ px: 1, cursor: "pointer" }}
-              onClick={(_) => dispatch(changeMetric("default"))}
+
+            <Box
+              sx={{ display: "flex", cursor: "pointer" }}
+              onClick={handleClick}
             >
-              Current Endpoint:
-            </Typography>
-            
-            <Typography
-              variant='h6'
-              component='div'
-              sx={{ flexGrow: 1, cursor: "pointer"}}
-              // onClick={(_) => dispatch(changeMetric("default"))}
-            >
-              {currentEndpoint}
-            </Typography>
+              <Typography
+                variant='h6'
+                component='div'
+                color='text.primary'
+                sx={{ px: 1 }}
+              >
+                Current Endpoint:
+              </Typography>
+
+              <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                {currentEndpoint}
+              </Typography>
+            </Box>
+
             <DropDownMenu />
             {/* <Switch
               className='darkModeSwitch'
