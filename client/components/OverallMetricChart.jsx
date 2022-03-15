@@ -24,7 +24,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
 import { useTheme } from "@mui/material/styles";
-import { CatchingPokemonSharp } from "@mui/icons-material";
 
 const OverallMetricChart = () => {
   const theme = useTheme();
