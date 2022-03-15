@@ -25,9 +25,9 @@ const MetricContainer = () => {
   const mostRecentOverallScore = overallScore[mostRecentRun];
 
   //Set the selected run to the latest initially
-  useEffect(() => {
-    dispatch(addRunValue(runList[runList.length - 1]));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(addRunValue(runList[runList.length - 1]));
+  // }, []);
 
   const handleClick = (metric) => {
     dispatch(changeMetric(metric));
