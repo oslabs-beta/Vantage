@@ -60,7 +60,7 @@ body {
   flex-direction: column;
   gap: .3rem;
   margin-bottom: 10px;
-  height: 300px;
+  height: calc(100vh - 519px);
   overflow: auto;
 }
 
