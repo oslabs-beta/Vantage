@@ -20,6 +20,7 @@ const Metric = ({ name, value, handleClick, size, isActive }) => {
       }}
     >
       <Box
+        className={activeClass}
         id = 'metricCircle'
         sx={{ 
           position: "relative", 
@@ -32,7 +33,6 @@ const Metric = ({ name, value, handleClick, size, isActive }) => {
           height: size + 10 + 'px'
         }}>
         <CircularProgress
-          className={activeClass}
           variant='determinate'
           color={color}
           value={value}

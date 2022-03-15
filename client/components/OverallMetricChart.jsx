@@ -23,8 +23,7 @@ import {
 } from "../store/currentViewSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
-import { useTheme } from '@mui/material/styles';
-
+import { useTheme } from "@mui/material/styles";
 
 const OverallMetricChart = () => {
   const theme = useTheme();
@@ -103,7 +102,8 @@ const OverallMetricChart = () => {
           filter="url(#shadow)"
           stroke= {theme.palette.primary.light}
           strokeWidth={sw}
-          dot={false} />
+          dot={false}
+        />
       )}
       {(currentMetric === "default" || currentMetric === "Best Practices") && (
         <Line
@@ -115,7 +115,7 @@ const OverallMetricChart = () => {
           dot={false}
         />
       )}
-      
+
       {(currentMetric === "default" || currentMetric === "Accessibility") && (
         <Line
           type='monotone'
@@ -126,8 +126,15 @@ const OverallMetricChart = () => {
           dot={false}
         />
       )}
-      {runB && <ReferenceArea x1={runA} x2={runB} />}
-      {/* <ReferenceLine x={runA} stroke="green" /> */}
+      {runB && (
+        <ReferenceArea
+          x1={runA}
+          x2={runB}
+          fill={theme.palette.primary.light}
+        />
+      )}
+      <ReferenceLine x={runA} stroke={theme.palette.primary.light} />
+      <ReferenceLine x={runB} stroke={theme.palette.primary.light} />
     </LineChart>
   );
 };

@@ -1,9 +1,9 @@
-import React, {useEffect, useLayoutEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import MainContainer from './containers/MainContainer';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { getTheme } from './store/currentViewSlice';
-import { useSelector} from 'react-redux';
+// import { useSelector, useDispatch} from 'react-redux';
 import './styles.scss';
 
 

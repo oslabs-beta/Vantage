@@ -9,6 +9,7 @@ import {
   Legend,
   Label,
   ReferenceArea,
+  ReferenceLine,
 } from "recharts";
 import CustomTooltip from "./CustomTooltip";
 import {
@@ -21,11 +22,13 @@ import {
   getCurrentEndpoint,
   getCurrentMetric,
   selectPerformanceMetrics,
-  addRunValue
+  addRunValue,
 } from "../store/currentViewSlice.js";
 import { useSelector, useDispatch } from "react-redux";
+import { useTheme } from "@mui/material/styles";
 
 const PerformanceMetricChart = () => {
+  const theme = useTheme();
   const [runA, runB] = useSelector(
     (state) => state.currentView.runValueArrSort
   );
@@ -137,7 +140,11 @@ const PerformanceMetricChart = () => {
       />
       <Legend />
       {lineComponents}
-      {runB && <ReferenceArea x1={runA} x2={runB} />}
+      {runB && (
+        <ReferenceArea x1={runA} x2={runB} fill={theme.palette.primary.light} />
+      )}
+      <ReferenceLine x={runA} stroke={theme.palette.primary.light} />
+      <ReferenceLine x={runB} stroke={theme.palette.primary.light} />
     </LineChart>
   );
 };
