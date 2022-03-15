@@ -170,6 +170,14 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
         delete data[resultType][item]['displayValue'];
         delete data[resultType][item]['details'];
         delete data[resultType][item]['scoreDisplayMode'];
+
+        // Pull URL out of description 
+        try {
+          data[resultType][item]['url'] = data[resultType][item]['description'].match(/\[Learn [Mm]ore\]\((.+)\)/)[1];
+          data[resultType][item]['description'] = data[resultType][item]['description'].match(/(.*)\[Learn [Mm]ore\]/)[1];
+        } catch {
+          data[resultType][item]['url'] = null;
+        }
         
         data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
       } else if (data[resultType][item]['results'][endpoint] === undefined) {
