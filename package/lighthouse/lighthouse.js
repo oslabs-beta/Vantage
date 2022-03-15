@@ -9,6 +9,7 @@ const { useDebugValue } = require('react');
 const { waitForDebugger } = require('inspector');
 const kill = require('kill-port');
 const installHooks = require('../git-hooks/gitHookInstall');
+const htmlOutput = require('./html-script');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
 // Commit Message
@@ -18,12 +19,12 @@ const installHooks = require('../git-hooks/gitHookInstall');
 
 // To do: Make these fields configurable during project setup
 let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, FULL_VIEW, CONFIG;
-const DATA_STORE = './data_store.json';
+const DATA_STORE = './vantage/data_store.json';
 
 // Initialize data from config file
 function initialize() {
   try {
-    const currentData = fs.readFileSync('./vantage_config.json');
+    const currentData = fs.readFileSync('./vantage/vantage_config.json');
     const configData = JSON.parse(currentData);
     SERVER_COMMAND = configData.nextAppSettings.serverCommand;
     BUILD_COMMAND = configData.nextAppSettings.buildCommand;
@@ -170,6 +171,14 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
         delete data[resultType][item]['displayValue'];
         delete data[resultType][item]['details'];
         delete data[resultType][item]['scoreDisplayMode'];
+
+        // Pull URL out of description 
+        try {
+          data[resultType][item]['url'] = data[resultType][item]['description'].match(/\[Learn [Mm]ore\]\((.+)\)/)[1];
+          data[resultType][item]['description'] = data[resultType][item]['description'].match(/(.*)\[Learn [Mm]ore\]/)[1];
+        } catch {
+          data[resultType][item]['url'] = null;
+        }
         
         data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
       } else if (data[resultType][item]['results'][endpoint] === undefined) {
@@ -199,13 +208,15 @@ async function initiateRefresh() {
       const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
       await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, FULL_VIEW, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
     }
+    htmlOutput();
+    
   } catch(err) {
     console.log('Vantage was unable to complete for this commit');
     console.log(err);
   }
 
   console.log('All tests complete');
-  process.exit();
+  process.exit(1);
 }
 
 initiateRefresh();
