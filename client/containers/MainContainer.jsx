@@ -27,14 +27,7 @@ const MainContainer = () => {
           <ChartContainer/>
           <DescriptionContainer/>
         </Box>
-<<<<<<< HEAD
-        <Box style={{width:'100%',bottom:'0',height:'40px'}}>
-          {/* <Waves/> */}
-          <Footer />
-        </Box>
-=======
         <Footer />
->>>>>>> dev
       </Box>
     </div>
   );

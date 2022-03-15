@@ -29,13 +29,13 @@ export default function DropDownMenu() {
   );
   
   return (
-    <Box >
+    <Box sx={{width: "138px", display: "flex", justifyContent: "flex-end"}}>
       <IconButton
         size="large"
-        // edge="start"
+        // edge="end"
         color="inherit"
         aria-label="menu"
-        sx={{ mt: 0 }}
+        sx={{ mt: 0, right: 0, display: "relative" }}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}

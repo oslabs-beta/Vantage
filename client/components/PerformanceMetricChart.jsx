@@ -110,6 +110,7 @@ const PerformanceMetricChart = () => {
 
   return (
     <LineChart
+      className="all-charts"
       onClick={handleClick}
       width={500}
       height={300}
@@ -132,7 +133,7 @@ const PerformanceMetricChart = () => {
       <XAxis dataKey={"name"} style={{ opacity: 0 }}>
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
-      <YAxis />
+      <YAxis /*domain={['dataMin', 'dataMax']}*/ />
       <Tooltip
         content={
           <CustomTooltip commits={commits} unit={unit} runList={runList} />
