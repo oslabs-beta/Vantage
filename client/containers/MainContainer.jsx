@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import DescriptionContainer from './DescriptionContainer';
 import Footer from './Footer';
+// import Waves from '../components/Waves';
 
 
 const MainContainer = () => {
@@ -21,6 +22,7 @@ const MainContainer = () => {
           <DescriptionContainer/>
         </Box>
         <Box style={{width:'100%',bottom:'0',height:'40px'}}>
+          {/* <Waves/> */}
           <Footer />
         </Box>
       </Box>
