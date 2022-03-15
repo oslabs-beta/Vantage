@@ -12,8 +12,10 @@ import {
   selectOverallScoreByEndpoint,
   selectRunList,
 } from "../store/dataSlice.js";
+import { useTheme } from "@mui/material/styles";
 
 const DescriptionContainer = () => {
+  const theme = useTheme();
   const currentMetric = useSelector(getCurrentMetric);
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const runList = useSelector(selectRunList);
@@ -29,7 +31,7 @@ const DescriptionContainer = () => {
   );
 
   const dataComponents = [];
-  if (data && runValueArrSort.length === 2) {
+  if (data && runValueArrSort.length) {
     for (const key in data) {
       const title = data[key].title;
       const description = data[key].description;
@@ -37,34 +39,48 @@ const DescriptionContainer = () => {
 
       //Get numeric difference
       const earlyRun = runValueArrSort[0];
-      const earlyDateFormat = new Date(earlyRun).toLocaleString();
-      const lateRun = runValueArrSort[1];
-      const lateDateFormat = new Date(lateRun).toLocaleString();
 
-      const numericDiff = numericUnit
-        ? Math.round(
-          data[key].results[currentEndpoint][lateRun].numericValue -
-              data[key].results[currentEndpoint][earlyRun].numericValue
-        )
-        : "";
+      let lateRun, scoreColor, numericDiff, scoreDiff;
+      if (runValueArrSort[1]) {
+        lateRun = runValueArrSort[1];
 
-      const scoreDiff =
-        data[key].results[currentEndpoint][lateRun].score -
-        data[key].results[currentEndpoint][earlyRun].score;
+        numericDiff = numericUnit
+          ? Math.round(
+            data[key].results[currentEndpoint][lateRun].numericValue -
+                data[key].results[currentEndpoint][earlyRun].numericValue
+          )
+          : "";
 
-      // console.log(title, scoreDiff);
-      console.log(
-        title,
-        data[key].results[currentEndpoint][lateRun].score,
-        data[key].results[currentEndpoint][earlyRun].score
-      );
+        scoreDiff = Math.round(
+          (data[key].results[currentEndpoint][lateRun].score -
+            data[key].results[currentEndpoint][earlyRun].score) *
+            100
+        );
 
-      const scoreColor =
-        scoreDiff > 0
-          ? "success.main"
-          : scoreDiff < 0
-            ? "error.main"
-            : "";
+        scoreColor =
+          scoreDiff > 0
+            ? theme.palette.success.dark
+            : scoreDiff < 0
+              ? theme.palette.error.main
+              : null;
+
+        //Only viewing one run
+      } else {
+        numericDiff = numericUnit
+          ? Math.round(
+            data[key].results[currentEndpoint][earlyRun].numericValue
+          )
+          : "";
+        scoreDiff =
+          Math.round(data[key].results[currentEndpoint][earlyRun].score * 100);
+        
+        scoreColor =
+          scoreDiff > 90
+            ? theme.palette.success.dark
+            : scoreDiff > 70
+              ? theme.palette.warning.dark
+              : theme.palette.error.main;
+      }
 
       const unitMap = {
         millisecond: "ms",
@@ -73,7 +89,7 @@ const DescriptionContainer = () => {
       };
 
       if (
-        data[key].results[currentEndpoint][lateRun].scoreDisplay !==
+        data[key].results[currentEndpoint][earlyRun].scoreDisplay !==
         "notApplicable"
       ) {
         dataComponents.push(
@@ -81,7 +97,13 @@ const DescriptionContainer = () => {
             <Card className={"suggestion"} sx={{ bgcolor: scoreColor }}>
               <Typography>{title}</Typography>
               <Typography>
-                {numericDiff} {unitMap[numericUnit]}
+                {numericUnit ? (
+                  <>
+                    {numericDiff} {unitMap[numericUnit]}
+                  </>
+                ) : (
+                  <>{scoreDiff}</>
+                )}
               </Typography>
             </Card>
           </Tooltip>

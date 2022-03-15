@@ -4957,22 +4957,22 @@ export default {
           },
           "2022-03-12T16:24:49.438Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .6,
             numericValue: 0,
           },
           "2022-03-12T16:26:08.985Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .7,
             numericValue: 0,
           },
           "2022-03-12T16:27:55.454Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .8,
             numericValue: 0,
           },
           "2022-03-12T16:29:29.601Z": {
             scoreDisplayMode: "numeric",
-            score: 1,
+            score: .9,
             numericValue: 0,
           },
           "2022-03-12T16:34:54.090Z": {
@@ -51448,27 +51448,27 @@ export default {
           },
           "2022-03-12T16:21:32.290Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .4,
           },
           "2022-03-12T16:23:08.011Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .5,
           },
           "2022-03-12T16:24:49.438Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .6,
           },
           "2022-03-12T16:26:08.985Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .7,
           },
           "2022-03-12T16:27:55.454Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .8,
           },
           "2022-03-12T16:29:29.601Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .9,
           },
           "2022-03-12T16:34:54.090Z": {
             scoreDisplayMode: "binary",
@@ -51552,23 +51552,23 @@ export default {
           },
           "2022-03-12T16:23:08.011Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .5,
           },
           "2022-03-12T16:24:49.438Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .6,
           },
           "2022-03-12T16:26:08.985Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .7,
           },
           "2022-03-12T16:27:55.454Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .8,
           },
           "2022-03-12T16:29:29.601Z": {
             scoreDisplayMode: "binary",
-            score: 1,
+            score: .9,
           },
           "2022-03-12T16:34:54.090Z": {
             scoreDisplayMode: "binary",

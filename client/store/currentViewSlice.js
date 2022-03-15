@@ -36,11 +36,9 @@ export const currentViewSlice = createSlice({
     },
     addRunValue: (state, action) => {
       const run = action.payload;
-      if (!state.runValueArr.includes(run)) {
-        if (state.runValueArr.length >= 2) state.runValueArr.shift();
-        state.runValueArr.push(run);
-        state.runValueArrSort = state.runValueArr.slice().sort();
-      }
+      if (state.runValueArr.length >= 2) state.runValueArr.shift();
+      if (run !== state.runValueArr[0]) state.runValueArr.push(run);
+      state.runValueArrSort = state.runValueArr.slice().sort();
     },
   },
 });
