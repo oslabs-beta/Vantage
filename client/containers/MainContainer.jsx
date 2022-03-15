@@ -8,11 +8,17 @@ import DescriptionContainer from './DescriptionContainer';
 import Footer from './Footer';
 
 
+
 const MainContainer = () => {
   return(
-    <div id="mainContainer">
+    <div id="mainContainer"
+    >
       <TitleContainer/>
-      <Box id ="mainBox">
+      <Box id ="mainBox"
+        style={{
+          
+        }}
+      >
         <Box id='contentContainer'
           sx={{width:'lg'}}
         >
@@ -20,9 +26,7 @@ const MainContainer = () => {
           <ChartContainer/>
           <DescriptionContainer/>
         </Box>
-        <Box style={{width:'100%',bottom:'0',height:'40px'}}>
-          <Footer />
-        </Box>
+        <Footer />
       </Box>
     </div>
   );

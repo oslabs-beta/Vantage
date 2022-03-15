@@ -1,14 +1,20 @@
-
+body {
+  margin-bottom: 0;
+  background-image :url('./assets/layered-waves.svg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% auto
+}
 #mainBox {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 15px;
   position: relative;
-  // height: '100vh'
+  height: '100vh';
+  
 }
 #contentContainer {
-  padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,11 +25,13 @@
   grid-template-columns: repeat(2,1fr);
   column-gap: 1rem;
   animation: fadeIn .5s;
+  align-content: center;
+  row-gap: 10px;
 }
 
 .active-metric {
   border-radius: 50%;
-  box-shadow: 0 0 20px 2px#55fffd;
+  box-shadow: 0 0 10px 2px#55fffc6b;
   //background-color:#e4e4e4;
 }
 
@@ -33,7 +41,12 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-top: 20px;
+  // padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.all-charts {
+  margin-top: 30px;
 }
 
 #metric-container {
@@ -47,6 +60,8 @@
   flex-direction: column;
   gap: .3rem;
   margin-bottom: 10px;
+  height: calc(100vh - 519px);
+  overflow: auto;
 }
 
 .suggestion {
@@ -54,6 +69,7 @@
   flex-direction: row;
   gap: 2rem;
   padding: .5em;
+  min-height: 3em;
   p {
     font-size: smaller;
     font-weight: 800;
@@ -81,17 +97,38 @@
     opacity: 1;
   }
 }
+
 #footer {
   position: fixed;
-  // display: flex;
-  // justify-content: flex-end;
   top: auto;
-  // top: 85vh;
   bottom:0;
-  // width:100vw;
   height:30px;
   padding-left: 20px;
 }
 #metricCircle{
   border-radius: 50%;
 }
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+  // height: 15px;
+  }
+  
+  ::-webkit-scrollbar-track {
+  border: 1px solid black;
+  border-radius: 15px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+  background: rgb(91, 91, 91);  
+  border-radius: 15px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+  background: rgb(123, 123, 123);  
+  }
+  // background: linear-gradient(326deg, rgb(23, 23, 23) 0%, rgb(39, 36, 58) 48%, rgb(53, 51, 72) 100%);
+  // border-style: solid;
+  // border-color: #1d1d2d;
+  // border-width: 1px;
