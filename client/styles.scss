@@ -54,6 +54,8 @@
   flex-direction: column;
   gap: .3rem;
   margin-bottom: 10px;
+  height: 300px;
+  overflow: auto;
 }
 
 .suggestion {
@@ -61,6 +63,7 @@
   flex-direction: row;
   gap: 2rem;
   padding: .5em;
+  min-height: 3em;
   p {
     font-size: smaller;
     font-weight: 800;
@@ -88,6 +91,7 @@
     opacity: 1;
   }
 }
+
 #footer {
   position: fixed;
   // display: flex;
@@ -102,3 +106,23 @@
 #metricCircle{
   border-radius: 50%;
 }
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+  // height: 15px;
+  }
+  
+  ::-webkit-scrollbar-track {
+  border: 1px solid black;
+  border-radius: 15px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+  background: rgb(91, 91, 91);  
+  border-radius: 15px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+  background: rgb(123, 123, 123);  
+  }

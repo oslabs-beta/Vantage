@@ -1,5 +1,5 @@
 import { Description } from "@mui/icons-material";
-import { Card, Tooltip, Typography } from "@mui/material";
+import { Card, Tooltip, Typography, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import {
   selectRunList,
 } from "../store/dataSlice.js";
 import { useTheme } from "@mui/material/styles";
+import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
 
 const DescriptionContainer = () => {
   const theme = useTheme();
@@ -35,6 +36,7 @@ const DescriptionContainer = () => {
     for (const key in data) {
       const title = data[key].title;
       const description = data[key].description;
+      const url = data[key].url;
       const numericUnit = data[key]?.numericUnit;
 
       //Get numeric difference
@@ -71,9 +73,10 @@ const DescriptionContainer = () => {
             data[key].results[currentEndpoint][earlyRun].numericValue
           )
           : "";
-        scoreDiff =
-          Math.round(data[key].results[currentEndpoint][earlyRun].score * 100);
-        
+        scoreDiff = Math.round(
+          data[key].results[currentEndpoint][earlyRun].score * 100
+        );
+
         scoreColor =
           scoreDiff > 90
             ? theme.palette.success.dark
@@ -105,6 +108,11 @@ const DescriptionContainer = () => {
                   <>{scoreDiff}</>
                 )}
               </Typography>
+              {url && (
+                <IconButton onClick={()=>window.open(url)}>
+                  <ArrowCircleRightRoundedIcon />
+                </IconButton>
+              )}
             </Card>
           </Tooltip>
         );
