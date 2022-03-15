@@ -9,11 +9,17 @@ import Footer from './Footer';
 // import Waves from '../components/Waves';
 
 
+
 const MainContainer = () => {
   return(
-    <div id="mainContainer">
+    <div id="mainContainer"
+    >
       <TitleContainer/>
-      <Box id ="mainBox">
+      <Box id ="mainBox"
+        style={{
+          
+        }}
+      >
         <Box id='contentContainer'
           sx={{width:'lg'}}
         >
@@ -21,10 +27,14 @@ const MainContainer = () => {
           <ChartContainer/>
           <DescriptionContainer/>
         </Box>
+<<<<<<< HEAD
         <Box style={{width:'100%',bottom:'0',height:'40px'}}>
           {/* <Waves/> */}
           <Footer />
         </Box>
+=======
+        <Footer />
+>>>>>>> dev
       </Box>
     </div>
   );

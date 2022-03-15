@@ -79,7 +79,12 @@ module.exports = {
             loader: 'file-loader',
           },
         ],
-      }
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
+      },
       
     ],
   },
