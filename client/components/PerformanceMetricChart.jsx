@@ -117,7 +117,14 @@ const PerformanceMetricChart = () => {
         left: 20,
         bottom: 5,
       }}
+      //added filter to linechart
+      filter="url(#shadow)"
     >
+      <defs>
+        <filter id="shadow" height="200%">
+          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="purple"/>
+        </filter>
+      </defs>
       <CartesianGrid strokeDasharray='3 3' />
       <XAxis dataKey={"name"} style={{ opacity: 0 }}>
         <Label value='Commits' style={{ fill: "gray" }} />

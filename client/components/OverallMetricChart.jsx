@@ -74,6 +74,11 @@ const OverallMetricChart = () => {
         bottom: 5,
       }}
     >
+      <defs>
+        <filter id="shadow" height="200%">
+          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="orchid"/>
+        </filter>
+      </defs>
       <CartesianGrid /*horizontal={false} vertical={false}*/ />
       <XAxis dataKey={"name"} tick={false}>
         <Label value='Commits' style={{ fill: "gray" }} />
@@ -85,6 +90,7 @@ const OverallMetricChart = () => {
         <Line
           type='monotone'
           dataKey='Performance'
+          filter="url(#shadow)"
           stroke= {theme.palette.primary.main}
           strokeWidth={sw}
           dot={false}
@@ -94,6 +100,7 @@ const OverallMetricChart = () => {
         <Line 
           type='monotone' 
           dataKey='SEO' 
+          filter="url(#shadow)"
           stroke= {theme.palette.primary.light}
           strokeWidth={sw}
           dot={false} />
@@ -102,6 +109,7 @@ const OverallMetricChart = () => {
         <Line
           type='monotone'
           dataKey='Best Practices'
+          filter="url(#shadow)"
           stroke={theme.palette.secondary.main}
           strokeWidth={sw}
           dot={false}
@@ -112,6 +120,7 @@ const OverallMetricChart = () => {
         <Line
           type='monotone'
           dataKey='Accessibility'
+          filter="url(#shadow)"
           stroke={theme.palette.secondary.light}
           strokeWidth={sw}
           dot={false}
