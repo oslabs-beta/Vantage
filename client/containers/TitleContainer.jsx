@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DropDownMenu from "../components/DropDownMenu";
 // import MenuDrawer from '../components/MenuDrawer';
 import { Button, AppBar, Box, Toolbar } from "@mui/material/";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { getCurrentEndpoint, changeMetric } from "../store/currentViewSlice";
 import { ThemeContext } from "@emotion/react";
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.png';
 
 const TitleContainer = () => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const TitleContainer = () => {
               variant='h6'
               component='div'
               sx={{ flexGrow: 1, cursor: "pointer"}}
-              onClick={(_) => dispatch(changeMetric("default"))}
+              // onClick={(_) => dispatch(changeMetric("default"))}
             >
               {currentEndpoint}
             </Typography>

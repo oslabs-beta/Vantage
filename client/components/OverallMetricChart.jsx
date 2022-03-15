@@ -23,8 +23,7 @@ import {
 } from "../store/currentViewSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import CustomTooltip from "./CustomTooltip.jsx";
-import { useTheme } from '@mui/material/styles';
-
+import { useTheme } from "@mui/material/styles";
 
 const OverallMetricChart = () => {
   const theme = useTheme();
@@ -73,7 +72,7 @@ const OverallMetricChart = () => {
         left: 20,
         bottom: 5,
       }}
-    >
+    > 
       <CartesianGrid /*horizontal={false} vertical={false}*/ />
       <XAxis dataKey={"name"} tick={false}>
         <Label value='Commits' style={{ fill: "gray" }} />
@@ -85,18 +84,19 @@ const OverallMetricChart = () => {
         <Line
           type='monotone'
           dataKey='Performance'
-          stroke= {theme.palette.primary.main}
+          stroke={theme.palette.primary.main}
           strokeWidth={sw}
           dot={false}
         />
       )}
       {(currentMetric === "default" || currentMetric === "SEO") && (
-        <Line 
-          type='monotone' 
-          dataKey='SEO' 
-          stroke= {theme.palette.primary.light}
+        <Line
+          type='monotone'
+          dataKey='SEO'
+          stroke={theme.palette.primary.light}
           strokeWidth={sw}
-          dot={false} />
+          dot={false}
+        />
       )}
       {(currentMetric === "default" || currentMetric === "Best Practices") && (
         <Line
@@ -107,7 +107,7 @@ const OverallMetricChart = () => {
           dot={false}
         />
       )}
-      
+
       {(currentMetric === "default" || currentMetric === "Accessibility") && (
         <Line
           type='monotone'
@@ -117,8 +117,15 @@ const OverallMetricChart = () => {
           dot={false}
         />
       )}
-      {runB && <ReferenceArea x1={runA} x2={runB} />}
-      {/* <ReferenceLine x={runA} stroke="green" /> */}
+      {runB && (
+        <ReferenceArea
+          x1={runA}
+          x2={runB}
+          fill={theme.palette.primary.light}
+        />
+      )}
+      <ReferenceLine x={runA} stroke={theme.palette.primary.light} />
+      <ReferenceLine x={runB} stroke={theme.palette.primary.light} />
     </LineChart>
   );
 };

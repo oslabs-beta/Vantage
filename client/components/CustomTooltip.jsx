@@ -13,7 +13,7 @@ const CustomTooltip = ({ active, payload, commits, unit }) => {
         <p
           key={i}
           style={{ color: cur.stroke }}
-        >{`${cur.name} : ${cur.value} ${unit}`}</p>
+        >{`${cur.name} : ${Math.round(cur.value)} ${unit}`}</p>
       );
     });
 

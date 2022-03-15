@@ -1,8 +1,13 @@
-import React from "react";
-import {Box, Paper} from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, Paper } from "@mui/material";
 import Metric from "../components/Metric";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentEndpoint, changeMetric, getCurrentMetric } from "../store/currentViewSlice";
+import {
+  getCurrentEndpoint,
+  changeMetric,
+  getCurrentMetric,
+  addRunValue,
+} from "../store/currentViewSlice";
 import {
   selectOverallScoreByEndpoint,
   selectRunList,
@@ -19,6 +24,11 @@ const MetricContainer = () => {
   const mostRecentRun = runList[runList.length - 1];
   const mostRecentOverallScore = overallScore[mostRecentRun];
 
+  //Set the selected run to the latest initially
+  useEffect(() => {
+    dispatch(addRunValue(runList[runList.length - 1]));
+  }, []);
+
   const handleClick = (metric) => {
     dispatch(changeMetric(metric));
   };
@@ -26,7 +36,7 @@ const MetricContainer = () => {
   return (
     <div id='metric-container'>
       <Paper>
-        <div className="metric-container-inner">
+        <div className='metric-container-inner'>
           <Box sx={{ display: "flex", gap: 5 }}>
             <Metric
               name={"Performance"}
@@ -56,8 +66,6 @@ const MetricContainer = () => {
           </Box>
         </div>
       </Paper>
-
-      
     </div>
   );
 };
