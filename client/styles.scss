@@ -119,15 +119,6 @@ body {
   transform: scale(1.05);
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 #footer {
   position: fixed;
   top: auto;
@@ -228,6 +219,7 @@ body {
   position: absolute;
   bottom: 13px;
   right: 10px;
+  animation: fadeIn .5s;
 }
 
 @media only screen and (max-height: 840px) {
@@ -236,5 +228,14 @@ body {
   }
   #description-container {
     height: auto;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
