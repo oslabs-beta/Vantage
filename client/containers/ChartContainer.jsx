@@ -5,12 +5,12 @@ import PerformanceMetricChart from "../components/PerformanceMetricChart";
 import {
   getCurrentMetric,
   selectPerformanceMetrics,
-  changeSelectorSwitch
+  changeSelectorSwitch,
 } from "../store/currentViewSlice";
 // import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
 // import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
-import CompareArrowsRoundedIcon from '@mui/icons-material/CompareArrowsRounded';
-import CommitRoundedIcon from '@mui/icons-material/CommitRounded';
+import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
+import CommitRoundedIcon from "@mui/icons-material/CommitRounded";
 
 import PerformanceMetrics from "./PerformanceMetrics";
 import OverallMetricChart from "../components/OverallMetricChart";
@@ -34,21 +34,25 @@ const ChartContainer = () => {
       {!isPerfMetricSelected && currentMetric === "Performance" && (
         <PerformanceMetricChart />
       )}
-      <Stack
-        direction='row'
-        spacing={1}
-        alignItems='center'
-        id='range-switch'
-      > 
-        <CommitRoundedIcon />
-        <CustomMUITooltip disableInteractive
-          title="Change between viewing a range or specific commit">
-          <CustomMUISwitch 
-            onChange={_=>dispatch(changeSelectorSwitch())}
-          />
-        </CustomMUITooltip>
-        <CompareArrowsRoundedIcon/>
-      </Stack>
+      {currentMetric !== "default" && (
+        <Stack
+          direction='row'
+          spacing={1}
+          alignItems='center'
+          id='range-switch'
+        >
+          <CommitRoundedIcon />
+          <CustomMUITooltip
+            disableInteractive
+            title='Change between viewing a range or specific commit'
+          >
+            <CustomMUISwitch
+              onChange={(_) => dispatch(changeSelectorSwitch())}
+            />
+          </CustomMUITooltip>
+          <CompareArrowsRoundedIcon />
+        </Stack>
+      )}
     </Paper>
   );
 };
