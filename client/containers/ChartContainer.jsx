@@ -20,9 +20,11 @@ const ChartContainer = () => {
   return (
     <>
       {/* <h1>{currentMetric}</h1> */}
-      <Paper id="chart-container">
+      <Paper id='chart-container' sx={{ boxShadow: 3 }}>
         {currentMetric === "Performance" && <PerformanceMetrics />}
-        {(isPerfMetricSelected || currentMetric !== "Performance") && <OverallMetricChart />}
+        {(isPerfMetricSelected || currentMetric !== "Performance") && (
+          <OverallMetricChart />
+        )}
         {!isPerfMetricSelected && currentMetric === "Performance" && (
           <PerformanceMetricChart />
         )}

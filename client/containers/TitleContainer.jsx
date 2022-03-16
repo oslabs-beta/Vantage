@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import DropDownMenu from "../components/DropDownMenu";
 // import MenuDrawer from '../components/MenuDrawer';
 import { Button, AppBar, Box, Toolbar } from "@mui/material/";
@@ -13,6 +13,7 @@ import {
   changeMetric,
   resetRunValue,
 } from "../store/currentViewSlice";
+import { selectRunList } from "../store/dataSlice";
 import { ThemeContext } from "@emotion/react";
 import Logo from "../assets/vantage-logo.svg";
 
@@ -20,11 +21,17 @@ const TitleContainer = () => {
   const dispatch = useDispatch();
   // const mode = useSelector(getTheme);
   const currentEndpoint = useSelector(getCurrentEndpoint);
+  const runList = useSelector(selectRunList);
 
   const handleClick = () => {
     dispatch(changeMetric("default"));
-    dispatch(resetRunValue());
+    dispatch(resetRunValue(runList[runList.length - 1]));
   };
+
+  // Set the selected run to the latest initially
+  useEffect(() => {
+    dispatch(resetRunValue(runList[runList.length - 1]));
+  }, []);
 
   return (
     <div id='titleContainer'>

@@ -74,11 +74,6 @@ const OverallMetricChart = () => {
       }}
       // filter="url(#shadow)"
     >
-      {/* <defs>
-        <filter id="shadow" height="200%">
-          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="orchid"/>
-        </filter>
-      </defs> */}
       <CartesianGrid /*horizontal={false} vertical={false}*/ />
       <XAxis dataKey={"name"} tick={false}>
         <Label value='Commits' style={{ fill: "gray" }} />
