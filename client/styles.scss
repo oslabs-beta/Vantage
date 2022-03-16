@@ -3,7 +3,8 @@ body {
   background-image :url('./assets/layered-waves.svg');
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-size: 100% auto
+  background-size: 100% auto;
+  overflow: hidden;
 }
 #mainBox {
   display: flex;
@@ -11,7 +12,7 @@ body {
   align-items: center;
   margin-top: 15px;
   position: relative;
-  height: '100vh';
+  // height: '100vh';
   
 }
 #contentContainer {
@@ -60,20 +61,41 @@ body {
   flex-direction: column;
   gap: .3rem;
   margin-bottom: 10px;
-  height: calc(100vh - 519px);
+  padding-left: 5px;
+  padding-right: 5px;
+  height: calc(100vh - 605px);
+  width: 73ch;
   overflow: auto;
 }
 
 .suggestion {
+  flex: 1;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   gap: 2rem;
   padding: .5em;
-  min-height: 3em;
+  // height: 2em;
+  min-height: 4em;
+  // height: 5em !important;
+  // height: clamp(3em, 4em, 5em) !important;
   p {
-    font-size: smaller;
     font-weight: 800;
+    font-size: 1.5rem;
+    span {
+      font-size: 1rem;
+    }
   }
+  p:first-child {
+    width: 400px;
+    font-size: .9rem;
+    
+  }
+}
+
+#suggestion-title {
+  width: 400px;
 }
 
 .metric-container-inner {
@@ -132,3 +154,16 @@ body {
   // border-style: solid;
   // border-color: #1d1d2d;
   // border-width: 1px;
+  #nav-bar {
+    background: linear-gradient(0deg, rgba(25,25,34,1) 0%, rgba(46,46,68,1) 52%, rgba(66,66,97,1) 100%);
+    justify-content: space-between;
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+
+  @media only screen and (max-width: 1050px) {
+    #nav-bar {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
