@@ -1,32 +1,35 @@
 /* eslint-disable no-unused-vars */
-const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
+const webpack = require("webpack");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 //Only use HtmlInlineScriptPlugin for production
 const pluginsArr = [
   new HtmlWebpackPlugin({
-    inject: 'body',
-    template: './client/index.html',
-  })
+    inject: "body",
+    template: "./client/index.html",
+  }),
+  new CleanWebpackPlugin(),
 ];
-if(process.env.NODE_ENV === "production") pluginsArr.push(new HtmlInlineScriptPlugin());
+if (process.env.NODE_ENV === "production")
+  pluginsArr.push(new HtmlInlineScriptPlugin());
 
 module.exports = {
   entry: [
     // entry point of our app
-    './client/index.js',
+    "./client/index.js",
   ],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
+    filename: "bundle.js",
   },
-  devtool: 'eval-source-map',
+  devtool: "eval-source-map",
   mode: process.env.NODE_ENV,
   devServer: {
-    host: 'localhost',
+    host: "localhost",
     port: 8080,
     // enable HMR on the devServer
     hot: true,
@@ -35,12 +38,12 @@ module.exports = {
 
     static: {
       // match the output path
-      directory: path.resolve(__dirname, 'dist'),
+      directory: path.resolve(__dirname, "dist"),
       // match the output 'publicPath'
-      publicPath: '/',
+      publicPath: "/",
     },
 
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: { "Access-Control-Allow-Origin": "*" },
     /**
      * proxy is required in order to make api calls to
      * express server while using hot-reload webpack server
@@ -64,28 +67,27 @@ module.exports = {
         test: /.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
         },
       },
       {
         test: /.(css|scss)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      }, 
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: ['@svgr/webpack'],
+        use: ["@svgr/webpack"],
       },
-      
     ],
   },
   plugins: pluginsArr,
@@ -94,6 +96,6 @@ module.exports = {
   // },
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
-    extensions: ['.js', '.jsx'],
+    extensions: [".js", ".jsx"],
   },
 };

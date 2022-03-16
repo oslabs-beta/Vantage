@@ -24,18 +24,13 @@ const MetricContainer = () => {
   const mostRecentRun = runList[runList.length - 1];
   const mostRecentOverallScore = overallScore[mostRecentRun];
 
-  //Set the selected run to the latest initially
-  // useEffect(() => {
-  //   dispatch(addRunValue(runList[runList.length - 1]));
-  // }, []);
-
   const handleClick = (metric) => {
     dispatch(changeMetric(metric));
   };
 
   return (
     <div id='metric-container'>
-      <Paper>
+      <Paper sx={{ boxShadow: 3 }}>
         <div className='metric-container-inner'>
           <Box sx={{ display: "flex", gap: 5 }}>
             <Metric

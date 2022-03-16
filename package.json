@@ -1,14 +1,14 @@
 {
   "name": "vantage-next",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open ./dist/index.html",
-    "start": "open ./dist/index.html",
+    "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open-cli ./dist/index.html",
+    "start": "open-cli ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
     "snapshot": "node ./package/lighthouse/lighthouse.js",
     "desktop": "cross-env AUDIT_MODE=desktop"
@@ -29,8 +29,7 @@
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
   "bin": {
     "snapshot": "./package/lighthouse/lighthouse.js",
-    "display": "./package/main/display.js",
-    "html-script": "./package/main/html-script.js"
+    "vantage": "./package/main/vantage.js"
   },
   "dependencies": {
     "chalk": "^5.0.0",
@@ -38,7 +37,8 @@
     "kill-port": "^1.6.1",
     "lighthouse": "^9.4.0",
     "nanospinner": "^1.0.0",
-    "node-inject-html": "^0.0.5"
+    "node-inject-html": "^0.0.5",
+    "open-cli": "^7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -51,6 +51,7 @@
     "@reduxjs/toolkit": "^1.8.0",
     "@svgr/webpack": "^6.2.1",
     "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.0",
     "eslint": "^8.10.0",

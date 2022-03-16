@@ -1,5 +1,6 @@
 import { Description } from "@mui/icons-material";
-import { Card, Tooltip, Typography, IconButton } from "@mui/material";
+import { Card, Typography, IconButton } from "@mui/material";
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { Box } from "@mui/system";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,21 @@ import {
 } from "../store/dataSlice.js";
 import { useTheme } from "@mui/material/styles";
 import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
+import { styled } from '@mui/material/styles';
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+  [`& .${tooltipClasses.arrow}`]: {
+    color: theme.palette.background.paper,
+  },
+}));
 
 const DescriptionContainer = () => {
   const theme = useTheme();
@@ -93,11 +109,11 @@ const DescriptionContainer = () => {
 
       let newNumericUnit = unitMap?.[numericUnit];
 
-      if(numericDiff > 1000) {
+      if (numericDiff > 1000) {
         numericDiff = Math.round(numericDiff / 1000);
-        if(newNumericUnit === 'ms') newNumericUnit = 's';
-        if(newNumericUnit === 'B') newNumericUnit = 'KiB';
-        if(newNumericUnit === 'elements') newNumericUnit = 'Kelements';
+        if (newNumericUnit === "ms") newNumericUnit = "s";
+        if (newNumericUnit === "B") newNumericUnit = "KiB";
+        if (newNumericUnit === "elements") newNumericUnit = "Kelements";
       }
 
       if (
@@ -111,14 +127,14 @@ const DescriptionContainer = () => {
           numericDiff,
           scoreDiff,
           url,
-          newNumericUnit
+          newNumericUnit,
         });
       }
     }
   }
 
   // console.log(dataArray);
-  dataArray.sort((a,b) => {
+  dataArray.sort((a, b) => {
     if (a.scoreDiff < b.scoreDiff) return -1;
     if (a.scoreDiff > b.scoreDiff) return 1;
     return 0;
@@ -132,11 +148,15 @@ const DescriptionContainer = () => {
       numericDiff,
       scoreDiff,
       url,
-      newNumericUnit
+      newNumericUnit,
     }) => {
-      
       return (
-        <Tooltip title={description} key={title}>
+        <LightTooltip
+          className="suggestion-tooltip"
+          disableInteractive
+          title={description}
+          key={title}
+        >
           <Card className={"suggestion"} sx={{ bgcolor: scoreColor }}>
             <Typography>{title}</Typography>
             <Typography>
@@ -148,11 +168,14 @@ const DescriptionContainer = () => {
                 <>{scoreDiff}</>
               )}
             </Typography>
-            <IconButton onClick={() => window.open(url)} disabled={url === null}>
+            <IconButton
+              onClick={() => window.open(url)}
+              disabled={url === null}
+            >
               <ArrowCircleRightRoundedIcon />
             </IconButton>
           </Card>
-        </Tooltip>
+        </LightTooltip>
       );
     }
   );

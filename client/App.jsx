@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { getTheme } from './store/currentViewSlice';
 // import { useSelector, useDispatch} from 'react-redux';
 import './styles.scss';
+import Waves from './assets/background.svg';
 
 
 
@@ -48,6 +49,7 @@ const App = () => {
       <div id="app">
         <CssBaseline />
         <MainContainer/>
+        <Waves id="waves"/>
       </div>
     </ThemeProvider>
   );
