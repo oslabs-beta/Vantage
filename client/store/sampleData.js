@@ -138,7 +138,7 @@ export default {
       "2022-03-15T15:01:12.791Z": {
         performance: 0.75,
         accessibility: 0.90,
-        "best-practices": 1,
+        "best-practices": 0.99,
         seo: 0.92,
         pwa: 0.3,
       },
