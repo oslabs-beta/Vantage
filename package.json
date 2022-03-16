@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open ./dist/index.html",
-    "start": "open ./dist/index.html",
+    "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open-cli ./dist/index.html",
+    "start": "open-cli ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
     "snapshot": "node ./package/lighthouse/lighthouse.js",
     "desktop": "cross-env AUDIT_MODE=desktop"
@@ -29,8 +29,7 @@
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
   "bin": {
     "snapshot": "./package/lighthouse/lighthouse.js",
-    "display": "./package/main/display.js",
-    "html-script": "./package/main/html-script.js"
+    "vantage": "./package/main/vantage.js"
   },
   "dependencies": {
     "chalk": "^5.0.0",

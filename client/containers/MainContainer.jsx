@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import DescriptionContainer from './DescriptionContainer';
 import Footer from './Footer';
+// import Waves from '../components/Waves';
 
 
 
