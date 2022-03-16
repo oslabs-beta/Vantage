@@ -158,10 +158,15 @@ const PerformanceMetricChart = () => {
       <Legend />
       {lineComponents}
       {runB && (
-        <ReferenceArea x1={runA} x2={runB} fill={theme.palette.primary.light} />
+        <ReferenceArea
+          x1={runA}
+          x2={runB}
+          fill={theme.palette.primary.dark}
+          opacity='0.3'
+        />
       )}
-      <ReferenceLine x={runA} stroke={theme.palette.primary.light} />
-      <ReferenceLine x={runB} stroke={theme.palette.primary.light} />
+      <ReferenceLine x={runA} stroke={theme.palette.primary.dark} />
+      <ReferenceLine x={runB} stroke={theme.palette.primary.dark} />
     </LineChart>
   );
 };
