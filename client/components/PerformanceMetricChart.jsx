@@ -143,12 +143,14 @@ const PerformanceMetricChart = () => {
         <Label value='Commits' style={{ fill: "gray" }} />
       </XAxis>
       <YAxis /*domain={['dataMin', 'dataMax']}*/>
-        <Label
-          value={webVitalUnits[perfMetricsSelectedArr[0]]}
-          style={{ fill: "gray" }}
-          angle={-90}
-          position='insideLeft'
-        />
+        {perfMetricsSelectedArr.length === 1 && (
+          <Label
+            value={webVitalUnits[perfMetricsSelectedArr[0]]}
+            style={{ fill: "gray" }}
+            angle={-90}
+            position='insideLeft'
+          />
+        )}
       </YAxis>
       <Tooltip
         content={
