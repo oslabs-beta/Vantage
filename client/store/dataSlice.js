@@ -6,7 +6,7 @@ const data =
   process.env.NODE_ENV === "production"
     ? { ...window.__VANTAGE_JSON__ }
     : sampleData;
-    // : null;
+// : null;
 
 export const dataSlice = createSlice({
   name: "data",
