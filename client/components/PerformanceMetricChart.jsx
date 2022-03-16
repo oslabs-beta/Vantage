@@ -147,7 +147,7 @@ const PerformanceMetricChart = () => {
         {perfMetricsSelectedArr.length === 1 && (
           <Label
             value={webVitalUnits[perfMetricsSelectedArr[0]]}
-            style={{ fill: "gray" }}
+            style={{ fill: "#ede1fc" }}
             angle={-90}
             position='insideLeft'
           />
