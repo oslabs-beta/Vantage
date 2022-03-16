@@ -98,19 +98,28 @@ const PerformanceMetricChart = () => {
     }
   };
 
+  const lineColorObj = {
+    FCP: theme.palette.primary.light,
+    SI: theme.palette.primary.main,
+    LCP: theme.palette.primary.dark,
+    TTI: theme.palette.secondary.light,
+    TBT: theme.palette.secondary.main,
+    CLS: theme.palette.secondary.dark,
+  };
+
   const lineComponents = perfMetricsSelectedArr.map((curr, i) => (
     <Line
       key={i}
       type='monotone'
       dataKey={curr}
-      stroke='#8884d8'
+      stroke={lineColorObj[curr]}
       strokeWidth={2}
     />
   ));
 
   return (
     <LineChart
-      className="all-charts"
+      className='all-charts'
       onClick={handleClick}
       width={500}
       height={300}
@@ -122,13 +131,13 @@ const PerformanceMetricChart = () => {
         bottom: 5,
       }}
       //added filter to linechart
-      filter="url(#shadow)"
+      // filter="url(#shadow)"
     >
-      <defs>
+      {/* <defs>
         <filter id="shadow" height="200%">
           <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="purple"/>
         </filter>
-      </defs>
+      </defs> */}
       <CartesianGrid strokeDasharray='3 3' />
       <XAxis dataKey={"name"} style={{ opacity: 0 }}>
         <Label value='Commits' style={{ fill: "gray" }} />

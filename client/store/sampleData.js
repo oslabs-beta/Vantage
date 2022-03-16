@@ -136,14 +136,14 @@ export default {
     },
     "/": {
       "2022-03-15T15:01:12.791Z": {
-        performance: 0.99,
-        accessibility: 0.97,
+        performance: 0.75,
+        accessibility: 0.90,
         "best-practices": 1,
         seo: 0.92,
         pwa: 0.3,
       },
       "2022-03-15T15:03:24.630Z": {
-        performance: 0.99,
+        performance: 0.80,
         accessibility: 0.97,
         "best-practices": 1,
         seo: 0.92,
