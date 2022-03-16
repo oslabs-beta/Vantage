@@ -114,6 +114,7 @@ const PerformanceMetricChart = () => {
       dataKey={curr}
       stroke={lineColorObj[curr]}
       strokeWidth={2}
+      dot={false}
     />
   ));
 
@@ -138,11 +139,11 @@ const PerformanceMetricChart = () => {
           <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="purple"/>
         </filter>
       </defs> */}
-      <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey={"name"} style={{ opacity: 0 }}>
-        <Label value='Commits' style={{ fill: "gray" }} />
+      <CartesianGrid strokeDasharray='10 5' stroke="#847a91"/>
+      <XAxis dataKey={"name"} tick={false} stroke="#ede1fc" >
+        <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis /*domain={['dataMin', 'dataMax']}*/ />
+      <YAxis stroke="#ede1fc" /*domain={['dataMin', 'dataMax']}*/ />
       <Tooltip
         content={
           <CustomTooltip commits={commits} unit={unit} runList={runList} />

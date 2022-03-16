@@ -79,11 +79,11 @@ const OverallMetricChart = () => {
           <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="orchid"/>
         </filter>
       </defs> */}
-      <CartesianGrid /*horizontal={false} vertical={false}*/ />
-      <XAxis dataKey={"name"} tick={false}>
-        <Label value='Commits' style={{ fill: "gray" }} />
+      <CartesianGrid strokeDasharray='10 5' stroke="#847a91"/>
+      <XAxis dataKey={"name"} tick={false} stroke="#ede1fc">
+        <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis /*domain={['dataMin', 'dataMax']}*/ />
+      <YAxis stroke="#ede1fc"/*domain={['dataMin', 'dataMax']}*/ />
       <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
       {(currentMetric === "default" || currentMetric === "Performance") && (
