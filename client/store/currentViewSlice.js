@@ -42,9 +42,8 @@ export const currentViewSlice = createSlice({
         state.runValueArrSort = state.runValueArr.slice().sort();
       }
     },
-    resetRunValue: (state) => {
-      state.runValueArr = [];
-      state.runValueArrSort = [];
+    resetRunValue: (state, action) => {
+      state.runValueArr = state.runValueArrSort = [action.payload];
     },
   },
 });

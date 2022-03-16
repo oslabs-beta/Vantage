@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,8 @@
     "kill-port": "^1.6.1",
     "lighthouse": "^9.4.0",
     "nanospinner": "^1.0.0",
-    "node-inject-html": "^0.0.5"
+    "node-inject-html": "^0.0.5",
+    "open-cli": "^7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -51,6 +52,7 @@
     "@reduxjs/toolkit": "^1.8.0",
     "@svgr/webpack": "^6.2.1",
     "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.0",
     "eslint": "^8.10.0",
