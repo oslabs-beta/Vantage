@@ -1,6 +1,5 @@
 import { Description } from "@mui/icons-material";
 import { Card, Typography, IconButton } from "@mui/material";
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { Box } from "@mui/system";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,21 +14,7 @@ import {
 } from "../store/dataSlice.js";
 import { useTheme } from "@mui/material/styles";
 import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
-import { styled } from '@mui/material/styles';
-
-const LightTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-  [`& .${tooltipClasses.arrow}`]: {
-    color: theme.palette.background.paper,
-  },
-}));
+import CustomMUITooltip from "../components/CustomMUITooltip";
 
 const DescriptionContainer = () => {
   const theme = useTheme();
@@ -98,7 +83,7 @@ const DescriptionContainer = () => {
             ? theme.palette.success.dark
             : scoreDiff > 70
               ? theme.palette.warning.dark
-              : theme.palette.error.main;
+              : theme.palette.error.dark;
       }
 
       const unitMap = {
@@ -151,7 +136,7 @@ const DescriptionContainer = () => {
       newNumericUnit,
     }) => {
       return (
-        <LightTooltip
+        <CustomMUITooltip
           className="suggestion-tooltip"
           disableInteractive
           title={description}
@@ -175,7 +160,7 @@ const DescriptionContainer = () => {
               <ArrowCircleRightRoundedIcon />
             </IconButton>
           </Card>
-        </LightTooltip>
+        </CustomMUITooltip>
       );
     }
   );

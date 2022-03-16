@@ -143,7 +143,16 @@ const PerformanceMetricChart = () => {
       <XAxis dataKey={"name"} tick={false} stroke="#ede1fc" >
         <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis stroke="#ede1fc" /*domain={['dataMin', 'dataMax']}*/ />
+      <YAxis stroke="#ede1fc" /*domain={['dataMin', 'dataMax']}*/>
+        {perfMetricsSelectedArr.length === 1 && (
+          <Label
+            value={webVitalUnits[perfMetricsSelectedArr[0]]}
+            style={{ fill: "#ede1fc" }}
+            angle={-90}
+            position='insideLeft'
+          />
+        )}
+      </YAxis>
       <Tooltip
         content={
           <CustomTooltip commits={commits} unit={unit} runList={runList} />
@@ -152,10 +161,15 @@ const PerformanceMetricChart = () => {
       <Legend />
       {lineComponents}
       {runB && (
-        <ReferenceArea x1={runA} x2={runB} fill={theme.palette.primary.light} />
+        <ReferenceArea
+          x1={runA}
+          x2={runB}
+          fill={theme.palette.primary.dark}
+          opacity='0.3'
+        />
       )}
-      <ReferenceLine x={runA} stroke={theme.palette.primary.light} />
-      <ReferenceLine x={runB} stroke={theme.palette.primary.light} />
+      <ReferenceLine x={runA} stroke={theme.palette.primary.dark} />
+      <ReferenceLine x={runB} stroke={theme.palette.primary.dark} />
     </LineChart>
   );
 };

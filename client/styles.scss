@@ -44,6 +44,7 @@ body {
 }
 
 #chart-container {
+  position: relative;
   justify-self: center;
   margin: 1rem;
   display: flex;
@@ -222,11 +223,18 @@ body {
 //     transform: translate3d(85px, 0, 0);
 //   }
 // }
-  @media only screen and (max-height: 840px) {
-    body {
-      overflow-y: auto;
-    }
-    #description-container {
-      height: auto;
-    }
+
+#range-switch {
+  position: absolute;
+  bottom: 13px;
+  right: 10px;
+}
+
+@media only screen and (max-height: 840px) {
+  body {
+    overflow-y: auto;
   }
+  #description-container {
+    height: auto;
+  }
+}
