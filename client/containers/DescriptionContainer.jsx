@@ -98,7 +98,7 @@ const DescriptionContainer = () => {
             ? theme.palette.success.dark
             : scoreDiff > 70
               ? theme.palette.warning.dark
-              : theme.palette.error.main;
+              : theme.palette.error.dark;
       }
 
       const unitMap = {
