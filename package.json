@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
     "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open ./dist/index.html",
-    "start": "open ./dist/index.html",
+    "start": "start ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
     "snapshot": "node ./package/lighthouse/lighthouse.js",
     "desktop": "cross-env AUDIT_MODE=desktop"
@@ -38,7 +38,8 @@
     "kill-port": "^1.6.1",
     "lighthouse": "^9.4.0",
     "nanospinner": "^1.0.0",
-    "node-inject-html": "^0.0.5"
+    "node-inject-html": "^0.0.5",
+    "open": "^8.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
