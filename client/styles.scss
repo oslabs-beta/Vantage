@@ -1,6 +1,5 @@
 body {
   margin-bottom: 0;
-  background-image: url("./assets/layered-waves.svg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -12,9 +11,17 @@ body {
   align-items: center;
   margin-top: 15px;
   position: relative;
-  // height: '100vh';
   
 }
+
+#waves {
+  position: absolute;
+  // left:0;
+  // right:0;
+  top: 0;
+  z-index: -1;
+}
+
 #contentContainer {
   display: flex;
   flex-direction: column;
@@ -158,6 +165,10 @@ body {
     padding-right: 150px;
   }
 
+  // .suggestion-tooltip {
+  //   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .5));
+  // }
+
   @media only screen and (max-width: 1050px) {
     #nav-bar {
       padding-left: 20px;
@@ -211,3 +222,11 @@ body {
 //     transform: translate3d(85px, 0, 0);
 //   }
 // }
+  @media only screen and (max-height: 840px) {
+    body {
+      overflow-y: auto;
+    }
+    #description-container {
+      height: auto;
+    }
+  }
