@@ -31,7 +31,7 @@ const DescriptionContainer = () => {
     (state) => state.currentView.runValueArrSort
   );
 
-  const dataComponents = [];
+  const dataArray = [];
   if (data && runValueArrSort.length) {
     for (const key in data) {
       const title = data[key].title;
@@ -91,34 +91,71 @@ const DescriptionContainer = () => {
         element: "elements",
       };
 
+      let newNumericUnit = unitMap?.[numericUnit];
+
+      if(numericDiff > 1000) {
+        numericDiff = Math.round(numericDiff / 1000);
+        if(newNumericUnit === 'ms') newNumericUnit = 's';
+        if(newNumericUnit === 'B') newNumericUnit = 'KiB';
+        if(newNumericUnit === 'elements') newNumericUnit = 'Kelements';
+      }
+
       if (
         data[key].results[currentEndpoint][earlyRun].scoreDisplay !==
         "notApplicable"
       ) {
-        dataComponents.push(
-          <Tooltip title={description} key={title}>
-            <Card className={"suggestion"} sx={{ bgcolor: scoreColor }}>
-              <Typography>{title}</Typography>
-              <Typography>
-                {numericUnit ? (
-                  <>
-                    {numericDiff} {unitMap[numericUnit]}
-                  </>
-                ) : (
-                  <>{scoreDiff}</>
-                )}
-              </Typography>
-              {url && (
-                <IconButton onClick={()=>window.open(url)}>
-                  <ArrowCircleRightRoundedIcon />
-                </IconButton>
-              )}
-            </Card>
-          </Tooltip>
-        );
+        dataArray.push({
+          description,
+          title,
+          scoreColor,
+          numericDiff,
+          scoreDiff,
+          url,
+          newNumericUnit
+        });
       }
     }
   }
+
+  // console.log(dataArray);
+  dataArray.sort((a,b) => {
+    if (a.scoreDiff < b.scoreDiff) return -1;
+    if (a.scoreDiff > b.scoreDiff) return 1;
+    return 0;
+  });
+
+  const dataComponents = dataArray.map(
+    ({
+      description,
+      title,
+      scoreColor,
+      numericDiff,
+      scoreDiff,
+      url,
+      newNumericUnit
+    }) => {
+      
+      return (
+        <Tooltip title={description} key={title}>
+          <Card className={"suggestion"} sx={{ bgcolor: scoreColor }}>
+            <Typography>{title}</Typography>
+            <Typography>
+              {newNumericUnit ? (
+                <>
+                  {numericDiff} <span>{newNumericUnit}</span>
+                </>
+              ) : (
+                <>{scoreDiff}</>
+              )}
+            </Typography>
+            <IconButton onClick={() => window.open(url)} disabled={url === null}>
+              <ArrowCircleRightRoundedIcon />
+            </IconButton>
+          </Card>
+        </Tooltip>
+      );
+    }
+  );
 
   return <Box id='description-container'>{dataComponents}</Box>;
 };

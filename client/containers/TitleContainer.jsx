@@ -14,7 +14,7 @@ import {
   resetRunValue,
 } from "../store/currentViewSlice";
 import { ThemeContext } from "@emotion/react";
-import Logo from '../assets/vantage-logo.svg';
+import Logo from "../assets/vantage-logo.svg";
 
 const TitleContainer = () => {
   const dispatch = useDispatch();
@@ -28,25 +28,20 @@ const TitleContainer = () => {
 
   return (
     <div id='titleContainer'>
-      <Box
-        sx={{
-          flexGrow: 1,
-        }}
-      >
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
-          <Toolbar sx={{background: 
-          'linear-gradient(0deg, rgba(25,25,34,1) 0%, rgba(46,46,68,1) 52%, rgba(66,66,97,1) 100%)', justifyContent: "space-between",
-          }}>
+          <Toolbar id='nav-bar'>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Logo style ={{height:'50px'}}/>
+              <Logo style={{ height: "50px" }} />
               {/* <MenuDrawer /> */}
-              <Typography 
-                color ='text.primary' 
-                variant='h6' 
-                component='div' 
-                marginLeft= '20px'
-                sx={{ flexGrow: 1 }}>
-              Vantage
+              <Typography
+                color='text.primary'
+                variant='h6'
+                component='div'
+                marginLeft='20px'
+                sx={{ flexGrow: 1 }}
+              >
+                Vantage
               </Typography>
             </Box>
             {/* <Brightness5Icon fontSize="small"/> */}
