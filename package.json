@@ -11,7 +11,8 @@
     "start": "open-cli ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
     "snapshot": "node ./package/lighthouse/lighthouse.js",
-    "desktop": "cross-env AUDIT_MODE=desktop"
+    "desktop": "cross-env AUDIT_MODE=desktop",
+    "postinstall": "package/git-hooks/gitHookInstall.js"
   },
   "repository": {
     "type": "git",
