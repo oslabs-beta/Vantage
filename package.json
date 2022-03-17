@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.7",
+  "version": "0.0.15",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
     "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open-cli ./dist/index.html",
     "start": "open-cli ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
+    "prepublishOnly": "cross-env NODE_ENV=production webpack",
     "snapshot": "node ./package/lighthouse/lighthouse.js",
-    "desktop": "cross-env AUDIT_MODE=desktop",
-    "postinstall": "package/git-hooks/gitHookInstall.js"
+    "desktop": "cross-env AUDIT_MODE=desktop"
   },
   "repository": {
     "type": "git",

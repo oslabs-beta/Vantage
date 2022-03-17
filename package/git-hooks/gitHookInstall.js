@@ -40,3 +40,5 @@ function ensureDirExists(dir) {
 }
 
 installHooks();
+
+module.exports = installHooks;
