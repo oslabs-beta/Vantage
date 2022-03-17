@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {

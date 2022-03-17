@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 //"run-list", "endpoints", "commits", "web-vitals", "binary", "numeric", "informative", "notApplicable"
 
-import sampleData from "./sampleData";
+// import sampleData from "./sampleData";
 const data =
   process.env.NODE_ENV === "production"
     ? { ...window.__VANTAGE_JSON__ }
-    : sampleData;
-    // : null;
+    // : sampleData;
+    : null;
 
 export const dataSlice = createSlice({
   name: "data",

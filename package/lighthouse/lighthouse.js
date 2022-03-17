@@ -21,19 +21,19 @@ const DATA_STORE = './vantage/data_store.json';
 
 // Initialize data from config file
 function initialize() {
-  try {
-    const currentData = fs.readFileSync('./vantage/vantage_config.json');
-    const configData = JSON.parse(currentData);
-    SERVER_COMMAND = configData.nextAppSettings.serverCommand;
-    BUILD_COMMAND = configData.nextAppSettings.buildCommand;
-    PORT = configData.nextAppSettings.port;
-    ENDPOINTS = configData.nextAppSettings.endpoints;
-    //optimizes audit for desktop apps instead of the default mobile view
-    if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
-    else CONFIG = {extends: 'lighthouse:default'};
-  } catch {
-    throw Error('Error accessing config file');
-  }
+  // try {
+  const currentData = fs.readFileSync('./vantage/vantage_config.json');
+  const configData = JSON.parse(currentData);
+  SERVER_COMMAND = configData.nextAppSettings.serverCommand;
+  BUILD_COMMAND = configData.nextAppSettings.buildCommand;
+  PORT = configData.nextAppSettings.port;
+  ENDPOINTS = configData.nextAppSettings.endpoints;
+  //optimizes audit for desktop apps instead of the default mobile view
+  if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
+  else CONFIG = {extends: 'lighthouse:default'};
+  // } catch {
+  //   throw Error('Error accessing config file');
+  // }
 }
 
 // Initiate the project's dev server based on command provided in config file
@@ -205,24 +205,24 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
-  try {
-    installHooks();
-    initialize();
-    getRoutes();
-    console.log(ENDPOINTS);
-    await startServer();
-    const snapshotTimestamp = new Date().toISOString();
-    const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
-    for (const endpoint of ENDPOINTS) {
-      const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
-      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
-    }
-    htmlOutput();
-    
-  } catch(err) {
-    console.log('Vantage was unable to complete for this commit');
-    console.log(err);
+  // try {
+  installHooks();
+  initialize();
+  getRoutes();
+  console.log(ENDPOINTS);
+  await startServer();
+  const snapshotTimestamp = new Date().toISOString();
+  const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
+  for (const endpoint of ENDPOINTS) {
+    const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+    await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
   }
+  htmlOutput();
+    
+  // } catch(err) {
+  //   console.log('Vantage was unable to complete for this commit');
+  //   console.log(err);
+  // }
 
   console.log('All tests complete');
   process.exit(1);
