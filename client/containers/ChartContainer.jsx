@@ -21,6 +21,7 @@ const ChartContainer = () => {
   const dispatch = useDispatch();
   const currentMetric = useSelector(getCurrentMetric);
   const perfMetricsSelected = useSelector(selectPerformanceMetrics);
+  const selectorSwitch = useSelector(state=>state.currentView.selectorSwitch);
 
   const perfMetricsSelectedArr = Object.values(perfMetricsSelected);
   const isPerfMetricSelected = perfMetricsSelectedArr.every((v) => v === false);
@@ -48,6 +49,7 @@ const ChartContainer = () => {
           >
             <CustomMUISwitch
               onChange={(_) => dispatch(changeSelectorSwitch())}
+              checked={selectorSwitch}
             />
           </CustomMUITooltip>
           <CompareArrowsRoundedIcon />

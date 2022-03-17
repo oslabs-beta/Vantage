@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.2",
+  "version": "0.0.7",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "start": "open-cli ./dist/index.html",
     "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
     "snapshot": "node ./package/lighthouse/lighthouse.js",
-    "desktop": "cross-env AUDIT_MODE=desktop"
+    "desktop": "cross-env AUDIT_MODE=desktop",
+    "postinstall": "package/git-hooks/gitHookInstall.js"
   },
   "repository": {
     "type": "git",
@@ -32,11 +33,8 @@
     "vantage": "./package/main/vantage.js"
   },
   "dependencies": {
-    "chalk": "^5.0.0",
-    "inquirer": "^8.2.0",
     "kill-port": "^1.6.1",
     "lighthouse": "^9.4.0",
-    "nanospinner": "^1.0.0",
     "node-inject-html": "^0.0.5",
     "open-cli": "^7.0.1"
   },
