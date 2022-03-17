@@ -6,6 +6,7 @@ const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec, execSync } = require('child_process');
 const kill = require('kill-port');
+const installHooks = require('../git-hooks/gitHookInstall');
 const htmlOutput = require('./html-script');
 // Command line process:  "npm run dev" to launch the app -> "npm run lighthouse" to generate the report
 
@@ -205,6 +206,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 
 async function initiateRefresh() {
   try {
+    installHooks();
     initialize();
     getRoutes();
     console.log(ENDPOINTS);
