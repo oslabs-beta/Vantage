@@ -58,6 +58,7 @@ function getRoutes(subfolders = '') {
     files.map((file) => {
       addFileToList(file, subfolders);
     });
+    ENDPOINTS.sort();
   } catch {
     throw Error('Error capturing structure of pages folder');
   }
@@ -137,8 +138,8 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   data["run-list"].push(snapshotTimestamp);
   data["run-list"] = Array.from(new Set(data["run-list"]));
   data["endpoints"].push(endpoint);
-  data["endpoints"] = Array.from(new Set(data["endpoints"]));
-
+  data["endpoints"] = Array.from(new Set(data["endpoints"])).sort();
+  console.log(Array.from(new Set(data["endpoints"])).sort());
 
   if (oldestRun !== undefined) delete data["commits"][oldestRun]; 
   data["commits"][snapshotTimestamp] = !lastResult ? ['PROCESSING IN PROGRESS, PLEASE WAIT', commitMessage] : commitMessage;
@@ -212,7 +213,7 @@ async function initiateRefresh() {
     const snapshotTimestamp = new Date().toISOString();
     const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
     for (const endpoint of ENDPOINTS) {
-      const lhr = await getLighthouseResults(`http://localhost:${3000}${endpoint}`);
+      const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
       await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
     }
     htmlOutput();
