@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-const fs = require('fs');
-
-fs.writeFileSync('./test.js', 'PLZ');
-
-console.log('PLZZZ')
