@@ -139,7 +139,6 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   data["run-list"] = Array.from(new Set(data["run-list"]));
   data["endpoints"].push(endpoint);
   data["endpoints"] = Array.from(new Set(data["endpoints"])).sort();
-  console.log(Array.from(new Set(data["endpoints"])).sort());
 
   if (oldestRun !== undefined) delete data["commits"][oldestRun]; 
   data["commits"][snapshotTimestamp] = !lastResult ? ['PROCESSING IN PROGRESS, PLEASE WAIT', commitMessage] : commitMessage;
