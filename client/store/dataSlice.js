@@ -1,30 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import regeneratorRuntime from 'regenerator-runtime';
 //"run-list", "endpoints", "commits", "web-vitals", "binary", "numeric", "informative", "notApplicable"
 
-// import sampleData from "./sampleData";
+import sampleData from "./sampleData";
 const data =
   process.env.NODE_ENV === "production"
     ? { ...window.__VANTAGE_JSON__ }
-    // : sampleData;
-    : null;
+    : sampleData;
+    // : null;
 
 export const dataSlice = createSlice({
   name: "data",
   initialState: data,
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
-  },
 });
 
-export const { increment, decrement, incrementByAmount } = dataSlice.actions;
+// export const {} = dataSlice.actions;
 
 export const selectWebVitals = (state) => state.data["web-vitals"];
 export const selectRunList = (state) => state.data["run-list"];

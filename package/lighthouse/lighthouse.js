@@ -6,6 +6,7 @@ const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec, execSync } = require('child_process');
 const kill = require('kill-port');
+const installHooks = require('../git-hooks/gitHookInstall');
 const htmlOutput = require('./html-script');
 
 // Define constants to be used throughout various functions

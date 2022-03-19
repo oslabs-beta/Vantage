@@ -135,8 +135,8 @@ const OverallMetricChart = () => {
           opacity="0.3"
         />
       )}
-      <ReferenceLine x={runA} stroke={theme.palette.primary.dark} />
-      <ReferenceLine x={runB} stroke={theme.palette.primary.dark} />
+      <ReferenceLine x={runA} stroke={theme.palette.primary.dark} strokeWidth={sw} />
+      <ReferenceLine x={runB} stroke={theme.palette.primary.dark} strokeWidth={sw} />
     </LineChart>
   );
 };
