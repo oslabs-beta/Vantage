@@ -7,24 +7,10 @@ const chromeLauncher = require('chrome-launcher');
 const { exec, execSync } = require('child_process');
 const kill = require('kill-port');
 const htmlOutput = require('./html-script');
-const log4js = require('log4js');
-
-// redirect stdout / stderr to log file
-// let log_file = fs.createWriteStream('./vantage/run_history.log', {flags: 'a'});
-// process.stdout.pipe(log_file);
-// process.stderr.pipe(log_ile);
-
-log4js.configure({
-    appenders: { mylogger: { type:"file", filename: "./vantage/run_history.log" } },
-    categories: { default: { appenders:["mylogger"], level:"ALL" } }
-});
-const logger = log4js.getLogger("default");
-
 
 // Define constants to be used throughout various functions
 let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG;
-const log_file = fs.createWriteStream('./vantage/run_history.log', {flags: 'a'});
-const output = new console.Console(log_file, log_file);
+const log = (message) => fs.appendFileSync('./vantage/run_history.log', `\n${message}`);
 const DATA_STORE = './vantage/data_store.json';
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
@@ -40,12 +26,8 @@ function initialize() {
     if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
     else CONFIG = {extends: 'lighthouse:default'};
   } catch (err) {
-    
-    // output.log(`An error occurred while attempting to access the config file.  Please ensure that you have added ./vantage/vantage_config.json to your project, see the README for the template.\nAdditional error details: ${err}`);
-    console.log(`An error occurred while attempting to access the config file.  Please ensure that you have added ./vantage/vantage_config.json to your project, see the README for the template.\nAdditional error details: ${err}`);
-    output.log('test');
-    logger.log('log4js test');
-    //output.log(`An error occurred while attempting to access the config file.  Please ensure that you have added ./vantage/vantage_config.json to your project, see the README for the template.\nAdditional error details: ${err}`);
+    log(`An error occurred while attempting to access the config file.  Please ensure that you have added ./vantage/vantage_config.json to your project, see the README for the template.`);
+    log(err.stack);
     process.exit(1);
   }
 }
@@ -74,7 +56,7 @@ function getRoutes(subfolders = '') {
     });
     ENDPOINTS.sort();
   } catch (err) {
-    throw Error(`Error capturing structure of pages folder. Please ensure your project follows the required structure for the NEXT.js pages folder.\nAdditional error details: ${err}`);
+    throw Error(`Error capturing structure of pages folder. Please ensure your project follows the required structure for the NEXT.js pages folder.`);
   }
 }
 
@@ -98,7 +80,7 @@ function addFileToList(file, subfolders) {
 
 // Initiate a headless Chrome session and check performance of the specified endpoint
 async function getLighthouseResults(url, gitMessage) {
-  output.log('Getting report for ' + url);
+  log('Getting report for ' + url);
 
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
   const options = {
@@ -109,24 +91,16 @@ async function getLighthouseResults(url, gitMessage) {
   };
   const runnerResult = await lighthouse(url, options, CONFIG);
 
-  // `.report` is the HTML report as a string
-  // const reportHtml = runnerResult.report;
-  // fs.writeFileSync('lhreport.html', reportHtml);
-
   // `.lhr` is the Lighthouse Result as a JS object
-  fs.writeFileSync('analysis_results.json', JSON.stringify(runnerResult.lhr));
-  output.log('Report completed for ', runnerResult.lhr.finalUrl);
-  output.log('Performance score: ', runnerResult.lhr.categories.performance.score * 100);
+  // fs.writeFileSync('analysis_results.json', JSON.stringify(runnerResult.lhr));
+  log(`Performance score: ${runnerResult.lhr.categories.performance.score * 100}`);
 
   await chrome.kill();
   return runnerResult.lhr;
 }
 
-
+// Process the returned lighthouse object and update JSON file with new data
 async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, lastResult) {
-  // Process returned object based on our defined criteria
-  // Get the existing JSON file for this project
-  // Update it with new data
 
   // Load existing JSON file or create new one if not yet present
   let data;
@@ -214,26 +188,28 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 }
 
 async function initiateRefresh() {
+  
   try {
-    output.log(`>>> NEW RUN`);
-    output.log(Date.now());
+    const snapshotTimestamp = new Date().toISOString();
+    const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
+
+    log(`>>> New run for commit '${commitMsg}' at ${snapshotTimestamp}`);
+
     initialize();
     getRoutes();
     await startServer();
-    const snapshotTimestamp = new Date().toISOString();
-    const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
+    
     for (const endpoint of ENDPOINTS) {
       const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
       await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
     }
     htmlOutput();
-    output.log('Tests completed');
+    log('Tests completed');
   } catch(err) {
-    output.error('Vantage was unable to complete for this commit');
-    output.error(err);
-    log_file.end();
-  }
-  output.log('>>> PROCESS EXITING');
+    log('Vantage was unable to complete for this commit');
+    log(err.stack);
+  } 
+  log('>>> PROCESS EXITING');
   process.exit(0);
 }
 
