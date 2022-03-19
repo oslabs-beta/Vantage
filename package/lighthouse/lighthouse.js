@@ -6,7 +6,6 @@ const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec, execSync } = require('child_process');
 const kill = require('kill-port');
-const installHooks = require('../git-hooks/gitHookInstall');
 const htmlOutput = require('./html-script');
 
 // Define constants to be used throughout various functions
@@ -16,21 +15,24 @@ const DATA_STORE = './vantage/data_store.json';
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
+  let configData = undefined;
   try {
     const currentData = fs.readFileSync('./vantage/vantage_config.json');
-    const configData = JSON.parse(currentData);
-    SERVER_COMMAND = configData.nextAppSettings.serverCommand;
-    BUILD_COMMAND = configData.nextAppSettings.buildCommand;
-    PORT = configData.nextAppSettings.port;
-    ENDPOINTS = configData.nextAppSettings.endpoints;
-    //optimizes audit for desktop apps instead of the default mobile view
-    if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
-    else CONFIG = {extends: 'lighthouse:default'};
-  } catch (err) {
-    log(`An error occurred while attempting to access the config file.  Please ensure that you have added ./vantage/vantage_config.json to your project, see the README for the template.`);
-    log(err.stack);
-    process.exit(1);
+    configData = JSON.parse(currentData);
+  } catch {
+    log(`The config file was not found or the format is incorrect.  Proceeding with default values.`);
   }
+
+  SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? 'npm run start';
+  BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npm run build';
+  PORT = configData.nextAppSettings.port ?? 3000;
+  ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
+  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`)
+
+  //optimizes audit for desktop apps instead of the default mobile view
+  if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
+  else CONFIG = {extends: 'lighthouse:default'};
+
 }
 
 // Build the NEXT project and then start server
