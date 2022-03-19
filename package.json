@@ -35,6 +35,7 @@
   "dependencies": {
     "kill-port": "^1.6.1",
     "lighthouse": "^9.4.0",
+    "log4js": "^6.4.3",
     "node-inject-html": "^0.0.5",
     "open-cli": "^7.0.1"
   },
