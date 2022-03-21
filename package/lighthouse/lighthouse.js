@@ -15,17 +15,18 @@ const DATA_STORE = './vantage/data_store.json';
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
-  let configData = undefined;
+  let configData;
   try {
     const currentData = fs.readFileSync('./vantage/vantage_config.json');
     configData = JSON.parse(currentData);
   } catch {
+    configData = {nextAppSettings : {}};
     log(`The config file was not found or the format is incorrect.  Proceeding with default values.`);
   }
 
-  SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? 'npm run start';
-  BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npm run build';
-  PORT = configData.nextAppSettings.port ?? 3000;
+  PORT = configData.nextAppSettings.port ?? 3500;
+  BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npx next build';
+  SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
   log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`)
 
@@ -71,12 +72,17 @@ function addFileToList(file, subfolders) {
     if (!ENDPOINTS.includes(endpointName)) {
       ENDPOINTS.push(endpointName); 
     }
-  } else if (file === 'index.js') {
+  } else if (file.endsWith('.ts') && !file.startsWith('_') && file !== 'index.ts') {
+    const endpointName = prefix + file.split('.ts')[0];
+    if (!ENDPOINTS.includes(endpointName)) {
+      ENDPOINTS.push(endpointName); 
+    }
+  } else if (file === 'index.js' || file === 'index.ts') {
     const endpointName = prefix + '/';
     if (!ENDPOINTS.includes(prefix)) {
       ENDPOINTS.push(prefix); 
     }
-  } else if (!file.endsWith('.js') && file !== 'api' && file !== '') {
+  } else if (!file.endsWith('.js') && !file.endsWith('.ts') && file !== 'api' && file !== '') {
     getRoutes(subfolders === '' ? file : subfolders + '/' + file);
   }
 }
@@ -212,6 +218,7 @@ async function initiateRefresh() {
     log('Vantage was unable to complete for this commit');
     log(err.stack);
   } 
+  await kill(PORT);
   log('>>> PROCESS EXITING');
   process.exit(0);
 }
