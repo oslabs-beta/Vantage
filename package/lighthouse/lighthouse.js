@@ -5,28 +5,36 @@ const lighthouse = require('lighthouse');
 const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
 const { exec, execSync } = require('child_process');
+const { resolve } = require('path');
 const kill = require('kill-port');
 const htmlOutput = require('./html-script');
+const nextConfig = require(resolve(process.env.INIT_CWD + '/next.config.js'));
 
 // Define constants to be used throughout various functions
-let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG;
-const log = (message) => fs.appendFileSync('./vantage/run_history.log', `\n${message}`);
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG, EXTENSIONS;
+const log = (message) => {
+  fs.appendFileSync('./vantage/run_history.log', `\n${message}`);
+};
+!fs.existsSync('./vantage/') && fs.mkdirSync('./vantage/');
 const DATA_STORE = './vantage/data_store.json';
+
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
-  let configData = undefined;
+  let configData;
   try {
     const currentData = fs.readFileSync('./vantage/vantage_config.json');
     configData = JSON.parse(currentData);
   } catch {
+    configData = {nextAppSettings : {}};
     log(`The config file was not found or the format is incorrect.  Proceeding with default values.`);
   }
 
-  SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? 'npm run start';
-  BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npm run build';
-  PORT = configData.nextAppSettings.port ?? 3000;
+  PORT = configData.nextAppSettings.port ?? 3500;
+  BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npx next build';
+  SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
+  EXTENSIONS = nextConfig.pageExtensions ?? ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'];
   log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`)
 
   //optimizes audit for desktop apps instead of the default mobile view
@@ -51,7 +59,7 @@ function getRoutes(subfolders = '') {
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
-    if (stdOut.includes("Failed to compile.")) throw Error(`Project failed to compile.\nAdditional error details: ${stdOut}`);
+    if (stdOut.includes("Failed to compile.")) throw Error(`Project failed to compile.`);
     const files = stdOut.split('\n');
     if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
     files.map((file) => {
@@ -66,24 +74,29 @@ function getRoutes(subfolders = '') {
 // Helper function to recursively traverse the pages folder and capture all endpoints
 function addFileToList(file, subfolders) {
   const prefix = subfolders !== '' ? '/' + subfolders + '/' : '/';
-  if (file.endsWith('.js') && !file.startsWith('_') && file !== 'index.js') {
-    const endpointName = prefix + file.split('.js')[0];
+  const checkExtensions = (file) => {
+    for (const extension of EXTENSIONS) if (file.endsWith('.' + extension)) return ('.' + extension);
+    return false;
+  };
+
+  let fileType = checkExtensions(file);
+  if (fileType && !file.startsWith('_') && file !== ('index' + fileType)) {
+    const endpointName = prefix + file.split(fileType)[0];
     if (!ENDPOINTS.includes(endpointName)) {
       ENDPOINTS.push(endpointName); 
     }
-  } else if (file === 'index.js') {
+  } else if (file === ('index' + fileType)) {
     const endpointName = prefix + '/';
     if (!ENDPOINTS.includes(prefix)) {
       ENDPOINTS.push(prefix); 
     }
-  } else if (!file.endsWith('.js') && file !== 'api' && file !== '') {
+  } else if (!fileType && file !== 'api' && file !== '') {
     getRoutes(subfolders === '' ? file : subfolders + '/' + file);
   }
 }
 
 // Initiate a headless Chrome session and check performance of the specified endpoint
 async function getLighthouseResults(url, gitMessage) {
-  log('Getting report for ' + url);
 
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
   const options = {
@@ -93,11 +106,6 @@ async function getLighthouseResults(url, gitMessage) {
     port: chrome.port
   };
   const runnerResult = await lighthouse(url, options, CONFIG);
-
-  // `.lhr` is the Lighthouse Result as a JS object
-  // fs.writeFileSync('analysis_results.json', JSON.stringify(runnerResult.lhr));
-  log(`Performance score: ${runnerResult.lhr.categories.performance.score * 100}`);
-
   await chrome.kill();
   return runnerResult.lhr;
 }
@@ -201,7 +209,7 @@ async function initiateRefresh() {
     initialize();
     getRoutes();
     await startServer();
-    
+    log('Endpoints tested: ' + ENDPOINTS);
     for (const endpoint of ENDPOINTS) {
       const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
       await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
@@ -212,6 +220,7 @@ async function initiateRefresh() {
     log('Vantage was unable to complete for this commit');
     log(err.stack);
   } 
+  await kill(PORT);
   log('>>> PROCESS EXITING');
   process.exit(0);
 }
