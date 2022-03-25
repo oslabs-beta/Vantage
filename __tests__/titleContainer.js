@@ -15,10 +15,12 @@
 
 
 describe('testing DropDownMenu Endpoints', ()=> {
+
     let menu
     let app
     let handleClick;
     let endpoints = store.getState().data.endpoints
+
   
         beforeEach(async () => {
             process.env.NODE_ENV = "development";
@@ -32,6 +34,8 @@ describe('testing DropDownMenu Endpoints', ()=> {
        
 
       test("DropDownMenu lists Endpoints from store", () => {
+        menu = app.container.querySelector('#dropDownMenu')
+        fireEvent.click(menu);
         expect('2').toEqual('2')
       });
 

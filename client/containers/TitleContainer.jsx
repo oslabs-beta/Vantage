@@ -76,16 +76,7 @@ const TitleContainer = () => {
                 {currentEndpoint}
               </Typography>
             </Box>
-
             <DropDownMenu />
-            {/* <Switch
-              className='darkModeSwitch'
-              checked={mode === "dark"}
-              onChange={() => dispatch(changeTheme())}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-            <DarkModeIcon fontSize='small' /> */}
-            {/* <Button color="inherit">Refresh</Button> */}
           </Toolbar>
         </AppBar>
       </Box>
