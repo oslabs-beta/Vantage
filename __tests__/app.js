@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import React from "React";
+import React from "react";
 import { Provider } from "react-redux";
 import store from "../client/store/store";
 import {
