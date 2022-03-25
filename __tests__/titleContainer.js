@@ -9,6 +9,7 @@
  import { Provider } from "react-redux";
  import TitleContainer from "../client/containers/TitleContainer.jsx";
  import DropDownMenu from "../client/components/DropDownMenu.jsx";
+ import App from "../client/App.jsx";
  import store from "../client/store/store";
  import {selectEndpoints} from '../client/store/dataSlice';
 
@@ -27,7 +28,6 @@ describe('testing DropDownMenu Endpoints', ()=> {
               </Provider>
             );
             handleClick = jest.fn()
-            menu = render(<DropDownMenu />);
           });
        
 
