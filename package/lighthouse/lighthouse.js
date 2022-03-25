@@ -59,6 +59,7 @@ function getRoutes(subfolders = '') {
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
+    if (stdOut.includes("Not a directory")) throw Error(`Not a directory`);
     if (stdOut.includes("Failed to compile.")) throw Error(`Project failed to compile.`);
     const files = stdOut.split('\n');
     if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
@@ -67,7 +68,7 @@ function getRoutes(subfolders = '') {
     });
     ENDPOINTS.sort();
   } catch (err) {
-    throw Error(`Error capturing structure of pages folder. Please ensure your project follows the required structure for the NEXT.js pages folder.`);
+    if (!err.message.includes('Not a directory')) throw Error(`Error capturing structure of pages folder. Please ensure your project follows the required structure for the NEXT.js pages folder.`);
   }
 }
 
