@@ -38,8 +38,7 @@
     "lighthouse": "^9.4.0",
     "node-inject-html": "^0.0.5",
     "open-cli": "^7.0.1",
-    "puppeteer": "^13.5.1",
-    "puppeteer-core": "^13.5.1"
+    "puppeteer": "^13.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",

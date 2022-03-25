@@ -19,7 +19,6 @@ const log = (message) => {
 !fs.existsSync('./vantage/') && fs.mkdirSync('./vantage/');
 const DATA_STORE = './vantage/data_store.json';
 
-
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
   let configData;
@@ -97,7 +96,7 @@ function addFileToList(file, subfolders) {
 }
 
 // Initiate a headless Chrome session and check performance of the specified endpoint
-async function getLighthouseResults(url, gitMessage) {
+async function getLighthouseResultsChromeLauncher(url, gitMessage) {
 
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
   const options = {
