@@ -38,9 +38,15 @@ const TitleContainer = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
           <Toolbar id='nav-bar'>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <a
+              href='https://www.vantagenext.com/'
+              style={{
+                display: "flex",
+                alignItems: "center",
+                textDecoration: "none",
+              }}
+            >
               <Logo style={{ height: "50px" }} />
-              {/* <MenuDrawer /> */}
               <Typography
                 color='text.primary'
                 variant='h6'
@@ -50,7 +56,7 @@ const TitleContainer = () => {
               >
                 Vantage
               </Typography>
-            </Box>
+            </a>
             {/* <Brightness5Icon fontSize="small"/> */}
 
             <Box
