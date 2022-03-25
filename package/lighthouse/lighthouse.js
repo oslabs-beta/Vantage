@@ -4,6 +4,7 @@
 const lighthouse = require('lighthouse');
 const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
+const puppeteer = require('puppeteer');
 const { exec, execSync } = require('child_process');
 const { resolve } = require('path');
 const kill = require('kill-port');
@@ -17,7 +18,6 @@ const log = (message) => {
 };
 !fs.existsSync('./vantage/') && fs.mkdirSync('./vantage/');
 const DATA_STORE = './vantage/data_store.json';
-
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
@@ -35,7 +35,7 @@ function initialize() {
   SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
   EXTENSIONS = nextConfig.pageExtensions ?? ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'];
-  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`)
+  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`);
 
   //optimizes audit for desktop apps instead of the default mobile view
   if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
@@ -59,6 +59,7 @@ function getRoutes(subfolders = '') {
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
+    if (stdOut.includes("Not a directory")) throw Error(`Not a directory`);
     if (stdOut.includes("Failed to compile.")) throw Error(`Project failed to compile.`);
     const files = stdOut.split('\n');
     if (!Array.isArray(ENDPOINTS)) ENDPOINTS = [];
@@ -67,7 +68,7 @@ function getRoutes(subfolders = '') {
     });
     ENDPOINTS.sort();
   } catch (err) {
-    throw Error(`Error capturing structure of pages folder. Please ensure your project follows the required structure for the NEXT.js pages folder.`);
+    if (!err.message.includes('Not a directory')) throw Error(`Error capturing structure of pages folder. Please ensure your project follows the required structure for the NEXT.js pages folder.`);
   }
 }
 
@@ -79,7 +80,7 @@ function addFileToList(file, subfolders) {
     return false;
   };
 
-  let fileType = checkExtensions(file);
+  const fileType = checkExtensions(file);
   if (fileType && !file.startsWith('_') && file !== ('index' + fileType)) {
     const endpointName = prefix + file.split(fileType)[0];
     if (!ENDPOINTS.includes(endpointName)) {
@@ -96,7 +97,7 @@ function addFileToList(file, subfolders) {
 }
 
 // Initiate a headless Chrome session and check performance of the specified endpoint
-async function getLighthouseResults(url, gitMessage) {
+async function getLighthouseResultsChromeLauncher(url, gitMessage) {
 
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
   const options = {
@@ -107,6 +108,21 @@ async function getLighthouseResults(url, gitMessage) {
   };
   const runnerResult = await lighthouse(url, options, CONFIG);
   await chrome.kill();
+  return runnerResult.lhr;
+}
+
+// Initiate a headless Chrome session and check performance of the specified endpoint
+async function getLighthouseResultsPuppeteer(url, gitMessage) {
+
+  const chrome = await puppeteer.launch({args: ['--remote-debugging-port=9222'],});
+  const options = {
+    logLevel: 'silent', 
+    output: 'html', 
+    maxWaitForLoad: 10000, 
+    port: 9222
+  };
+  const runnerResult = await lighthouse(url, options, CONFIG);
+  await chrome.close();
   return runnerResult.lhr;
 }
 
@@ -211,7 +227,8 @@ async function initiateRefresh() {
     await startServer();
     log('Endpoints tested: ' + ENDPOINTS);
     for (const endpoint of ENDPOINTS) {
-      const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
+      //const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
+      const lhr = await getLighthouseResultsPuppeteer(`http://localhost:${PORT}${endpoint}`);
       await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
     }
     htmlOutput();
