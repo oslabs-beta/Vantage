@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import "@testing-library/jest-dom";
-import { currentViewSlice,  } from '../store/currentViewSlice';
+import { currentViewSlice  } from '../client/store/currentViewSlice';
 
 
 describe('CurrentViewSlice Testing', () => {
@@ -27,7 +27,7 @@ describe('CurrentViewSlice Testing', () => {
 
   describe('default state', () => {
     it('should return a default state when given an undefined input', () => {
-      expect(subject(undefined, { type: undefined })).toEqual(state);
+      expect(createSlice(undefined, { type: undefined })).toEqual(initialState);
     });
   });
 
