@@ -35,7 +35,7 @@ function initialize() {
   SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
   EXTENSIONS = nextConfig.pageExtensions ?? ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'];
-  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`)
+  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`);
 
   //optimizes audit for desktop apps instead of the default mobile view
   if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
@@ -80,7 +80,7 @@ function addFileToList(file, subfolders) {
     return false;
   };
 
-  let fileType = checkExtensions(file);
+  const fileType = checkExtensions(file);
   if (fileType && !file.startsWith('_') && file !== ('index' + fileType)) {
     const endpointName = prefix + file.split(fileType)[0];
     if (!ENDPOINTS.includes(endpointName)) {
