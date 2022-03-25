@@ -4,6 +4,7 @@
 const lighthouse = require('lighthouse');
 const fs = require('fs');
 const chromeLauncher = require('chrome-launcher');
+const puppeteer = require('puppeteer');
 const { exec, execSync } = require('child_process');
 const { resolve } = require('path');
 const kill = require('kill-port');
@@ -110,6 +111,21 @@ async function getLighthouseResults(url, gitMessage) {
   return runnerResult.lhr;
 }
 
+// Initiate a headless Chrome session and check performance of the specified endpoint
+async function getLighthouseResultsPuppeteer(url, gitMessage) {
+
+  const chrome = await puppeteer.launch({args: ['--remote-debugging-port=9222'],});
+  const options = {
+    logLevel: 'silent', 
+    output: 'html', 
+    maxWaitForLoad: 10000, 
+    port: 9222
+  };
+  const runnerResult = await lighthouse(url, options, CONFIG);
+  await chrome.close();
+  return runnerResult.lhr;
+}
+
 // Process the returned lighthouse object and update JSON file with new data
 async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, lastResult) {
 
@@ -211,7 +227,8 @@ async function initiateRefresh() {
     await startServer();
     log('Endpoints tested: ' + ENDPOINTS);
     for (const endpoint of ENDPOINTS) {
-      const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
+      //const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
+      const lhr = await getLighthouseResultsPuppeteer(`http://localhost:${PORT}${endpoint}`);
       await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
     }
     htmlOutput();
