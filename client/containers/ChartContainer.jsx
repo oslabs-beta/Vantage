@@ -7,8 +7,6 @@ import {
   selectPerformanceMetrics,
   changeSelectorSwitch,
 } from "../store/currentViewSlice";
-// import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
-// import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
 import CommitRoundedIcon from "@mui/icons-material/CommitRounded";
 

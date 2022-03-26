@@ -1,8 +1,6 @@
 import * as React from 'react';
-// import Button from '@mui/material/Button';
 import {Menu, MenuItem, IconButton, Box} from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
-// import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useDispatch, useSelector } from "react-redux";
 import { changeEndpoint } from "../store/currentViewSlice";
 import {selectEndpoints} from '../store/dataSlice';
@@ -12,10 +10,10 @@ export default function DropDownMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
 
-  const open = Boolean(anchorEl);
+  const open = !!anchorEl;
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -32,7 +30,6 @@ export default function DropDownMenu() {
     <Box sx={{width: "138px", display: "flex", justifyContent: "flex-end"}}>
       <IconButton
         size="large"
-        // edge="end"
         color="inherit"
         aria-label="menu"
         sx={{ mt: 0, right: 0, display: "relative" }}
