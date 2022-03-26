@@ -13,14 +13,12 @@ import {
 } from "recharts";
 import CustomTooltip from "./CustomTooltip";
 import {
-  selectOverallScoreByEndpoint,
   selectCommits,
   selectRunList,
   selectWebVitalData,
 } from "../store/dataSlice.js";
 import {
   getCurrentEndpoint,
-  getCurrentMetric,
   selectPerformanceMetrics,
   addRunValue,
 } from "../store/currentViewSlice.js";
@@ -64,7 +62,8 @@ const PerformanceMetricChart = () => {
   );
   const valueType =
     perfMetricsSelectedArr.length > 1 ? "score" : "numericValue";
-
+  
+  // Score/metric for each metric
   const data = runList.map((cur, i) => {
     const multiple = valueType === "score" ? 100 : 1;
     return {
@@ -87,6 +86,7 @@ const PerformanceMetricChart = () => {
     CLS: "",
   };
 
+  //Only add unit if 1 web vital is selected
   const unit =
     perfMetricsSelectedArr.length > 1
       ? ""
@@ -131,19 +131,12 @@ const PerformanceMetricChart = () => {
         left: 20,
         bottom: 5,
       }}
-      //added filter to linechart
-      // filter="url(#shadow)"
     >
-      {/* <defs>
-        <filter id="shadow" height="200%">
-          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="purple"/>
-        </filter>
-      </defs> */}
-      <CartesianGrid strokeDasharray='10 5' stroke="#847a91"/>
-      <XAxis dataKey={"name"} tick={false} stroke="#ede1fc" >
+      <CartesianGrid strokeDasharray='10 5' stroke='#847a91' />
+      <XAxis dataKey={"name"} tick={false} stroke='#ede1fc'>
         <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis stroke="#ede1fc" /*domain={['dataMin', 'dataMax']}*/>
+      <YAxis stroke='#ede1fc' /*domain={['dataMin', 'dataMax']}*/>
         {perfMetricsSelectedArr.length === 1 && (
           <Label
             value={webVitalUnits[perfMetricsSelectedArr[0]]}
@@ -168,8 +161,16 @@ const PerformanceMetricChart = () => {
           opacity='0.3'
         />
       )}
-      <ReferenceLine x={runA} stroke={theme.palette.primary.dark} strokeWidth={2} />
-      <ReferenceLine x={runB} stroke={theme.palette.primary.dark} strokeWidth={2} />
+      <ReferenceLine
+        x={runA}
+        stroke={theme.palette.primary.dark}
+        strokeWidth={2}
+      />
+      <ReferenceLine
+        x={runB}
+        stroke={theme.palette.primary.dark}
+        strokeWidth={2}
+      />
     </LineChart>
   );
 };

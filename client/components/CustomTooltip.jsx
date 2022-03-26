@@ -1,5 +1,4 @@
 import { Card } from "@mui/material";
-import { Box } from "@mui/system";
 import React from "react";
 
 const CustomTooltip = ({ active, payload, commits, unit }) => {
@@ -7,7 +6,6 @@ const CustomTooltip = ({ active, payload, commits, unit }) => {
     const activeTime = payload[0].payload.name;
     const dateFormatted = new Date(activeTime).toLocaleString();
 
-    // console.log(payload);
     const payloadComponents = payload.map((cur, i) => {
       return (
         <p
