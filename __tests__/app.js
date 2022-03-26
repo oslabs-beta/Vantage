@@ -11,6 +11,7 @@ import {
   waitFor,
   fireEvent,
   prettyDOM,
+  within,
 } from "@testing-library/react";
 import App from "../client/App.jsx";
 import "@testing-library/jest-dom";
@@ -106,24 +107,73 @@ describe("React-Redux integration tests", () => {
         fireEvent.click(perf);
         const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT", "CLS"];
         webVitalArr.forEach((cur) => {
-          const webVitalMetric = app.getByText(cur)
+          const webVitalMetric = app.getByText(cur);
           fireEvent.click(webVitalMetric);
           expect(app.getAllByText(cur)[0]).toBeInTheDocument();
           fireEvent.click(webVitalMetric);
         });
       });
 
-      test("Clicking on each web vital shows a line for it", () => {
+      test("Clicking on each web vital shows a line for it individually", () => {
         const perf = app.getAllByText("Performance")[0];
         fireEvent.click(perf);
         const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT", "CLS"];
         webVitalArr.forEach((cur) => {
-          const webVitalMetric = app.getByText(cur)
+          const webVitalMetric = app.getByText(cur);
           fireEvent.click(webVitalMetric);
-          const webVitalLine = app.container.querySelectorAll('.recharts-line')
+          const webVitalLine = app.container.querySelectorAll(".recharts-line");
           expect(webVitalLine.length).toBe(1);
           fireEvent.click(webVitalMetric);
         });
+      });
+
+      test("Clicking on each web vital shows it's unit on the graph", () => {
+        const perf = app.getAllByText("Performance")[0];
+        fireEvent.click(perf);
+        const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT"];
+        webVitalArr.forEach((cur, i) => {
+          const webVitalMetric = app.getByText(cur);
+          fireEvent.click(webVitalMetric);
+          const unit = app
+            .getAllByText("ms")
+            .filter(({ nodeName }) => nodeName === "tspan");
+          expect(unit[0]).toBeInTheDocument();
+          fireEvent.click(webVitalMetric);
+        });
+      });
+
+      test("Clicking on each web vital shows a line for it together", () => {
+        const perf = app.getAllByText("Performance")[0];
+        fireEvent.click(perf);
+        const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT", "CLS"];
+        webVitalArr.forEach((cur, i) => {
+          const webVitalMetric = app.getByText(cur);
+          fireEvent.click(webVitalMetric);
+          const webVitalLine = app.container.querySelectorAll(".recharts-line");
+          expect(webVitalLine.length).toBe(i + 1);
+        });
+      });
+    });
+
+    describe("Testing chart range switch", () => {
+      let switchContainer;
+      beforeEach(() => {
+        const metric = app.getAllByText("Performance")[0];
+        fireEvent.click(metric);
+        switchContainer = app.container.querySelector("#range-switch");
+      });
+
+      test("Switch is in document", () => {
+        expect(switchContainer).toBeInTheDocument();
+      });
+
+      test("selectorSwitch in store starts as false", () => {
+        expect(store.getState().currentView.selectorSwitch).toBe(false);
+      });
+
+      test("selectorSwitch in to be true after range switch is clicked", () => {
+        fireEvent.click(app.container.querySelector("#range-switch-click"));
+        expect(store.getState().currentView.selectorSwitch).toBe(true);
       });
     });
   });
