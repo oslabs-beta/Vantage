@@ -12,32 +12,38 @@
  import App from "../client/App.jsx";
  import store from "../client/store/store";
  import {selectEndpoints} from '../client/store/dataSlice';
+ import regeneratorRuntime from "regenerator-runtime";
 
 
-describe('testing DropDownMenu Endpoints', ()=> {
+describe('testing Title Container', ()=> {
 
     let menu
-    let app
-    let handleClick;
-    let endpoints = store.getState().data.endpoints
+    let titleContainer
+    const endpoints = store.getState().data.endpoints
 
-  
-        beforeEach(async () => {
-            process.env.NODE_ENV = "development";
-            app = await render(
-              <Provider store={store}>
-                <App />
-              </Provider>
-            );
-            handleClick = jest.fn()
-          });
-       
+    beforeEach(async () => {
+      process.env.NODE_ENV = "development";
+      titleContainer = await render(
+        <Provider store={store}>
+          <TitleContainer />
+        </Provider>
+      );
+      menu = await render(
+        <Provider store={store}>
+          <DropDownMenu />
+        </Provider>
+      );
+    });
 
       test("DropDownMenu lists Endpoints from store", () => {
-        menu = app.container.querySelector('#dropDownMenu')
-        fireEvent.click(menu);
-        expect('2').toEqual('2')
+        let menuIcon = titleContainer.container.querySelector('#dropDownMenu')
+        fireEvent.click(menuIcon);
+        endpoints.forEach(el => {
+          expect(menu.getAllByText(el)).toBeTruthy();
+        });
       });
+
+      
 
 
     
