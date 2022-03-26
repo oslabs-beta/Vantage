@@ -34,6 +34,7 @@ describe('testing Title Container', ()=> {
       );
     });
 
+
       test("DropDownMenu lists Endpoints from store", () => {
         let menuIcon = titleContainer.container.querySelector('#dropDownMenu')
         fireEvent.click(menuIcon);
@@ -44,8 +45,9 @@ describe('testing Title Container', ()=> {
 
       test("Clicking endpoint changes view slice", () => {
         let menuIcon = titleContainer.container.querySelector('#dropDownMenu')
-        fireEvent.click(menuIcon);
         const endpointText = endpoints[0];
+        expect(titleContainer.queryAllByText(endpointText)).toHaveLength(0);
+        fireEvent.click(menuIcon);
         const menuItem = menu.getByText(endpointText);
         fireEvent.click(menuItem)
         expect(titleContainer.getAllByText(endpointText)).toBeTruthy();
