@@ -11,13 +11,10 @@ body {
   align-items: center;
   margin-top: 15px;
   position: relative;
-  
 }
 
 #waves {
   position: absolute;
-  // left:0;
-  // right:0;
   top: 0;
   z-index: -1;
 }
@@ -32,7 +29,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 1rem;
-  animation: fadeIn .5s;
+  animation: fadeIn 0.5s;
   align-content: center;
   row-gap: 10px;
 }
@@ -40,7 +37,6 @@ body {
 .active-metric {
   border-radius: 50%;
   box-shadow: 0 0 10px 2px#55fffc6b;
-  //background-color:#e4e4e4;
 }
 
 #chart-container {
@@ -83,11 +79,8 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  padding: .5em;
-  // height: 2em;
+  padding: 0.5em;
   min-height: 4em;
-  // height: 5em !important;
-  // height: clamp(3em, 4em, 5em) !important;
   p {
     font-weight: 800;
     font-size: 1.5rem;
@@ -97,8 +90,7 @@ body {
   }
   p:first-child {
     width: 400px;
-    font-size: .9rem;
-    
+    font-size: 0.9rem;
   }
 }
 
@@ -133,93 +125,46 @@ body {
 /* Scrollbar styles */
 ::-webkit-scrollbar {
   width: 10px;
-  // height: 15px;
-  }
-  
-  ::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-track {
   border: 1px solid black;
   border-radius: 15px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-  background: rgb(91, 91, 91);  
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(91, 91, 91);
   border-radius: 15px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-  background: rgb(123, 123, 123);  
-  }
+}
 
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(123, 123, 123);
+}
+
+#nav-bar {
+  background: linear-gradient(
+    0deg,
+    rgba(25, 25, 34, 1) 0%,
+    rgba(46, 46, 68, 1) 52%,
+    rgba(66, 66, 97, 1) 100%
+  );
+  justify-content: space-between;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+@media only screen and (max-width: 1050px) {
   #nav-bar {
-    background: linear-gradient(0deg, rgba(25,25,34,1) 0%, rgba(46,46,68,1) 52%, rgba(66,66,97,1) 100%);
-    justify-content: space-between;
-    padding-left: 150px;
-    padding-right: 150px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-
-  // .suggestion-tooltip {
-  //   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .5));
-  // }
-
-  @media only screen and (max-width: 1050px) {
-    #nav-bar {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  }
-
-// // Playing around with Wavey Background
-// .waves {
-//   position: relative;
-//   width: 100%;
-//   height: 15vh;
-//   margin-bottom: -7px; /*Fix for safari gap*/
-//   min-height: 100px;
-//   max-height: 150px;
-// }
-
-// .content {
-//   position: relative;
-//   height: 20vh;
-//   text-align: center;
-//   background-color: white;
-// }
-
-// /* Animation */
-
-// .parallax > use {
-//   animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
-// }
-// .parallax > use:nth-child(1) {
-//   animation-delay: -2s;
-//   animation-duration: 7s;
-// }
-// .parallax > use:nth-child(2) {
-//   animation-delay: -3s;
-//   animation-duration: 10s;
-// }
-// .parallax > use:nth-child(3) {
-//   animation-delay: -4s;
-//   animation-duration: 13s;
-// }
-// .parallax > use:nth-child(4) {
-//   animation-delay: -5s;
-//   animation-duration: 20s;
-// }
-// @keyframes move-forever {
-//   0% {
-//     transform: translate3d(-90px, 0, 0);
-//   }
-//   100% {
-//     transform: translate3d(85px, 0, 0);
-//   }
-// }
+}
 
 #range-switch {
   position: absolute;
   bottom: 13px;
   right: 10px;
-  animation: fadeIn .5s;
+  animation: fadeIn 0.5s;
 }
 
 @media only screen and (max-height: 840px) {
