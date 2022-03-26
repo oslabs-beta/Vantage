@@ -48,6 +48,7 @@ describe('testing Title Container', ()=> {
         const endpointText = endpoints[0];
         const menuItem = menu.getByText(endpointText);
         fireEvent.click(menuItem)
+        expect(titleContainer.getAllByText(endpointText)).toBeTruthy();
       });
       
 
