@@ -16,7 +16,6 @@
 
 
 describe('testing Title Container', ()=> {
-
     let menu
     let titleContainer
     const endpoints = store.getState().data.endpoints
@@ -43,7 +42,16 @@ describe('testing Title Container', ()=> {
         });
       });
 
+      test("Clicking endpoint changes view slice", () => {
+        let menuIcon = titleContainer.container.querySelector('#dropDownMenu')
+        fireEvent.click(menuIcon);
+        const endpointText = endpoints[0];
+        const menuItem = menu.getByText(endpointText);
+        fireEvent.click(menuItem)
+      });
       
+
+
 
 
     
