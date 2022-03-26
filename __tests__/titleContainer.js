@@ -35,6 +35,10 @@ describe('testing Title Container', ()=> {
     });
 
 
+    test("Title Container contains title", () => {
+      expect(titleContainer.getByText("Vantage")).toBeTruthy();
+    });
+
       test("DropDownMenu lists Endpoints from store", () => {
         let menuIcon = titleContainer.container.querySelector('#dropDownMenu')
         fireEvent.click(menuIcon);
