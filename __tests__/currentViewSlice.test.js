@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
 import "@testing-library/jest-dom";
-import { currentViewSlice  } from '../client/store/currentViewSlice';
+import { currentViewSlice } from '../client/store/currentViewSlice';
 
 
 describe('CurrentViewSlice Testing', () => {
   let initialState;
+  const fakeAction = { type: 'NOT_A_REAL_ACTION'};
 
   beforeEach(() => {
     initialState = {
@@ -27,7 +27,11 @@ describe('CurrentViewSlice Testing', () => {
 
   describe('default state', () => {
     it('should return a default state when given an undefined input', () => {
-      expect(createSlice(undefined, { type: undefined })).toEqual(initialState);
+      const { changeMetric } = currentViewSlice.actions;
+      console.log(changeMetric);
+      const newState = changeMetric(undefined, fakeAction)
+      console.log(newState);
+      expect(newState).toBe(initialState);
     });
   });
 
