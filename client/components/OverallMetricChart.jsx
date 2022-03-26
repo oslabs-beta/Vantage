@@ -40,7 +40,8 @@ const OverallMetricChart = () => {
   const runList = useSelector(selectRunList);
   const currentMetric = useSelector(getCurrentMetric);
 
-  const data = runList.map((cur, i) => {
+  // Data for chart
+  const data = runList.map((cur) => {
     const curData = overallScore[cur];
     return {
       name: cur,
@@ -51,7 +52,7 @@ const OverallMetricChart = () => {
     };
   });
 
-  const sw = 2;
+  const sw = 2; //stroke width
 
   const handleClick = (data) => {
     if (data) {
@@ -59,9 +60,28 @@ const OverallMetricChart = () => {
     }
   };
 
+  const lineComponents = [
+    { name: "Performance", color: theme.palette.primary.main },
+    { name: "SEO", color: theme.palette.primary.light },
+    { name: "Best Practices", color: theme.palette.secondary.main },
+    { name: "Accessibility", color: theme.palette.secondary.light },
+  ].map(({ name, color }) => (
+    <React.Fragment key={name}>
+      {(currentMetric === "default" || currentMetric === name) && (
+        <Line
+          type='monotone'
+          dataKey={name}
+          stroke={color}
+          strokeWidth={sw}
+          dot={false}
+        />
+      )}
+    </React.Fragment>
+  ));
+
   return (
     <LineChart
-      className="all-charts"
+      className='all-charts'
       onClick={handleClick}
       width={500}
       height={300}
@@ -72,71 +92,33 @@ const OverallMetricChart = () => {
         left: 20,
         bottom: 5,
       }}
-      // filter="url(#shadow)"
     >
-      {/* <defs>
-        <filter id="shadow" height="200%">
-          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="orchid"/>
-        </filter>
-      </defs> */}
-      <CartesianGrid strokeDasharray='10 5' stroke="#847a91"/>
-      <XAxis dataKey={"name"} tick={false} stroke="#ede1fc">
+      <CartesianGrid strokeDasharray='10 5' stroke='#847a91' />
+      <XAxis dataKey={"name"} tick={false} stroke='#ede1fc'>
         <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis stroke="#ede1fc"/*domain={['dataMin', 'dataMax']}*/ />
+      <YAxis stroke='#ede1fc' /*domain={['dataMin', 'dataMax']}*/ />
       <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
-      {(currentMetric === "default" || currentMetric === "Performance") && (
-        <Line
-          type='monotone'
-          dataKey='Performance'
-          // filter="url(#shadow)"
-          stroke= {theme.palette.primary.main}
-          strokeWidth={sw}
-          dot={false}
-        />
-      )}
-      {(currentMetric === "default" || currentMetric === "SEO") && (
-        <Line 
-          type='monotone' 
-          dataKey='SEO' 
-          // filter="url(#shadow)"
-          stroke= {theme.palette.primary.light}
-          strokeWidth={sw}
-          dot={false}
-        />
-      )}
-      {(currentMetric === "default" || currentMetric === "Best Practices") && (
-        <Line
-          type='monotone'
-          dataKey='Best Practices'
-          // filter="url(#shadow)"
-          stroke={theme.palette.secondary.main}
-          strokeWidth={sw}
-          dot={false}
-        />
-      )}
-
-      {(currentMetric === "default" || currentMetric === "Accessibility") && (
-        <Line
-          type='monotone'
-          dataKey='Accessibility'
-          // filter="url(#shadow)"
-          stroke={theme.palette.secondary.light}
-          strokeWidth={sw}
-          dot={false}
-        />
-      )}
+      {lineComponents}
       {runB && (
         <ReferenceArea
           x1={runA}
           x2={runB}
           fill={theme.palette.primary.dark}
-          opacity="0.3"
+          opacity='0.3'
         />
       )}
-      <ReferenceLine x={runA} stroke={theme.palette.primary.dark} strokeWidth={sw} />
-      <ReferenceLine x={runB} stroke={theme.palette.primary.dark} strokeWidth={sw} />
+      <ReferenceLine
+        x={runA}
+        stroke={theme.palette.primary.dark}
+        strokeWidth={sw}
+      />
+      <ReferenceLine
+        x={runB}
+        stroke={theme.palette.primary.dark}
+        strokeWidth={sw}
+      />
     </LineChart>
   );
 };
