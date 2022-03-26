@@ -1,20 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import regeneratorRuntime from 'regenerator-runtime';
-//"run-list", "endpoints", "commits", "web-vitals", "binary", "numeric", "informative", "notApplicable"
 
 import sampleData from "./sampleData";
 const data =
   process.env.NODE_ENV === "production"
     ? { ...window.__VANTAGE_JSON__ }
     : sampleData;
-    // : null;
+// : null;
 
 export const dataSlice = createSlice({
   name: "data",
   initialState: data,
 });
-
-// export const {} = dataSlice.actions;
 
 export const selectWebVitals = (state) => state.data["web-vitals"];
 export const selectRunList = (state) => state.data["run-list"];
