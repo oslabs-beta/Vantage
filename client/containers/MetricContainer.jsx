@@ -6,7 +6,6 @@ import {
   getCurrentEndpoint,
   changeMetric,
   getCurrentMetric,
-  addRunValue,
 } from "../store/currentViewSlice";
 import {
   selectOverallScoreByEndpoint,
@@ -57,7 +56,6 @@ const MetricContainer = () => {
               handleClick={handleClick}
               isActive={currentMetric === "Accessibility"}
             />
-            {/* <Metric name={"PWA"} value={mostRecentOverallScore.pwa * 100} /> */}
           </Box>
         </div>
       </Paper>
