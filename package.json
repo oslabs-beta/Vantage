@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oslabs-beta/Frosty.git"
+    "url": "git+https://github.com/oslabs-beta/Vantage.git"
   },
   "keywords": [
     "nextjs",
