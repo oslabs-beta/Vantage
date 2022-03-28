@@ -9,7 +9,12 @@ const { exec, execSync } = require('child_process');
 const { resolve } = require('path');
 const kill = require('kill-port');
 const htmlOutput = require('./html-script');
-const nextConfig = require(resolve(process.env.INIT_CWD + '/next.config.js'));
+const regeneratorRuntime = require('regenerator-runtime');
+const testing = process.env.NODE_ENV === 'testing' ? true : false;
+
+
+let nextConfig;
+try { nextConfig = require(resolve(process.env.INIT_CWD + '/next.config.js')); } catch { nextConfig = {}}
 
 // Define constants to be used throughout various functions
 let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG, EXTENSIONS;
@@ -17,7 +22,7 @@ const log = (message) => {
   fs.appendFileSync('./vantage/run_history.log', `\n${message}`);
 };
 !fs.existsSync('./vantage/') && fs.mkdirSync('./vantage/');
-const DATA_STORE = './vantage/data_store.json';
+const DATA_STORE = !testing ? './vantage/data_store.json' : './__tests__/data_store.json';
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
@@ -113,7 +118,7 @@ async function getLighthouseResultsChromeLauncher(url, gitMessage) {
 
 // Initiate a headless Chrome session and check performance of the specified endpoint
 async function getLighthouseResultsPuppeteer(url, gitMessage) {
-
+  
   const chrome = await puppeteer.launch({args: ['--remote-debugging-port=9222'],});
   const options = {
     logLevel: 'silent', 
@@ -128,9 +133,9 @@ async function getLighthouseResultsPuppeteer(url, gitMessage) {
 
 // Process the returned lighthouse object and update JSON file with new data
 async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, lastResult) {
-
   // Load existing JSON file or create new one if not yet present
   let data;
+  
   try {
     const currentData = await fs.readFileSync(DATA_STORE);
     data = JSON.parse(currentData);
@@ -140,7 +145,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
 
   // If more than 10 runs are present, store the oldest timestamp for use during delete lines below
   let oldestRun;
-  if (data["run-list"].length >= 10) {
+  if (data["run-list"].length > 10) {
     if (!lastResult) oldestRun = data["run-list"][0];
     else oldestRun = data["run-list"].shift();
   }
@@ -172,7 +177,9 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
     const keys = [];
     refs.map((ref) => keys.push(ref.id));
     for (const item of keys) {
-      const currentResults = {'scoreDisplayMode' : lhr['audits'][item]['scoreDisplayMode'], 'score' : lhr['audits'][item]['score'], 'numericValue' : lhr['audits'][item]['numericValue'], 'displayValue' : lhr['audits'][item]['displayValue']};
+      const thisItem = {};
+      Object.assign(thisItem, lhr['audits'][item]);
+      const currentResults = {'scoreDisplayMode' : thisItem['scoreDisplayMode'], 'score' : thisItem['score'], 'numericValue' : thisItem['numericValue'], 'displayValue' : thisItem['displayValue']};
       const resultType = webVitals.has(item) ? 'web-vitals' : category;
 
       if (data[resultType] === undefined) data[resultType] = {};
@@ -198,15 +205,18 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
         data[resultType][item]['description'] = data[resultType][item]['description'].replace(/\(http.*\)/, '');
         data[resultType][item]['description'] = data[resultType][item]['description'].replace(/\[/, '');
         data[resultType][item]['description'] = data[resultType][item]['description'].replace(/\]/, '');
+        data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: {...currentResults}}};
 
-        data[resultType][item]['results'] = { [endpoint] : {[snapshotTimestamp]: currentResults}};
+
       } else if (data[resultType][item]['results'][endpoint] === undefined) {
       // score, numeric value, display value
         data[resultType][item]['results'][endpoint] = {[snapshotTimestamp] : currentResults};
       } else {
         data[resultType][item]['results'][endpoint][snapshotTimestamp] = currentResults;
       }
+  
       if (oldestRun !== undefined) delete data[resultType][item]['results'][endpoint][oldestRun]; 
+
     }
   }
 
@@ -242,4 +252,6 @@ async function initiateRefresh() {
   process.exit(0);
 }
 
-initiateRefresh();
+if (!testing) initiateRefresh();
+
+module.exports = {generateUpdatedDataStore};
