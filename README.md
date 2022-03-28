@@ -1,13 +1,56 @@
-# Vantage
-NEXTjs SEO optimization and monitoring tool
+# <img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/favicon.png?raw=true" alt="Vantage Logo" height="30"/> [VANTAGE]("https://www.vantagenext.com")
 
-## Configure a Project
-* Add the following in your project's root directory:
-  * vantage_config.json - edit build and start commands to match your project's commands
-* To initiate a project, run ```npx snapshot```. This will run the first snapshot and add the command to the git post-commit hook
-  * If you have an existing post-commit hook file, add ```npx snapshot >&- 2>&- &``` to the file
-* for testing, run ```sudo npm link ../vantage``` (or project directory location) then ```npm install``` to link the vantage-next package to the project
+Vantage is a web optimization tool designed for NEXTjs apps.
+* Uses Google lighthouse under the hood to determine key web vital scores and suggestions to improve.
+* Evaluates your app in the background with every commit.
+* Automatically evaluates every page in the app.
+* Allows you to compare snapshots to see exactly which recommendations changed, and how your updates have directly influenced specific metrics.
 
-* If you specify your own custom server command to avoid conflicts with other ports being used for testing, then the ```PORT``` value should match the port that your server runs on.
-* If you do not specify a custom server command, then your server will start on the provided ```PORT``` value.  3500 will be used by default.
-* If your project has custom page extensions set in next.config.js, these will be used to detect the page extensions that are compatible with next.js
+## Get Started
+
+Install as a dev dependency in your project to get started.
+```
+npm install vantage --save-dev
+```
+
+### Vantage Dashboard
+![Vantage Dashboard](https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/screenshot1.png?raw=true)
+
+Gifs below:
+
+
+## Documentation
+
+View further documentation, config setup, and troubleshooting guides at:
+
+https://www.vantagenext.com/docs
+
+## Technologies used
+* Google Lighthouse
+* Reactjs
+* Material UI
+* Redux Toolkit
+* Recharts
+* SASS
+* Webpack
+* Puppeteer
+
+
+## Contributors
+
+* Ari Shoham - [Github](https://github.com/arishoham) | [LinkedIn](https://www.linkedin.com/in/ari-shoham/)
+* Michael Noah - [Github](https://github.com/mnoah1) | [LinkedIn](https://www.linkedin.com/in/mnoah/)
+* Eli Davis - [Github](https://github.com/elidavis42) | [LinkedIn](https://www.linkedin.com/in/elidavis42/)
+* Paul Perez - [Github](https://github.com/perezp92) | [LinkedIn](https://www.linkedin.com/in/perezp92/)
+
+## Want to Contribute?
+
+1. Clone the repo and make a new branch: `$ git checkout https://github.com/oslabs-beta/Vantage.git -b [name_of_new_branch]`.
+1. Add a feature, fix a bug, or refactor some code :)
+    * Make sure to lint your code!
+1. Write/update tests for the changes you made, if necessary.
+1. Run unit & integration tests and make sure all tests pass: `npm test`.
+1. Open a Pull Request with a comprehensive description of changes to the `dev` branch.
+1. Open a Pull Request to the [docs](https://github.com/oslabs-beta/vantage-splash) and *Contributors* if necessary.
+
+**Thank you!**
