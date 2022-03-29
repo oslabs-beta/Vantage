@@ -3,7 +3,6 @@ import currentViewSlice, {
   changeMetric, 
   changeEndpoint, 
   changePerformanceMetrics,
-  addRunValue,
   changeSelectorSwitch
 } from '../client/store/currentViewSlice';
 import store from '../client/store/store'
@@ -71,5 +70,4 @@ describe('CurrentViewSlice', () => {
       expect(CLS).toEqual(false);
     });
   })
-
 });
