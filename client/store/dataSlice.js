@@ -9,6 +9,7 @@ export const selectWebVitals = (state) => state.data["web-vitals"];
 export const selectRunList = (state) => state.data["run-list"];
 export const selectEndpoints = (state) => state.data.endpoints;
 export const selectCommits = (state) => state.data.commits;
+
 export const selectOverallScoreByEndpoint = (state, endpoint) =>
   state.data["overall-scores"][endpoint];
 

@@ -1,9 +1,9 @@
-import * as React from 'react';
-import {Menu, MenuItem, IconButton, Box} from '@mui/material';
-import ArticleIcon from '@mui/icons-material/Article';
+import * as React from "react";
+import { Menu, MenuItem, IconButton, Box } from "@mui/material";
+import ArticleIcon from "@mui/icons-material/Article";
 import { useDispatch, useSelector } from "react-redux";
 import { changeEndpoint } from "../store/currentViewSlice";
-import {selectEndpoints} from '../store/dataSlice';
+import { selectEndpoints } from "../store/dataSlice";
 
 export default function DropDownMenu() {
   const endpoints = useSelector(selectEndpoints);
@@ -22,34 +22,36 @@ export default function DropDownMenu() {
     dispatch(changeEndpoint(endpointName));
     setAnchorEl(null);
   };
-  const endpointList = endpoints.map((el,i) =>
-    <MenuItem key={i} onClick={(_) => selectEndpoint(el)}>{el}</MenuItem>
-  );
-  
+  const endpointList = endpoints.map((el, i) => (
+    <MenuItem key={i} onClick={(_) => selectEndpoint(el)}>
+      {el}
+    </MenuItem>
+  ));
+
   return (
-    <Box sx={{width: "138px", display: "flex", justifyContent: "flex-end"}}>
+    <Box sx={{ width: "138px", display: "flex", justifyContent: "flex-end" }}>
       <IconButton
-        id = "dropDownMenu"
-        size="large"
-        color="inherit"
-        aria-label="menu"
+        id='dropDownMenu'
+        size='large'
+        color='inherit'
+        aria-label='menu'
         sx={{ mt: 0, right: 0, display: "relative" }}
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <ArticleIcon/>
+        <ArticleIcon />
       </IconButton>
       <Menu
-        id="basic-menu"
+        id='basic-menu'
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          "aria-labelledby": "basic-button",
         }}
-      >  
+      >
         {endpointList}
       </Menu>
     </Box>

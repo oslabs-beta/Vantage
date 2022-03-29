@@ -1,4 +1,4 @@
-import { Paper, Stack, Tooltip } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PerformanceMetricChart from "../components/PerformanceMetricChart";
@@ -19,7 +19,9 @@ const ChartContainer = () => {
   const dispatch = useDispatch();
   const currentMetric = useSelector(getCurrentMetric);
   const perfMetricsSelected = useSelector(selectPerformanceMetrics);
-  const selectorSwitch = useSelector(state=>state.currentView.selectorSwitch);
+  const selectorSwitch = useSelector(
+    (state) => state.currentView.selectorSwitch
+  );
 
   const perfMetricsSelectedArr = Object.values(perfMetricsSelected);
   const isPerfMetricSelected = perfMetricsSelectedArr.every((v) => v === false);
@@ -46,7 +48,7 @@ const ChartContainer = () => {
             title='Change between viewing a range or specific commit'
           >
             <CustomMUISwitch
-              id="range-switch-click"
+              id='range-switch-click'
               onChange={(_) => dispatch(changeSelectorSwitch())}
               checked={selectorSwitch}
             />
