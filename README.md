@@ -13,17 +13,22 @@ Install as a dev dependency in your project to get started.
 npm install vantage --save-dev
 ```
 
-### Vantage Dashboard
-![Vantage Dashboard](https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/screenshot1.png?raw=true)
-
-Gifs below:
-
-
 ## Documentation
 
 View further documentation, config setup, and troubleshooting guides at:
 
 https://www.vantagenext.com/docs
+
+
+### Vantage Dashboard
+![Vantage Dashboard](https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/dashboard-view.png?raw=true)
+
+### Compare Commit Results:
+<img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/toggle-range.gif?raw=true" alt="Compare Commits" width="70%"/>
+
+### Choose Endpoints:
+<img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/endpoint-select.gif?raw=true" alt="Choose Endpoints" width="70%"/>
+
 
 ## Technologies used
 * Google Lighthouse

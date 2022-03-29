@@ -1,15 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import sampleData from "./sampleData";
-const data =
-  process.env.NODE_ENV === "production"
-    ? { ...window.__VANTAGE_JSON__ }
-    : sampleData;
-// : null;
-
 export const dataSlice = createSlice({
   name: "data",
-  initialState: data,
+  initialState: { ...window.__VANTAGE_JSON__ },
 });
 
 export const selectWebVitals = (state) => state.data["web-vitals"];
@@ -21,9 +14,13 @@ export const selectOverallScoreByEndpoint = (state, endpoint) =>
 
 export const selectMostRecentWebVital = (state, webVital, endpoint) => {
   const runList = state.data["run-list"];
-  return state.data["web-vitals"][webVital].results[endpoint][
-    runList[runList.length - 1]
-  ];
+  const score =
+    state.data["web-vitals"][webVital].results[endpoint][
+      runList[runList.length - 1]
+    ].score;
+  const title = state.data["web-vitals"][webVital].title;
+  const description = state.data["web-vitals"][webVital].description;
+  return { score, title, description };
 };
 
 export const selectWebVitalData = (state, webVital, endpoint) =>

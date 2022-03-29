@@ -4,17 +4,40 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+var fs = require("fs");
+var injectHTML = require("node-inject-html").injectHTML;
+
+//Inject sample data into index.html
+function htmlFileOutput() {
+  const htmlTest = fs.readFileSync("./client/index.html").toString();
+  const VANTAGE_JSON = fs
+    .readFileSync("./vantage_dev/sampleData.json")
+    .toString();
+  const htmlInject = `<script>window.__VANTAGE_JSON__ = ${VANTAGE_JSON}</script>`;
+  const newHtml = injectHTML(htmlTest, { headStart: htmlInject });
+  fs.writeFileSync(path.resolve("./vantage_dev/index.html"), newHtml);
+}
 
 //Only use HtmlInlineScriptPlugin for production
-const pluginsArr = [
-  new HtmlWebpackPlugin({
-    inject: "body",
-    template: "./client/index.html",
-  }),
-  new CleanWebpackPlugin(),
-];
-if (process.env.NODE_ENV === "production")
+const pluginsArr = [new CleanWebpackPlugin()];
+if (process.env.NODE_ENV === "production") {
+  pluginsArr.push(
+    new HtmlWebpackPlugin({
+      inject: "body",
+      template: "./client/index.html",
+    })
+  );
   pluginsArr.push(new HtmlInlineScriptPlugin());
+  //Inject sample data into index.html in development mode
+} else if (process.env.NODE_ENV === "development") {
+  htmlFileOutput();
+  pluginsArr.push(
+    new HtmlWebpackPlugin({
+      inject: "body",
+      template: "./vantage_dev/index.html",
+    })
+  );
+}
 
 module.exports = {
   entry: [
