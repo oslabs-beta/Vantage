@@ -5,19 +5,13 @@
 import React from "react";
 import { Provider } from "react-redux";
 import store from "../client/store/store";
-import {
-  render,
-  screen,
-  waitFor,
-  fireEvent,
-  prettyDOM,
-} from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import App from "../client/App.jsx";
 import "@testing-library/jest-dom";
 import regeneratorRuntime from "regenerator-runtime";
 
 describe("React-Redux integration tests", () => {
-  describe("Empty state before interactions", () => {
+  describe("Render app before each test", () => {
     let app;
     beforeEach(async () => {
       process.env.NODE_ENV = "development";
@@ -85,7 +79,7 @@ describe("React-Redux integration tests", () => {
       });
     });
 
-    describe("Checking performance web vitals", () => {
+    describe("Performance web vitals", () => {
       beforeEach(() => {
         //Close suggestions
         const curEndpoint = app.getByText("Current Endpoint:");
@@ -106,23 +100,124 @@ describe("React-Redux integration tests", () => {
         fireEvent.click(perf);
         const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT", "CLS"];
         webVitalArr.forEach((cur) => {
-          const webVitalMetric = app.getByText(cur)
+          const webVitalMetric = app.getByText(cur);
           fireEvent.click(webVitalMetric);
           expect(app.getAllByText(cur)[0]).toBeInTheDocument();
           fireEvent.click(webVitalMetric);
         });
       });
 
-      test("Clicking on each web vital shows a line for it", () => {
+      test("Clicking on each web vital shows a line for it individually", () => {
         const perf = app.getAllByText("Performance")[0];
         fireEvent.click(perf);
         const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT", "CLS"];
         webVitalArr.forEach((cur) => {
-          const webVitalMetric = app.getByText(cur)
+          const webVitalMetric = app.getByText(cur);
           fireEvent.click(webVitalMetric);
-          const webVitalLine = app.container.querySelectorAll('.recharts-line')
+          const webVitalLine = app.container.querySelectorAll(".recharts-line");
           expect(webVitalLine.length).toBe(1);
           fireEvent.click(webVitalMetric);
+        });
+      });
+
+      test("Clicking on each web vital shows it's unit on the graph", () => {
+        const perf = app.getAllByText("Performance")[0];
+        fireEvent.click(perf);
+        const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT"];
+        webVitalArr.forEach((cur, i) => {
+          const webVitalMetric = app.getByText(cur);
+          fireEvent.click(webVitalMetric);
+          const unit = app
+            .getAllByText("ms")
+            .filter(({ nodeName }) => nodeName === "tspan");
+          expect(unit[0]).toBeInTheDocument();
+          fireEvent.click(webVitalMetric);
+        });
+      });
+
+      test("Clicking on each web vital shows a line for it together", () => {
+        const perf = app.getAllByText("Performance")[0];
+        fireEvent.click(perf);
+        const webVitalArr = ["FCP", "SI", "LCP", "TTI", "TBT", "CLS"];
+        webVitalArr.forEach((cur, i) => {
+          const webVitalMetric = app.getByText(cur);
+          fireEvent.click(webVitalMetric);
+          const webVitalLine = app.container.querySelectorAll(".recharts-line");
+          expect(webVitalLine.length).toBe(i + 1);
+        });
+      });
+    });
+
+    describe("Chart range switch", () => {
+      let switchContainer;
+      beforeEach(() => {
+        const metric = app.getAllByText("Performance")[0];
+        fireEvent.click(metric);
+        switchContainer = app.container.querySelector("#range-switch");
+      });
+
+      test("Switch is in document", () => {
+        expect(switchContainer).toBeInTheDocument();
+      });
+
+      test("selectorSwitch in store starts as false", () => {
+        expect(store.getState().currentView.selectorSwitch).toBe(false);
+      });
+
+      test("selectorSwitch in to be true after range switch is clicked", () => {
+        fireEvent.click(app.container.querySelector("#range-switch-click"));
+        expect(store.getState().currentView.selectorSwitch).toBe(true);
+      });
+    });
+
+    describe("Suggestions", () => {
+      const metricArr = [];
+      beforeEach(() => {
+        metricArr[0] = app.getAllByText("Performance")[0];
+        metricArr[1] = app.getAllByText("Accessibility")[0];
+        metricArr[2] = app.getAllByText("Best Practices")[0];
+        metricArr[3] = app.getAllByText("SEO")[0];
+      });
+
+      test("Each Suggestion has two paragraphs and a button", () => {
+        metricArr.forEach((metric) => {
+          fireEvent.click(metric);
+          const suggestions = app.container.querySelectorAll(".suggestion");
+          suggestions.forEach((cur) => {
+            expect(cur).toBeInTheDocument();
+            expect(cur.children[0].nodeName).toBe("P");
+            expect(cur.children[1].nodeName).toBe("P");
+            expect(cur.lastChild.nodeName).toBe("BUTTON");
+          });
+        });
+      });
+
+      test("Each suggestion description has text", () => {
+        metricArr.forEach((metric) => {
+          fireEvent.click(metric);
+          const suggestions = app.container.querySelectorAll(".suggestion");
+          suggestions.forEach((cur) => {
+            expect(cur.children[0].innerHTML).toBeTruthy();
+          });
+        });
+      });
+
+      test("Each suggestion has a valid value", () => {
+        metricArr.forEach((metric) => {
+          fireEvent.click(metric);
+          const suggestions = app.container.querySelectorAll(".suggestion");
+          suggestions.forEach((cur) => {
+            const num = Number(cur.children[1].innerHTML);
+            if (isNaN(num)) {
+              expect(isNaN(cur.children[1].firstChild.nodeValue)).toBe(false);
+              expect(cur.children[1].children[0].innerHTML).toMatch(
+                /ms|B|elements|s|KiB|Kelements/
+              );
+            } else {
+              expect(num).toBeLessThanOrEqual(100);
+              expect(num).toBeGreaterThanOrEqual(0);
+            }
+          });
         });
       });
     });

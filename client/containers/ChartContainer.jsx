@@ -46,6 +46,7 @@ const ChartContainer = () => {
             title='Change between viewing a range or specific commit'
           >
             <CustomMUISwitch
+              id="range-switch-click"
               onChange={(_) => dispatch(changeSelectorSwitch())}
               checked={selectorSwitch}
             />

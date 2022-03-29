@@ -1,17 +1,11 @@
-import { Description } from "@mui/icons-material";
 import { Card, Typography, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getCurrentEndpoint,
-  changeMetric,
   getCurrentMetric,
 } from "../store/currentViewSlice";
-import {
-  selectOverallScoreByEndpoint,
-  selectRunList,
-} from "../store/dataSlice.js";
 import { useTheme } from "@mui/material/styles";
 import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
 import CustomMUITooltip from "../components/CustomMUITooltip";
@@ -20,7 +14,6 @@ const DescriptionContainer = () => {
   const theme = useTheme();
   const currentMetric = useSelector(getCurrentMetric);
   const currentEndpoint = useSelector(getCurrentEndpoint);
-  const runList = useSelector(selectRunList);
   const metricMap = {
     SEO: "seo",
     "Best Practices": "best-practices",
