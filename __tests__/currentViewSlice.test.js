@@ -1,5 +1,11 @@
 import "@testing-library/jest-dom";
-import currentViewSlice, { changeMetric, changeEndpoint } from '../client/store/currentViewSlice';
+import currentViewSlice, { 
+  changeMetric, 
+  changeEndpoint, 
+  changePerformanceMetrics,
+  addRunValue,
+  changeSelectorSwitch
+} from '../client/store/currentViewSlice';
 import store from '../client/store/store'
 
 
@@ -16,16 +22,13 @@ describe('CurrentViewSlice', () => {
   });
   
   describe('Unrecognized action types', () => {
-    it('should return the original state', () => {
+    it('should not affect state', () => {
       const action = { type: 'FAKE_TYPE'};
       expect(currentViewSlice(initialState, action)).toBe(initialState);
     })
   });
 
-  describe('changeMetric', () => {
-    // const action = store.dispatch(changeMetric('SEO'))
-    // console.log(action, ' IN CHANGE METRIC TEST');
-    
+  describe('changeMetric', () => {   
     it('should change currentMetric to action payload', () => {
       const { currentMetric } = store.getState().currentView;
       expect(currentMetric).toEqual('default')
@@ -37,39 +40,36 @@ describe('CurrentViewSlice', () => {
         expect(newMetric).toEqual(metric);
       };
     });
-
-    it('should return Error for unrecognized actions', () => {
-      // console.log('CHANGE METRIC Action: ', action);
-      const action = store.dispatch(changeMetric('FALSE ACTION'));
-      const metric = action.payload;
-      const { currentMetric } = store.getState().currentView;
-      console.log('CHANGE METRIC currentMetric: ', currentMetric);
-      expect(action).toBeInstanceOf(Error);
-      // expect(newState).toEqual(initialState);
-    });
   })
 
   describe('changeEndpoint', () => {
     it('should change Endpoint to action payload', () => {
-      const action = store.dispatch(changeEndpoint('SEO'))
-      const metric = action.payload;
-      const { currentMetric } = store.getState().currentView;
-      expect(currentMetric).toBe(metric);
+      const action = store.dispatch(changeEndpoint('Documentation'))
+      const endpoint = action.payload;
+      const newState = currentViewSlice(initialState, action);
+      const { currentEndpoint } = store.getState().currentView;
+      expect(currentEndpoint).toEqual(endpoint);
     });
   })
   describe('changePerformanceMetrics', () => {
-    it('should change performanceMetrics to action payload', () => {
-      const action = store.dispatch(changeMetric('SEO'))
-      const metric = action.payload;
-      const { currentMetric } = store.getState().currentView;
-      expect(currentMetric).toBe(metric);
+    it('should change specific performanceMetric to opposite boolean', () => {
+      expect(store.getState().currentView.performanceMetrics.FCP).toEqual(false);
+      const action = store.dispatch(changePerformanceMetrics('FCP'))
+      const newState = currentViewSlice(initialState, action)
+      const { FCP } = store.getState().currentView.performanceMetrics;
+      expect(FCP).toEqual(true);
+    });
+    
+    it('should only change action payloads performance metrics', () => {
+      const action = store.dispatch(changePerformanceMetrics('FCP'))
+      const newState = currentViewSlice(initialState, action)
+      const { SI, LCP, TTI, TBT, CLS } = store.getState().currentView.performanceMetrics;
+      expect(SI).toEqual(false);
+      expect(LCP).toEqual(false);
+      expect(TTI).toEqual(false);
+      expect(TBT).toEqual(false);
+      expect(CLS).toEqual(false);
     });
   })
-  describe('addRunValue', () => {
-    it('should add run value to the array', () => {
-
-    });
-  })
-
 
 });
