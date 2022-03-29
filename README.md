@@ -24,10 +24,10 @@ https://www.vantagenext.com/docs
 ![Vantage Dashboard](https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/dashboard-view.png?raw=true)
 
 ### Compare Commit Results:
-![Compare Commits](https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/toggle-range.gif?raw=true)
+<img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/toggle-range.gif?raw=true" alt="Compare Commits" width="70%"/>
 
 ### Choose Endpoints:
-![Compare Commits](https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/endpoint-select.gif?raw=true)
+<img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/splash/endpoint-select.gif?raw=true" alt="Choose Endpoints" width="70%"/>
 
 
 ## Technologies used

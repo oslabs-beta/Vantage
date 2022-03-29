@@ -107,3 +107,5 @@ package-lock.json
 .DS_Store
 test-results/
 playwright-report/
+
+vantage_dev/index.html
