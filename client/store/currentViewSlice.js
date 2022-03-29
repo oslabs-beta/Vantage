@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+ 
 
 export const currentViewSlice = createSlice({
   name: "currentView",

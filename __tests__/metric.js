@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import React from "React";
+import React from "react";
 import userEvent from "@testing-library/user-event";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
