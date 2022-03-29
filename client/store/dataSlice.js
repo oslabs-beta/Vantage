@@ -21,9 +21,12 @@ export const selectOverallScoreByEndpoint = (state, endpoint) =>
 
 export const selectMostRecentWebVital = (state, webVital, endpoint) => {
   const runList = state.data["run-list"];
-  return state.data["web-vitals"][webVital].results[endpoint][
+  const score = state.data["web-vitals"][webVital].results[endpoint][
     runList[runList.length - 1]
-  ];
+  ].score;
+  const title = state.data["web-vitals"][webVital].title;
+  const description = state.data["web-vitals"][webVital].description;
+  return {score, title, description};
 };
 
 export const selectWebVitalData = (state, webVital, endpoint) =>

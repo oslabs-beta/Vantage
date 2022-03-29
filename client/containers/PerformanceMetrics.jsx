@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Metric from "../components/Metric";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentEndpoint,
-  changeMetric,
   changePerformanceMetrics,
   selectPerformanceMetrics,
 } from "../store/currentViewSlice";
-import {
-  selectOverallScoreByEndpoint,
-  selectMostRecentWebVital,
-} from "../store/dataSlice.js";
-import { Box, Grid } from "@mui/material";
+import { selectMostRecentWebVital } from "../store/dataSlice.js";
+import { Box } from "@mui/material";
 
 const PerformanceMetrics = () => {
   const dispatch = useDispatch();
@@ -43,15 +39,15 @@ const PerformanceMetrics = () => {
   };
 
   const data = [
-    {name:"FCP", value: fcp.score * 100},
-    {name:"TTI", value: tti.score * 100},
-    {name:"SI", value: si.score * 100},
-    {name:"TBT", value: tbt.score * 100},
-    {name:"LCP", value: lcp.score * 100},
-    {name:"CLS", value: cls.score * 100},
+    { name: "FCP", value: fcp.score * 100, description: fcp.title },
+    { name: "TTI", value: tti.score * 100, description: tti.title },
+    { name: "SI", value: si.score * 100, description: si.title },
+    { name: "TBT", value: tbt.score * 100, description: tbt.title },
+    { name: "LCP", value: lcp.score * 100, description: lcp.title },
+    { name: "CLS", value: cls.score * 100, description: cls.title },
   ];
 
-  const metricsArr = data.map((cur)=>(
+  const metricsArr = data.map((cur) => (
     <Metric
       key={cur.name}
       name={cur.name}
@@ -59,14 +55,11 @@ const PerformanceMetrics = () => {
       size={50}
       handleClick={handleClick}
       isActive={currentPerfMetrics[cur.name]}
-    />)
-  );
+      description={cur.description}
+    />
+  ));
 
-  return (
-    <Box id='performance-metrics'>
-      {metricsArr}
-    </Box>
-  );
+  return <Box id='performance-metrics'>{metricsArr}</Box>;
 };
 
 export default PerformanceMetrics;
