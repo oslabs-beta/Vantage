@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//manages the data from the report
+//the front end does not change the data so no reducers are necessary
 export const dataSlice = createSlice({
   name: "data",
   initialState: { ...window.__VANTAGE_JSON__ },
