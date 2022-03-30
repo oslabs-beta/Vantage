@@ -15,6 +15,7 @@ export const selectCommits = (state) => state.data.commits;
 export const selectOverallScoreByEndpoint = (state, endpoint) =>
   state.data["overall-scores"][endpoint];
 
+//displays data from the most recent commit
 export const selectMostRecentWebVital = (state, webVital, endpoint) => {
   const runList = state.data["run-list"];
   const score =
@@ -25,7 +26,7 @@ export const selectMostRecentWebVital = (state, webVital, endpoint) => {
   const description = state.data["web-vitals"][webVital].description;
   return { score, title, description };
 };
-
+//displays data a different commit
 export const selectWebVitalData = (state, webVital, endpoint) =>
   state.data["web-vitals"][webVital].results[endpoint];
 
