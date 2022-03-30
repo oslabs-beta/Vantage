@@ -22,7 +22,6 @@ const ChartContainer = () => {
   const selectorSwitch = useSelector(
     (state) => state.currentView.selectorSwitch
   );
-  
 
   const perfMetricsSelectedArr = Object.values(perfMetricsSelected);
   const isPerfMetricSelected = perfMetricsSelectedArr.every((v) => v === false);
