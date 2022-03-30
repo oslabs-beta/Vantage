@@ -1,9 +1,9 @@
 # <img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/favicon.png?raw=true" alt="Vantage Logo" height="30"/> [VANTAGE]("https://www.vantagenext.com")
 
 Vantage is a web optimization tool designed for NEXTjs apps.
-* Uses Google lighthouse under the hood to determine key web vital scores and suggestions to improve.
+* Uses Google lighthouse under the hood to determine key web vital scores and improvement suggestions.
 * Evaluates your app in the background with every commit.
-* Automatically evaluates every page in the app.
+* Automatically evaluates every page in the app by traversing the project's endpoints to capture data.
 * Allows you to compare snapshots to see exactly which recommendations changed, and how your updates have directly influenced specific metrics.
 
 ## Get Started
