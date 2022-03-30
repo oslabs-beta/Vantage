@@ -3,9 +3,8 @@ import currentViewSlice, {
   changeMetric, 
   changeEndpoint, 
   changePerformanceMetrics,
-  changeSelectorSwitch
 } from '../client/store/currentViewSlice';
-import store from '../client/store/store'
+import store from '../__test_utils__/store_test'
 
 
 describe('CurrentViewSlice', () => {
