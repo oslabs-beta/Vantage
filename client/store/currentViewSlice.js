@@ -6,6 +6,7 @@ export const currentViewSlice = createSlice({
   initialState: {
     currentMetric: "default",
     currentEndpoint: "/",
+    //initialize performance metrics as not selected
     performanceMetrics: {
       FCP: false,
       SI: false,
@@ -14,16 +15,19 @@ export const currentViewSlice = createSlice({
       TBT: false,
       CLS: false,
     },
+    //initialize selected commit points as empty
     runValueArr: [],
     runValueArrSort: [],
     selectorSwitch: false,
   },
   reducers: {
+    //changes which metric the user is viewing
     changeMetric: (state, action) => {
       const regex = /Performance|Accessibility|Best Practices|SEO|default/;
       if (regex.test(action.payload)) state.currentMetric = action.payload;
       else throw "changeMetric payload incorrect";
     },
+    //changes which endpoint the user is viewing
     changeEndpoint: (state, action) => {
       state.currentEndpoint = action.payload;
     },
