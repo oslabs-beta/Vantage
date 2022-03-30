@@ -8,16 +8,11 @@
     "postinstall": "./package/git-hooks/gitHookInstall",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "prod-test": "cross-env NODE_ENV=production webpack && node ./package/main/html-script-test && open-cli ./dist/index.html",
-    "start": "open-cli ./dist/index.html",
-    "my-publish": "cross-env NODE_ENV=production webpack && npm publish",
-    "prepublishOnly": "cross-env NODE_ENV=production webpack",
-    "snapshot": "node ./package/lighthouse/lighthouse.js",
-    "desktop": "cross-env AUDIT_MODE=desktop"
+    "prepublishOnly": "cross-env NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oslabs-beta/Frosty.git"
+    "url": "git+https://github.com/oslabs-beta/Vantage.git"
   },
   "keywords": [
     "nextjs",
