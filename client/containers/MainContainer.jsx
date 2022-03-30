@@ -5,13 +5,12 @@ import ChartContainer from "./ChartContainer";
 import Box from "@mui/material/Box";
 import DescriptionContainer from "./DescriptionContainer";
 import Footer from "./Footer";
-// import Waves from '../components/Waves';
 
 const MainContainer = () => {
   return (
     <div id='mainContainer'>
       <TitleContainer />
-      <Box id='mainBox' style={{}}>
+      <Box id='mainBox' >
         <Box id='contentContainer' sx={{ width: "lg" }}>
           <MetricContainer />
           <ChartContainer />

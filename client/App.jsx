@@ -39,11 +39,9 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div id='app'>
-        <CssBaseline />
-        <MainContainer />
-        <Waves id='waves' />
-      </div>
+      <CssBaseline />
+      <MainContainer />
+      <Waves id='waves' />
     </ThemeProvider>
   );
 };

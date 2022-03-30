@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import DropDownMenu from "../components/DropDownMenu";
-import { AppBar, Box, Toolbar } from "@mui/material/";
-import Typography from "@mui/material/Typography";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material/";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentEndpoint,
@@ -50,7 +49,6 @@ const TitleContainer = () => {
                 Vantage
               </Typography>
             </a>
-
             <Box
               sx={{ display: "flex", cursor: "pointer" }}
               onClick={handleClick}

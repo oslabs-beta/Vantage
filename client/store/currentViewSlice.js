@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const currentViewSlice = createSlice({
   name: "currentView",
   initialState: {
-    theme: "dark",
     currentMetric: "default",
     currentEndpoint: "/",
     performanceMetrics: {
@@ -68,7 +67,6 @@ export const {
   changeSelectorSwitch,
 } = currentViewSlice.actions;
 
-// export const getTheme = (state) => state.currentView.theme;
 export const getCurrentMetric = (state) => state.currentView.currentMetric;
 export const getCurrentEndpoint = (state) => state.currentView.currentEndpoint;
 export const selectPerformanceMetrics = (state) =>
