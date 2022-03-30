@@ -31,26 +31,31 @@ export const currentViewSlice = createSlice({
     changeEndpoint: (state, action) => {
       state.currentEndpoint = action.payload;
     },
+    //changes which metric the user is viewing
     changePerformanceMetrics: (state, action) => {
       state.performanceMetrics[action.payload] =
         !state.performanceMetrics[action.payload];
     },
+    //adds a selected commit to the run value array
     addRunValue: (state, action) => {
       if (state.currentMetric !== "default") {
-        //range mode
+        //check if range mode is selected
         if (state.selectorSwitch && state.runValueArr[1] !== action.payload) {
           const run = action.payload;
           if (state.runValueArr.length >= 2) state.runValueArr.shift();
           if (run !== state.runValueArr[0]) state.runValueArr.push(run);
+          //sort the selected commits to keep track of which was first selected
           state.runValueArrSort = state.runValueArr.slice().sort();
         } else if(!state.selectorSwitch) {
           state.runValueArr = state.runValueArrSort = [action.payload];
         }
       }
     },
+    //clears run value array
     resetRunValue: (state, action) => {
       state.runValueArr = state.runValueArrSort = [action.payload];
     },
+    //toggle between single and range view
     changeSelectorSwitch: (state) => {
       state.selectorSwitch = !state.selectorSwitch;
       if (state.runValueArr.length >= 2 && !state.selectorSwitch) {
