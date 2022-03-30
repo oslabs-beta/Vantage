@@ -39,6 +39,7 @@ https://www.vantagenext.com/docs
 * SASS
 * Webpack
 * Puppeteer
+* Node
 
 
 ## Contributors
