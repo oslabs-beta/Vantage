@@ -3,13 +3,11 @@
  */
 
 import React from "react";
-import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import TitleContainer from "../client/containers/TitleContainer.jsx";
 import DropDownMenu from "../client/components/DropDownMenu.jsx";
-import { selectEndpoints } from "../client/store/dataSlice";
 import regeneratorRuntime from "regenerator-runtime";
 
 //Test store
