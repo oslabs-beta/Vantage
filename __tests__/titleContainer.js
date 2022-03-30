@@ -9,9 +9,11 @@ import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import TitleContainer from "../client/containers/TitleContainer.jsx";
 import DropDownMenu from "../client/components/DropDownMenu.jsx";
-import store from "../client/store/store";
 import { selectEndpoints } from "../client/store/dataSlice";
 import regeneratorRuntime from "regenerator-runtime";
+
+//Test store
+import store from '../__test_utils__/store_test'
 
 describe("testing Title Container", () => {
   let menu;

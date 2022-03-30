@@ -4,17 +4,18 @@
 
 import React from "react";
 import { Provider } from "react-redux";
-import store from "../client/store/store";
 import { render, fireEvent } from "@testing-library/react";
 import App from "../client/App.jsx";
 import "@testing-library/jest-dom";
 import regeneratorRuntime from "regenerator-runtime";
 
+// Test store
+import store from '../__test_utils__/store_test'
+
 describe("React-Redux integration tests", () => {
   describe("Render app before each test", () => {
     let app;
     beforeEach(async () => {
-      process.env.NODE_ENV = "development";
       app = await render(
         <Provider store={store}>
           <App />
@@ -23,7 +24,6 @@ describe("React-Redux integration tests", () => {
     });
 
     test("App is rendering", () => {
-      // const circle = metric.container.querySelector('circle')
       expect(app.getByText("Vantage")).toBeInTheDocument();
       expect(app.getAllByText("Performance")[0]).toBeInTheDocument();
       expect(app.getAllByText("SEO")[0]).toBeInTheDocument();
