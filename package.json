@@ -16,7 +16,9 @@
   },
   "keywords": [
     "nextjs",
-    "seo"
+    "seo",
+    "lighthouse",
+    "web vitals"
   ],
   "author": "",
   "license": "ISC",
