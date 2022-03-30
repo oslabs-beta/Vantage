@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.19",
+  "version": "0.0.21",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,9 @@
   },
   "keywords": [
     "nextjs",
-    "seo"
+    "seo",
+    "lighthouse",
+    "web vitals"
   ],
   "author": "",
   "license": "ISC",

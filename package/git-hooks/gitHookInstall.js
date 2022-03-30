@@ -10,7 +10,6 @@ const hook = "post-commit";
 function installHooks() {
   //Make sure there is a .git folder
   const gitRoot = resolve(process.env.INIT_CWD + "/.git");
-  console.log(gitRoot);
   if (fs.existsSync(gitRoot)) {
     const hooksDir = resolve(gitRoot, "hooks");
     ensureDirExists(hooksDir); //Add hooks folder if it doesn't exist

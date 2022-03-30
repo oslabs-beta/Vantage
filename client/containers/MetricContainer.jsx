@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Paper } from "@mui/material";
 import Metric from "../components/Metric";
 import { useDispatch, useSelector } from "react-redux";
