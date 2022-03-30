@@ -3,29 +3,26 @@
 // Import required dependencies
 const lighthouse = require('lighthouse');
 const fs = require('fs');
-const chromeLauncher = require('chrome-launcher');
 const puppeteer = require('puppeteer');
 const { exec, execSync } = require('child_process');
 const { resolve } = require('path');
 const kill = require('kill-port');
 const htmlOutput = require('./html-script');
 const regeneratorRuntime = require('regenerator-runtime');
-const testing = process.env.NODE_ENV === 'testing' ? true : false;
-
 
 let nextConfig;
 try { nextConfig = require(resolve(process.env.INIT_CWD + '/next.config.js')); } catch { nextConfig = {}}
 
 // Define constants to be used throughout various functions
-let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG, EXTENSIONS;
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG, EXTENSIONS, DATA_STORE;
 const log = (message) => {
   fs.appendFileSync('./vantage/run_history.log', `\n${message}`);
 };
-!fs.existsSync('./vantage/') && fs.mkdirSync('./vantage/');
-const DATA_STORE = !testing ? './vantage/data_store.json' : './__tests__/data_store.json';
+
 
 // Initialize all constants based on provided values in the ./vantage/vantage_config.json file.
 function initialize() {
+  !fs.existsSync('./vantage/') && fs.mkdirSync('./vantage/');
   let configData;
   try {
     const currentData = fs.readFileSync('./vantage/vantage_config.json');
@@ -35,27 +32,25 @@ function initialize() {
     log(`The config file was not found or the format is incorrect.  Proceeding with default values.`);
   }
 
+  
   PORT = configData.nextAppSettings.port ?? 3500;
   BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npx next build';
   SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
   EXTENSIONS = nextConfig.pageExtensions ?? ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'];
-  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`);
+  DATA_STORE = nextConfig.dataStore ?? './vantage/data_store.json';
 
-  //optimizes audit for desktop apps instead of the default mobile view
-  if (process.env.AUDIT_MODE === 'desktop') CONFIG = configData.config;
-  else CONFIG = {extends: 'lighthouse:default'};
+  log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`);
 
 }
 
-// Build the NEXT project and then start server
+// Build the Next.js project and then start server
 async function startServer() {
   await kill(PORT);
   const stdOut = execSync(BUILD_COMMAND, { encoding: 'utf-8' });
   exec(SERVER_COMMAND, (err, stdOut, stdErr) => {
     if (err) throw Error(`Error starting project's server.\nAdditional error details: ${err}`);
   });
-  await new Promise(resolve => setTimeout(resolve, 5000));
 }
 
 // Traverse the 'pages' folder in project directory and capture list of endpoints to check
@@ -96,24 +91,9 @@ function addFileToList(file, subfolders) {
     if (!ENDPOINTS.includes(prefix)) {
       ENDPOINTS.push(prefix); 
     }
-  } else if (!fileType && file !== 'api' && file !== '') {
+  } else if (!fileType && file !== 'api' && file !== '' && !file.endsWith('.json')) {
     getRoutes(subfolders === '' ? file : subfolders + '/' + file);
   }
-}
-
-// Initiate a headless Chrome session and check performance of the specified endpoint
-async function getLighthouseResultsChromeLauncher(url, gitMessage) {
-
-  const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-  const options = {
-    logLevel: 'silent', 
-    output: 'html', 
-    maxWaitForLoad: 10000, 
-    port: chrome.port
-  };
-  const runnerResult = await lighthouse(url, options, CONFIG);
-  await chrome.kill();
-  return runnerResult.lhr;
 }
 
 // Initiate a headless Chrome session and check performance of the specified endpoint
@@ -132,12 +112,12 @@ async function getLighthouseResultsPuppeteer(url, gitMessage) {
 }
 
 // Process the returned lighthouse object and update JSON file with new data
-async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, lastResult) {
+async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMessage, lastResult, dataStore) {
   // Load existing JSON file or create new one if not yet present
   let data;
   
   try {
-    const currentData = await fs.readFileSync(DATA_STORE);
+    const currentData = await fs.readFileSync(dataStore);
     data = JSON.parse(currentData);
   } catch {
     data = {"run-list": [], "endpoints":[], "commits":{}, "overall-scores": {}, "web-vitals": {}};
@@ -169,7 +149,7 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   };
 
   
-  // Update web vitals section of output object
+  // Update audit results within the object
   const webVitals = new Set(['first-contentful-paint', 'speed-index', 'largest-contentful-paint', 'interactive', 'total-blocking-time', 'cumulative-layout-shift']);
   
   for (const category of Object.keys(lhr['categories'])) {
@@ -221,9 +201,10 @@ async function generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commit
   }
 
   // Save output to JSON
-  fs.writeFileSync(DATA_STORE, JSON.stringify(data));
+  fs.writeFileSync(dataStore, JSON.stringify(data));
 }
 
+// Primary function to step through all parts of refresh and data collection process
 async function initiateRefresh() {
   
   try {
@@ -237,9 +218,8 @@ async function initiateRefresh() {
     await startServer();
     log('Endpoints tested: ' + ENDPOINTS);
     for (const endpoint of ENDPOINTS) {
-      //const lhr = await getLighthouseResults(`http://localhost:${PORT}${endpoint}`);
       const lhr = await getLighthouseResultsPuppeteer(`http://localhost:${PORT}${endpoint}`);
-      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1]);
+      await generateUpdatedDataStore(lhr, snapshotTimestamp, endpoint, commitMsg, endpoint === ENDPOINTS[ENDPOINTS.length - 1], DATA_STORE);
     }
     htmlOutput();
     log('Tests completed');
@@ -252,6 +232,6 @@ async function initiateRefresh() {
   process.exit(0);
 }
 
-if (!testing) initiateRefresh();
+if (process.env.NODE_ENV !== 'testing') initiateRefresh();
 
-module.exports = {generateUpdatedDataStore};
+module.exports = {generateUpdatedDataStore, initiateRefresh};
