@@ -1,4 +1,11 @@
-# <img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/favicon.png?raw=true" alt="Vantage Logo" height="30"/> [VANTAGE]("https://www.vantagenext.com")
+# <img src="https://github.com/oslabs-beta/vantage-splash/blob/dev/public/favicon.png?raw=true" alt="Vantage Logo" width="30%"/> 
+
+# [VANTAGE]("https://www.vantagenext.com")
+
+[![Build](https://img.shields.io/github/workflow/status/oslabs-beta/Vantage/Node.js%20CI)](https://github.com/oslabs-beta/Vantage/)
+[![NPM Downloads](https://img.shields.io/npm/dm/vantage-next)](https://github.com/oslabs-beta/Vantage/)
+[![Issues](https://img.shields.io/github/issues/oslabs-beta/Vantage)](https://github.com/oslabs-beta/Vantage/)
+[![License](https://img.shields.io/github/license/oslabs-beta/Vantage)](https://github.com/oslabs-beta/Vantage/)
 
 Vantage is a web optimization tool designed for NEXTjs apps.
 
