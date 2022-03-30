@@ -1,5 +1,7 @@
 process.env.NODE_ENV = 'testing';
 
+const SAMPLE_DATA_FILE = './__tests__/sample_lhr.json';
+const DATA_STORE_FILE = './__tests__/data_store.json';
 const snapshot = require("../package/lighthouse/lighthouse");
 const fs = require('fs');
 
@@ -9,9 +11,9 @@ describe("data_store.json tests", () => {
 
   describe("Export a single run", () => {
     beforeEach(async () => {
-      const sample_lhr = JSON.parse(fs.readFileSync('./__tests__/sample_lhr.json'));
-      await snapshot.generateUpdatedDataStore(sample_lhr, '2021-01-01 00:00:00', '/myEndpoint', 'Sample Commit', true);
-      data_store = fs.readFileSync('./__tests__/data_store.json');
+      const sample_lhr = JSON.parse(fs.readFileSync(SAMPLE_DATA_FILE));
+      await snapshot.generateUpdatedDataStore(sample_lhr, '2021-01-01 00:00:00', '/myEndpoint', 'Sample Commit', true, DATA_STORE_FILE);
+      data_store = fs.readFileSync(DATA_STORE_FILE);
       json = JSON.parse(data_store);
     });
 
@@ -68,7 +70,7 @@ describe("data_store.json tests", () => {
     
     afterEach(() => {
       // Delete the data_store file
-      fs.unlinkSync('./__tests__/data_store.json');
+      fs.unlinkSync(DATA_STORE_FILE);
     });
   });
 
@@ -84,13 +86,12 @@ describe("data_store.json tests", () => {
 
       for (let i = 0; i < count; i++) {
           for (let j = 0; j < endpoints.length; j++) {
-            const sample_lhr = await JSON.parse(fs.readFileSync('./__tests__/sample_lhr.json'));
-            await snapshot.generateUpdatedDataStore(sample_lhr, commits[i], endpoints[j], commitMsgs[i], true);
+            const sample_lhr = await JSON.parse(fs.readFileSync(SAMPLE_DATA_FILE));
+            await snapshot.generateUpdatedDataStore(sample_lhr, commits[i], endpoints[j], commitMsgs[i], true, DATA_STORE_FILE);
           }
       }
-      data_store = fs.readFileSync('./__tests__/data_store.json');
+      data_store = fs.readFileSync(DATA_STORE_FILE);
       json = JSON.parse(data_store);
-      //console.log(json);
     });
 
     test("Run list exists and has correct value", () => {
@@ -173,7 +174,7 @@ describe("data_store.json tests", () => {
     
       afterEach(() => {
         // Delete the data_store file
-        fs.unlinkSync('./__tests__/data_store.json');
+        fs.unlinkSync(DATA_STORE_FILE);
       });
     });
   }
