@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
  
-
+//manages what the user is viewing
 export const currentViewSlice = createSlice({
   name: "currentView",
   initialState: {
