@@ -211,9 +211,9 @@ async function initiateRefresh() {
     const snapshotTimestamp = new Date().toISOString();
     const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
 
+    initialize();
     log(`>>> New run for commit '${commitMsg}' at ${snapshotTimestamp}`);
 
-    initialize();
     getRoutes();
     await startServer();
     log('Endpoints tested: ' + ENDPOINTS);
