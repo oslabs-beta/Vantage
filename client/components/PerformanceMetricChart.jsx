@@ -17,11 +17,7 @@ import {
   selectRunList,
   selectWebVitalData,
 } from "../store/dataSlice.js";
-import {
-  getCurrentEndpoint,
-  selectPerformanceMetrics,
-  addRunValue,
-} from "../store/currentViewSlice.js";
+import { getCurrentEndpoint, addRunValue } from "../store/currentViewSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 
@@ -34,7 +30,9 @@ const PerformanceMetricChart = () => {
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const commits = useSelector(selectCommits);
   const runList = useSelector(selectRunList);
-  const perfMetricsSelected = useSelector(selectPerformanceMetrics);
+  const performanceMetricsArr = useSelector(
+    (state) => state.currentView.performanceMetricsArr
+  );
 
   const fcpData = useSelector((state) =>
     selectWebVitalData(state, "first-contentful-paint", currentEndpoint)
@@ -55,14 +53,8 @@ const PerformanceMetricChart = () => {
     selectWebVitalData(state, "cumulative-layout-shift", currentEndpoint)
   );
 
-  // Show actual units if only one performance metric is selected
-  const perfMetricsSelectedArr = Object.entries(perfMetricsSelected).reduce(
-    (acc, curr) => (curr[1] ? [...acc, curr[0]] : acc),
-    []
-  );
-  const valueType =
-    perfMetricsSelectedArr.length > 1 ? "score" : "numericValue";
-  
+  const valueType = performanceMetricsArr.length > 1 ? "score" : "numericValue";
+
   // Score/metric for each metric
   const data = runList.map((cur, i) => {
     const multiple = valueType === "score" ? 100 : 1;
@@ -88,9 +80,9 @@ const PerformanceMetricChart = () => {
 
   //Only add unit if 1 web vital is selected
   const unit =
-    perfMetricsSelectedArr.length > 1
+    performanceMetricsArr.length > 1
       ? ""
-      : webVitalUnits[perfMetricsSelectedArr[0]];
+      : webVitalUnits[performanceMetricsArr[0]];
 
   const handleClick = (data) => {
     if (data) {
@@ -107,7 +99,7 @@ const PerformanceMetricChart = () => {
     CLS: theme.palette.secondary.dark,
   };
 
-  const lineComponents = perfMetricsSelectedArr.map((curr, i) => (
+  const lineComponents = performanceMetricsArr.map((curr, i) => (
     <Line
       key={i}
       type='monotone'
@@ -136,16 +128,18 @@ const PerformanceMetricChart = () => {
       <XAxis dataKey={"name"} tick={false} stroke='#ede1fc'>
         <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis stroke='#ede1fc' /*domain={['dataMin', 'dataMax']}*/>
-        {perfMetricsSelectedArr.length === 1 && (
+      {performanceMetricsArr.length === 1 ? (
+        <YAxis stroke='#ede1fc'>
           <Label
-            value={webVitalUnits[perfMetricsSelectedArr[0]]}
+            value={webVitalUnits[performanceMetricsArr[0]]}
             style={{ fill: "#ede1fc" }}
             angle={-90}
             position='insideLeft'
           />
-        )}
-      </YAxis>
+        </YAxis>
+      ) : (
+        <YAxis stroke='#ede1fc' domain={[0, 100]} />
+      )}
       <Tooltip
         content={
           <CustomTooltip commits={commits} unit={unit} runList={runList} />

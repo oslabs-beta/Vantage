@@ -32,8 +32,7 @@ describe('CurrentViewSlice', () => {
       expect(currentMetric).toEqual('default')
       const metricArr = ['Performance', 'Accessibility', 'Best Practices', 'SEO', 'default']
       for(const metric of metricArr){
-        const action = store.dispatch(changeMetric(metric))
-        const newState = currentViewSlice(initialState, action);
+        store.dispatch(changeMetric(metric))
         const newMetric = store.getState().currentView.currentMetric;
         expect(newMetric).toEqual(metric);
       };
@@ -44,29 +43,30 @@ describe('CurrentViewSlice', () => {
     it('should change Endpoint to action payload', () => {
       const action = store.dispatch(changeEndpoint('Documentation'))
       const endpoint = action.payload;
-      const newState = currentViewSlice(initialState, action);
       const { currentEndpoint } = store.getState().currentView;
       expect(currentEndpoint).toEqual(endpoint);
     });
   })
   describe('changePerformanceMetrics', () => {
-    it('should change specific performanceMetric to opposite boolean', () => {
-      expect(store.getState().currentView.performanceMetrics.FCP).toEqual(false);
-      const action = store.dispatch(changePerformanceMetrics('FCP'))
-      const newState = currentViewSlice(initialState, action)
-      const { FCP } = store.getState().currentView.performanceMetrics;
-      expect(FCP).toEqual(true);
+    it('If a non valid performance metric is dispatched, nothing should change', () => {
+      store.dispatch(changePerformanceMetrics('FCP'))
+      expect(store.getState().currentView.performanceMetricsArr).toEqual(['FCP']);
+      store.dispatch(changePerformanceMetrics('YES'))
+      store.dispatch(changePerformanceMetrics('NO'))
+      store.dispatch(changePerformanceMetrics('MAYBE'))
+      expect(store.getState().currentView.performanceMetricsArr).toEqual(['FCP']);
+      store.dispatch(changePerformanceMetrics('FCP'))
     });
     
-    it('should only change action payloads performance metrics', () => {
-      const action = store.dispatch(changePerformanceMetrics('FCP'))
-      const newState = currentViewSlice(initialState, action)
-      const { SI, LCP, TTI, TBT, CLS } = store.getState().currentView.performanceMetrics;
-      expect(SI).toEqual(false);
-      expect(LCP).toEqual(false);
-      expect(TTI).toEqual(false);
-      expect(TBT).toEqual(false);
-      expect(CLS).toEqual(false);
+    it('should add and remove performance metrics from performanceMetricsArr', () => {
+      store.dispatch(changePerformanceMetrics('FCP'))
+      expect(store.getState().currentView.performanceMetricsArr).toEqual(['FCP']);
+      store.dispatch(changePerformanceMetrics('TTI'))
+      expect(store.getState().currentView.performanceMetricsArr).toEqual(['FCP','TTI']);
+      store.dispatch(changePerformanceMetrics('TTI'))
+      expect(store.getState().currentView.performanceMetricsArr).toEqual(['FCP']);
+      store.dispatch(changePerformanceMetrics('FCP'))
+      expect(store.getState().currentView.performanceMetricsArr).toEqual([]);
     });
   })
 });
