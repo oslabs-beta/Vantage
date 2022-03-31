@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentEndpoint,
   changePerformanceMetrics,
-  selectPerformanceMetrics,
 } from "../store/currentViewSlice";
 import { selectMostRecentWebVital } from "../store/dataSlice.js";
 import { Box } from "@mui/material";
 
 const PerformanceMetrics = () => {
   const dispatch = useDispatch();
-
-  const currentPerfMetrics = useSelector(selectPerformanceMetrics);
+  const performanceMetricsArr = useSelector(
+    (state) => state.currentView.performanceMetricsArr
+  );
 
   const currentEndpoint = useSelector(getCurrentEndpoint);
   const fcp = useSelector((state) =>
@@ -54,7 +54,7 @@ const PerformanceMetrics = () => {
       value={cur.value}
       size={50}
       handleClick={handleClick}
-      isActive={currentPerfMetrics[cur.name]}
+      isActive={performanceMetricsArr.includes(cur.name)}
       description={cur.description}
     />
   ));

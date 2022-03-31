@@ -97,7 +97,7 @@ const OverallMetricChart = () => {
       <XAxis dataKey={"name"} tick={false} stroke='#ede1fc'>
         <Label value='Commits' style={{ fill: "#ede1fc" }} />
       </XAxis>
-      <YAxis stroke='#ede1fc' /*domain={['dataMin', 'dataMax']}*/ />
+      <YAxis stroke='#ede1fc' domain={[0, 100]} />
       <Tooltip content={<CustomTooltip commits={commits} />} />
       <Legend />
       {lineComponents}

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PerformanceMetricChart from "../components/PerformanceMetricChart";
 import {
   getCurrentMetric,
-  selectPerformanceMetrics,
   changeSelectorSwitch,
 } from "../store/currentViewSlice";
 import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
@@ -18,13 +17,14 @@ import CustomMUISwitch from "../components/CustomMUISwitch";
 const ChartContainer = () => {
   const dispatch = useDispatch();
   const currentMetric = useSelector(getCurrentMetric);
-  const perfMetricsSelected = useSelector(selectPerformanceMetrics);
   const selectorSwitch = useSelector(
     (state) => state.currentView.selectorSwitch
   );
 
-  const perfMetricsSelectedArr = Object.values(perfMetricsSelected);
-  const isPerfMetricSelected = perfMetricsSelectedArr.every((v) => v === false);
+  const performanceMetricsArr = useSelector(
+    (state) => state.currentView.performanceMetricsArr
+  );
+  const isPerfMetricSelected = performanceMetricsArr.every((v) => v === false);
 
   return (
     <Paper id='chart-container' sx={{ boxShadow: 3 }}>

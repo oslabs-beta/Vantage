@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataReducer from "./dataSlice";
-import currentViewReducer from "./currentViewSlice";
+import currentViewReducer from "../client/store/currentViewSlice";
+
+// Test version of data Slice
+import dataReducer from "./dataSlice_test";
 
 export default configureStore({
   reducer: {
     data: dataReducer,
     currentView: currentViewReducer,
   },
-  devTools: process.env.NODE_ENV === "development",
 });

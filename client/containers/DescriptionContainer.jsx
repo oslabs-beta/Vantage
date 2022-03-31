@@ -96,7 +96,7 @@ const DescriptionContainer = () => {
 
       if (
         data[key].results[currentEndpoint][earlyRun].scoreDisplay !==
-        "notApplicable"
+        "notApplicable" && data[key].results[currentEndpoint][earlyRun].score !== undefined
       ) {
         dataArray.push({
           description,
