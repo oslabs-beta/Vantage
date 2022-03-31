@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
- 
+
 //manages what the user is viewing
 export const currentViewSlice = createSlice({
   name: "currentView",
@@ -7,14 +7,7 @@ export const currentViewSlice = createSlice({
     currentMetric: "default",
     currentEndpoint: "/",
     //initialize performance metrics as not selected
-    performanceMetrics: {
-      FCP: false,
-      SI: false,
-      LCP: false,
-      TTI: false,
-      TBT: false,
-      CLS: false,
-    },
+    performanceMetricsArr: [],
     //initialize selected commit points as empty
     runValueArr: [],
     runValueArrSort: [],
@@ -33,8 +26,13 @@ export const currentViewSlice = createSlice({
     },
     //changes which metric the user is viewing
     changePerformanceMetrics: (state, action) => {
-      state.performanceMetrics[action.payload] =
-        !state.performanceMetrics[action.payload];
+      const regex = /FCP|TTI|SI|TBT|LCP|CLS/;
+      if (regex.test(action.payload)) {
+        const index = state.performanceMetricsArr.indexOf(action.payload);
+        index === -1
+          ? state.performanceMetricsArr.push(action.payload)
+          : state.performanceMetricsArr.splice(index, 1);
+      }
     },
     //adds a selected commit to the run value array
     addRunValue: (state, action) => {
@@ -46,7 +44,7 @@ export const currentViewSlice = createSlice({
           if (run !== state.runValueArr[0]) state.runValueArr.push(run);
           //sort the selected commits to keep track of which was first selected
           state.runValueArrSort = state.runValueArr.slice().sort();
-        } else if(!state.selectorSwitch) {
+        } else if (!state.selectorSwitch) {
           state.runValueArr = state.runValueArrSort = [action.payload];
         }
       }
@@ -78,7 +76,5 @@ export const {
 
 export const getCurrentMetric = (state) => state.currentView.currentMetric;
 export const getCurrentEndpoint = (state) => state.currentView.currentEndpoint;
-export const selectPerformanceMetrics = (state) =>
-  state.currentView.performanceMetrics;
 
 export default currentViewSlice.reducer;
