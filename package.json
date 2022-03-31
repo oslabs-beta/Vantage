@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose",
-    "postinstall": "./package/git-hooks/gitHookInstall",
+    "postinstall": "./package/git-hooks/gitHookInstall.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
     "prepublishOnly": "cross-env NODE_ENV=production webpack"
