@@ -1,6 +1,6 @@
 {
   "name": "vantage-next",
-  "version": "0.0.22",
+  "version": "1.0.0",
   "description": "NEXTjs SEO optimization and monitoring tool",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/oslabs-beta/Frosty/issues"
+    "url": "https://github.com/oslabs-beta/Vantage/issues"
   },
   "homepage": "https://github.com/oslabs-beta/Frosty#readme",
   "bin": {
