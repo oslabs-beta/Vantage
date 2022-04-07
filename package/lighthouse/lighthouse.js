@@ -14,7 +14,7 @@ let nextConfig;
 try { nextConfig = require(resolve(process.env.INIT_CWD + '/next.config.js')); } catch { nextConfig = {}}
 
 // Define constants to be used throughout various functions
-let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG, EXTENSIONS, DATA_STORE;
+let SERVER_COMMAND, BUILD_COMMAND, PORT, ENDPOINTS, CONFIG, EXTENSIONS, DATA_STORE, BASE_URL;
 const log = (message) => {
   fs.appendFileSync('./vantage/run_history.log', `\n${message}`);
 };
@@ -37,8 +37,11 @@ function initialize() {
   BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npx next build';
   SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
+  // Temporary solution for base url defined by user in config - it should be loaded from tsconfig/nextconfig
+  BASE_URL = configData.nextAppSettings.baseUrl ?? '.'; 
   EXTENSIONS = nextConfig.pageExtensions ?? ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'];
   DATA_STORE = nextConfig.dataStore ?? './vantage/data_store.json';
+
 
   log(`Parameters for this run: SERVER_COMMAND: ${SERVER_COMMAND}, BUILD_COMMAND: ${BUILD_COMMAND}, PORT: ${PORT}, ENDPOINTS: ${ENDPOINTS.toString()}`);
 
@@ -55,7 +58,7 @@ async function startServer() {
 
 // Traverse the 'pages' folder in project directory and capture list of endpoints to check
 function getRoutes(subfolders = '') {
-  let commands = `cd pages`;
+  let commands = `cd ${BASE_URL}/pages`;
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
