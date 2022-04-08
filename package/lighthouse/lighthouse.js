@@ -37,6 +37,7 @@ function initialize() {
   BUILD_COMMAND = configData.nextAppSettings.buildCommand ?? 'npx next build';
   SERVER_COMMAND = configData.nextAppSettings.serverCommand ?? `npx next start -p ${PORT}`;
   ENDPOINTS = configData.nextAppSettings.endpoints ?? [];
+  SRC_DIRECTORY = configData.nextAppSettings.srcDirectory ?? false;
   EXTENSIONS = nextConfig.pageExtensions ?? ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'];
   DATA_STORE = nextConfig.dataStore ?? './vantage/data_store.json';
 
@@ -55,7 +56,7 @@ async function startServer() {
 
 // Traverse the 'pages' folder in project directory and capture list of endpoints to check
 function getRoutes(subfolders = '') {
-  let commands = `cd pages`;
+  let commands = `cd ${SRC_DIRECTORY && `src/`}pages`;
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
