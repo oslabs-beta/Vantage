@@ -40,4 +40,18 @@ function ensureDirExists(dir) {
   fs.existsSync(dir) || fs.mkdirSync(dir);
 }
 
+function addToGitignore() {
+  const gitignoreFilePath = resolve(process.env.INIT_CWD + "/.gitignore");
+  fs.readFile(gitignoreFilePath, (err, data) => {
+    if (err) throw err;
+    if (!/vantage\//.test(data.toString())) {
+      fs.appendFile(gitignoreFilePath, "\nvantage/", function (err) {
+        if (err) throw err;
+        console.log("Added to gitignore");
+      });
+    }
+  });
+}
+
+addToGitignore();
 installHooks();
