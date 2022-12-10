@@ -56,7 +56,7 @@ async function startServer() {
 
 // Traverse the 'pages' folder in project directory and capture list of endpoints to check
 function getRoutes(subfolders = '') {
-  let commands = `cd ${SRC_DIRECTORY && `src/`}pages`;
+  let commands = `cd ${SRC_DIRECTORY ? `src/` : ''}pages`;
   if (subfolders !== '') commands += ` && cd ${subfolders}`;
   try {
     const stdOut = execSync(`${commands} && ls`, { encoding: 'utf-8' });
